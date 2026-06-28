@@ -99,11 +99,9 @@ body.en-tienda .aviso { display: block; }
 /* --- Interior: escenario con cartelones colgados sobre la imagen --- */
 .escenario {
   position: relative;
-  width: min(100%, 64vh);
-  aspect-ratio: 1024 / 1535;
-  margin: 0 auto;
-  border-radius: 14px; overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  width: 100vw; margin-left: calc(50% - 50vw);
+  min-height: 100svh;
+  overflow: hidden;
   background: url(../img/interior-tienda.png) center / cover no-repeat;
   animation: aparecerEscena 1s ease both;
 }
