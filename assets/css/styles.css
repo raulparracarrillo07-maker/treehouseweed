@@ -21,3 +21,12 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -.01em; }
 .contenedor { width: min(1100px, 92vw); margin-inline: auto; }
 .oculto { display: none !important; }
 button { font: inherit; cursor: pointer; border: none; }
+.puerta {
+  position: fixed; inset: 0; z-index: 100;
+  background: radial-gradient(circle at 50% 30%, var(--fondo-2), var(--fondo));
+  display: grid; place-items: center; text-align: center; padding: 1rem;
+}
+.puerta-caja { max-width: 420px; display: grid; gap: 1rem; }
+.puerta-botones { display: flex; gap: .75rem; justify-content: center; }
+.btn-oro { background: var(--oro); color: #1a1205; padding: .8rem 1.4rem; border-radius: var(--radio); font-weight: 700; }
+.btn-tenue { background: transparent; color: var(--texto-tenue); padding: .8rem 1.4rem; border: 1px solid var(--texto-tenue); border-radius: var(--radio); }
