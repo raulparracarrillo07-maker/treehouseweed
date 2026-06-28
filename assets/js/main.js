@@ -44,13 +44,9 @@ async function init() {
 }
 
 function entrarSitio() {
-  montarIntro({ onTerminar: mostrarTienda });
-}
-
-function mostrarTienda() {
-  document.body.classList.remove("pre-tienda");
-  iniciarSmooth();
-  irACasa();
+  irACasa();        // la tienda se renderiza DEBAJO del recorrido, en el mismo scroll
+  iniciarSmooth();  // scroll suave (Lenis)
+  montarIntro();    // el video avanza con el scroll; al pasarlo, ya estás en la tienda
 }
 
 function irACasa() {
@@ -59,11 +55,17 @@ function irACasa() {
     if (cuarto.tipo === "categoria") return abrirCuarto(cuarto.id);
     abrirInfo(cuarto.id);
   });
-  renderDestacados(app, catalogo, (p) => { carrito = agregar(carrito, p); refrescarCarrito(); });
-  revelar();
+}
+
+// Al elegir una sección, ya entraste: se cierra el recorrido y se navega arriba.
+function salirDelRecorrido() {
+  document.getElementById("intro").classList.add("oculto");
+  document.body.classList.add("en-tienda");
+  window.scrollTo(0, 0);
 }
 
 function abrirCuarto(categoria) {
+  salirDelRecorrido();
   const app = document.getElementById("app");
   renderCuarto(app, catalogo, categoria, (p) => { carrito = agregar(carrito, p); refrescarCarrito(); });
   const volver = document.createElement("button");
@@ -74,6 +76,7 @@ function abrirCuarto(categoria) {
 }
 
 function abrirInfo(cuartoId) {
+  salirDelRecorrido();
   const app = document.getElementById("app");
   renderInfo(app, cuartoId, config);
   const volver = document.createElement("button");

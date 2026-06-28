@@ -46,13 +46,14 @@ button { font: inherit; cursor: pointer; border: none; }
 .panel input { width: 3rem; text-align: center; }
 .aviso { text-align: center; color: var(--texto-tenue); font-size: .8rem; padding: 2rem 1rem 5rem; }
 
-/* --- Intro de video (recorrido cinemático) --- */
-.pre-tienda #app,
-.pre-tienda .aviso,
-.pre-tienda .fab,
-.pre-tienda #panel-carrito { display: none !important; }
+/* --- Intro de video (recorrido cinemático, primera sección del scroll) --- */
+/* Carrito/WhatsApp/aviso aparecen solo cuando ya pasaste el recorrido. */
+.fab, .aviso { display: none; }
+body.en-tienda .fab { display: inline-block; }
+body.en-tienda .aviso { display: block; }
 
-.intro { position: relative; height: 600vh; z-index: 40; background: #000; }
+.intro { position: relative; height: 600vh; background: #000; }
+#app { position: relative; z-index: 1; }
 .intro-sticky { position: sticky; top: 0; height: 100vh; display: grid; place-items: center; overflow: hidden; background: #000; }
 .intro-sticky::before {
   content: ""; position: absolute; inset: -8%;
