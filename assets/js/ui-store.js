@@ -22,7 +22,8 @@ export function renderCasa(contenedor, catalogo, alElegirCuarto) {
 
 export function renderCuarto(contenedor, catalogo, categoria, alAgregar) {
   const productos = productosDe(catalogo, categoria);
-  contenedor.innerHTML = `<h2>${categoria}</h2><div class="productos"></div>`;
+  const titulo = categoria.charAt(0).toUpperCase() + categoria.slice(1);
+  contenedor.innerHTML = `<h2>${titulo}</h2><div class="productos"></div>`;
   const grid = contenedor.querySelector(".productos");
   for (const p of productos) {
     const card = document.createElement("article");

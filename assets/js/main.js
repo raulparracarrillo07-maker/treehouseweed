@@ -32,6 +32,7 @@ async function init() {
   config = await fetch("data/config.json").then((r) => r.json());
   catalogo = await fetch("data/productos.json").then((r) => r.json());
   cablearFabs();
+  refrescarCarrito();
   montarPuertaEdad({
     storage: localStorage,
     overlay: document.getElementById("puerta-edad"),
