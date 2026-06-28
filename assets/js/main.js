@@ -1,5 +1,5 @@
 import { montarPuertaEdad } from "./age-gate.js";
-import { renderCasa, renderCuarto } from "./ui-store.js";
+import { renderCasa, renderCuarto, renderDestacados } from "./ui-store.js";
 import { carritoVacio, agregar, cambiarCantidad } from "./cart.js";
 import { renderCarrito } from "./ui-cart.js";
 import { construirMensaje, construirURL } from "./whatsapp.js";
@@ -45,6 +45,7 @@ function irACasa() {
   renderCasa(app, catalogo, (cuarto) => {
     if (cuarto.tipo === "categoria") abrirCuarto(cuarto.id);
   });
+  renderDestacados(app, catalogo, (p) => { carrito = agregar(carrito, p); refrescarCarrito(); });
 }
 
 function abrirCuarto(categoria) {

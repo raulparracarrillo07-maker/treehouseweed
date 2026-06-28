@@ -1,4 +1,4 @@
-import { productosDe } from "./catalog.js";
+import { productosDe, destacados } from "./catalog.js";
 
 const CUARTOS = [
   { id: "rolados", nombre: "Rolados", tipo: "categoria" },
@@ -51,4 +51,43 @@ export function renderCuarto(contenedor, catalogo, categoria, alAgregar) {
     card.appendChild(btn);
     grid.appendChild(card);
   }
+}
+
+export function renderDestacados(contenedor, catalogo, alAgregar) {
+  const items = destacados(catalogo);
+  if (items.length === 0) return;
+
+  const seccion = document.createElement("section");
+  seccion.innerHTML = `<h3 class="oro">Más vendidos</h3><div class="productos"></div>`;
+  const grid = seccion.querySelector(".productos");
+
+  for (const p of items) {
+    const card = document.createElement("article");
+    card.className = "producto";
+
+    const titulo = document.createElement("h3");
+    titulo.textContent = p.nombre;
+
+    const presentacion = document.createElement("p");
+    presentacion.className = "tenue";
+    presentacion.textContent = p.presentacion;
+
+    const precio = document.createElement("p");
+    precio.className = "precio";
+    precio.textContent = `$${p.precio}`;
+
+    const btn = document.createElement("button");
+    btn.className = "btn-oro";
+    btn.dataset.agregar = "";
+    btn.textContent = "Agregar";
+    btn.addEventListener("click", () => alAgregar(p));
+
+    card.appendChild(titulo);
+    card.appendChild(presentacion);
+    card.appendChild(precio);
+    card.appendChild(btn);
+    grid.appendChild(card);
+  }
+
+  contenedor.prepend(seccion);
 }
