@@ -1,0 +1,24 @@
+/* TreeHouseWeed — estilos globales
+   Aquí irá la identidad visual: colores, tipografía, layout. */
+
+:root {
+  /* Paleta base provisional (ajustar al definir la marca) */
+  --color-fondo: #0f1410;
+  --color-texto: #eaf0e6;
+  --color-acento: #4c8c4a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: system-ui, sans-serif;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}

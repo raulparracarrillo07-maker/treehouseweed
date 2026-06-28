@@ -1,0 +1,21 @@
+{
+  "marca": "TreeHouseWeed",
+  "moneda": "MXN",
+  "categorias": [
+    "rolados",
+    "prerrolados",
+    "extractos"
+  ],
+  "productos": [
+    {
+      "id": "ejemplo-01",
+      "nombre": "Producto de ejemplo",
+      "categoria": "prerrolados",
+      "descripcion": "Descripción breve del producto.",
+      "presentacion": "1 unidad",
+      "precio": 0,
+      "imagen": "assets/img/productos/ejemplo-01.jpg",
+      "disponible": true
+    }
+  ]
+}
