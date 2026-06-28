@@ -1,21 +1,11 @@
 {
   "marca": "TreeHouseWeed",
   "moneda": "MXN",
-  "categorias": [
-    "rolados",
-    "prerrolados",
-    "extractos"
-  ],
+  "categorias": ["rolados", "prerrolados", "extractos"],
   "productos": [
-    {
-      "id": "ejemplo-01",
-      "nombre": "Producto de ejemplo",
-      "categoria": "prerrolados",
-      "descripcion": "Descripción breve del producto.",
-      "presentacion": "1 unidad",
-      "precio": 0,
-      "imagen": "assets/img/productos/ejemplo-01.jpg",
-      "disponible": true
-    }
+    { "id": "rol-01", "nombre": "Rolado clásico", "categoria": "rolados", "descripcion": "Rolado artesanal de la casa.", "presentacion": "1 g", "precio": 150, "imagen": "assets/img/productos/rol-01.jpg", "disponible": true, "destacado": true },
+    { "id": "rol-02", "nombre": "Rolado premium", "categoria": "rolados", "descripcion": "Selección de flor premium.", "presentacion": "1.5 g", "precio": 220, "imagen": "assets/img/productos/rol-02.jpg", "disponible": true, "destacado": false },
+    { "id": "pre-01", "nombre": "Prerrolado mini", "categoria": "prerrolados", "descripcion": "Listo para prender.", "presentacion": "0.5 g", "precio": 90, "imagen": "assets/img/productos/pre-01.jpg", "disponible": true, "destacado": true },
+    { "id": "ext-01", "nombre": "Extracto wax", "categoria": "extractos", "descripcion": "Concentrado de alta pureza.", "presentacion": "0.5 g", "precio": 350, "imagen": "assets/img/productos/ext-01.jpg", "disponible": true, "destacado": false }
   ]
 }
