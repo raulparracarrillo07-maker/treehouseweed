@@ -6,7 +6,7 @@
   <title>TreeHouseWeed</title>
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
-<body>
+<body class="pre-tienda">
   <div id="puerta-edad" class="puerta">
     <div class="puerta-caja">
       <h1>Tree<span class="oro">House</span>Weed</h1>
@@ -18,11 +18,26 @@
       </div>
     </div>
   </div>
+  <section id="intro" class="intro oculto">
+    <div class="intro-sticky">
+      <video id="intro-video" src="assets/video/intro.mp4" muted playsinline preload="auto"></video>
+      <div class="intro-vignette"></div>
+      <div class="intro-marca">
+        <img class="intro-logo" src="assets/img/logo/treehouseweed-logo-transparente.png" alt="TreeHouseWeed" />
+        <div class="intro-scroll">
+          <span class="intro-chevron" aria-hidden="true"></span>
+          <span class="intro-tag">Desliza para subir al árbol</span>
+        </div>
+      </div>
+      <button id="saltar-intro" class="saltar">Entrar a la tienda</button>
+    </div>
+  </section>
   <main id="app" class="contenedor"></main>
   <footer class="aviso">Consume con responsabilidad. Producto solo para mayores de edad.</footer>
   <button id="fab-carrito" class="fab">Carrito <span id="badge-carrito">0</span></button>
   <a id="fab-whatsapp" class="fab fab-wa" target="_blank" rel="noopener">WhatsApp</a>
   <aside id="panel-carrito" class="panel oculto"></aside>
+  <script src="assets/js/lib/lenis.min.js"></script>
   <script type="module" src="assets/js/main.js"></script>
 </body>
 </html>

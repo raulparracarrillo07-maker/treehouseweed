@@ -9,15 +9,45 @@ const CUARTOS = [
 ];
 
 export function renderCasa(contenedor, catalogo, alElegirCuarto) {
-  contenedor.innerHTML = `<h2>La casa del árbol</h2><div class="cuartos"></div>`;
-  const grid = contenedor.querySelector(".cuartos");
-  for (const cuarto of CUARTOS) {
-    const card = document.createElement("button");
-    card.className = "cuarto";
-    card.textContent = cuarto.nombre;
-    card.addEventListener("click", () => alElegirCuarto(cuarto));
-    grid.appendChild(card);
-  }
+  contenedor.innerHTML = `
+    <section class="interior">
+      <header class="casa-header reveal">
+        <p class="casa-bienvenida">Casa del árbol</p>
+        <h2 class="casa-titulo">La tienda</h2>
+      </header>
+      <div class="cartelones"></div>
+    </section>`;
+  const grid = contenedor.querySelector(".cartelones");
+  CUARTOS.forEach((cuarto, i) => {
+    const c = document.createElement("button");
+    c.className = "cartelon reveal";
+    c.style.setProperty("--n", String(i % 6));
+    c.style.setProperty("--d", (i * 80) + "ms");
+
+    const cuerdas = document.createElement("span");
+    cuerdas.className = "cartelon-cuerdas";
+
+    const cuerpo = document.createElement("span");
+    cuerpo.className = "cartelon-cuerpo";
+
+    const arte = document.createElement("span");
+    arte.className = "cartelon-arte";
+
+    const nombre = document.createElement("span");
+    nombre.className = "cartelon-nombre";
+    nombre.textContent = cuarto.nombre;
+
+    cuerpo.appendChild(arte);
+    cuerpo.appendChild(nombre);
+    c.appendChild(cuerdas);
+    c.appendChild(cuerpo);
+    c.addEventListener("click", () => {
+      if (c.classList.contains("empujado")) return;
+      c.classList.add("empujado");
+      setTimeout(() => alElegirCuarto(cuarto), 430);
+    });
+    grid.appendChild(c);
+  });
 }
 
 export function renderCuarto(contenedor, catalogo, categoria, alAgregar) {

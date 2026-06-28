@@ -1,4 +1,6 @@
 import { montarPuertaEdad } from "./age-gate.js";
+import { montarIntro } from "./intro.js";
+import { iniciarSmooth, revelar } from "./anim.js";
 import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js";
 import { carritoVacio, agregar, cambiarCantidad } from "./cart.js";
 import { renderCarrito } from "./ui-cart.js";
@@ -37,8 +39,18 @@ async function init() {
     storage: localStorage,
     overlay: document.getElementById("puerta-edad"),
     edadMinima: config.edadMinima,
-    onEntrar: irACasa,
+    onEntrar: entrarSitio,
   });
+}
+
+function entrarSitio() {
+  montarIntro({ onTerminar: mostrarTienda });
+}
+
+function mostrarTienda() {
+  document.body.classList.remove("pre-tienda");
+  iniciarSmooth();
+  irACasa();
 }
 
 function irACasa() {
@@ -48,6 +60,7 @@ function irACasa() {
     abrirInfo(cuarto.id);
   });
   renderDestacados(app, catalogo, (p) => { carrito = agregar(carrito, p); refrescarCarrito(); });
+  revelar();
 }
 
 function abrirCuarto(categoria) {
