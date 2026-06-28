@@ -27,12 +27,28 @@ export function renderCuarto(contenedor, catalogo, categoria, alAgregar) {
   for (const p of productos) {
     const card = document.createElement("article");
     card.className = "producto";
-    card.innerHTML = `
-      <h3>${p.nombre}</h3>
-      <p class="tenue">${p.presentacion} — ${p.descripcion}</p>
-      <p class="precio">$${p.precio}</p>
-      <button class="btn-oro" data-agregar>Agregar</button>`;
-    card.querySelector("[data-agregar]").addEventListener("click", () => alAgregar(p));
+
+    const titulo = document.createElement("h3");
+    titulo.textContent = p.nombre;
+
+    const detalle = document.createElement("p");
+    detalle.className = "tenue";
+    detalle.textContent = `${p.presentacion} — ${p.descripcion}`;
+
+    const precio = document.createElement("p");
+    precio.className = "precio";
+    precio.textContent = `$${p.precio}`;
+
+    const btn = document.createElement("button");
+    btn.className = "btn-oro";
+    btn.dataset.agregar = "";
+    btn.textContent = "Agregar";
+    btn.addEventListener("click", () => alAgregar(p));
+
+    card.appendChild(titulo);
+    card.appendChild(detalle);
+    card.appendChild(precio);
+    card.appendChild(btn);
     grid.appendChild(card);
   }
 }
