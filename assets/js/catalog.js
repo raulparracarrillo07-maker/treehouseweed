@@ -1,5 +1,5 @@
 export function categorias(catalogo) {
-  return catalogo.categorias;
+  return [...catalogo.categorias];
 }
 
 export function productosDe(catalogo, categoria) {
