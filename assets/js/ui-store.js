@@ -1,28 +1,39 @@
 import { productosDe, destacados } from "./catalog.js";
 
 const CUARTOS = [
+  { id: "mas-vendidos", nombre: "Más vendidos", tipo: "categoria" },
   { id: "rolados", nombre: "Rolados", tipo: "categoria" },
   { id: "prerrolados", nombre: "Prerrolados", tipo: "categoria" },
   { id: "extractos", nombre: "Extractos", tipo: "categoria" },
-  { id: "nosotros", nombre: "Nosotros", tipo: "info" },
-  { id: "pedido", nombre: "Pedido", tipo: "info" },
+  { id: "plumas", nombre: "Plumas", tipo: "categoria" },
+  { id: "comestibles", nombre: "Comestibles", tipo: "categoria" },
+];
+
+// Posiciones (centro %, sobre la imagen del interior): 3 hileras de 2, colgando
+// frente a la ventana, dejando ver la galaxia arriba y el atardecer abajo.
+const POS = [
+  { x: 33, y: 31 }, { x: 67, y: 31 },
+  { x: 33, y: 47 }, { x: 67, y: 47 },
+  { x: 33, y: 63 }, { x: 67, y: 63 },
 ];
 
 export function renderCasa(contenedor, catalogo, alElegirCuarto) {
   contenedor.innerHTML = `
-    <section class="interior">
-      <header class="casa-header reveal">
+    <section class="escenario">
+      <div class="escena-header">
         <p class="casa-bienvenida">Casa del árbol</p>
         <h2 class="casa-titulo">La tienda</h2>
-      </header>
-      <div class="cartelones"></div>
+      </div>
     </section>`;
-  const grid = contenedor.querySelector(".cartelones");
+  const esc = contenedor.querySelector(".escenario");
   CUARTOS.forEach((cuarto, i) => {
+    const pos = POS[i % POS.length];
     const c = document.createElement("button");
-    c.className = "cartelon reveal";
+    c.className = "cartelon";
+    c.style.left = pos.x + "%";
+    c.style.top = pos.y + "%";
     c.style.setProperty("--n", String(i % 6));
-    c.style.setProperty("--d", (i * 80) + "ms");
+    c.style.setProperty("--d", (550 + i * 130) + "ms");
 
     const cuerdas = document.createElement("span");
     cuerdas.className = "cartelon-cuerdas";
@@ -46,7 +57,7 @@ export function renderCasa(contenedor, catalogo, alElegirCuarto) {
       c.classList.add("empujado");
       setTimeout(() => alElegirCuarto(cuarto), 430);
     });
-    grid.appendChild(c);
+    esc.appendChild(c);
   });
 }
 
