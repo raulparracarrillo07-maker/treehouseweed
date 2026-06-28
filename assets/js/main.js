@@ -1,5 +1,5 @@
 import { montarPuertaEdad } from "./age-gate.js";
-import { renderCasa, renderCuarto, renderDestacados } from "./ui-store.js";
+import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js";
 import { carritoVacio, agregar, cambiarCantidad } from "./cart.js";
 import { renderCarrito } from "./ui-cart.js";
 import { construirMensaje, construirURL } from "./whatsapp.js";
@@ -43,7 +43,8 @@ async function init() {
 function irACasa() {
   const app = document.getElementById("app");
   renderCasa(app, catalogo, (cuarto) => {
-    if (cuarto.tipo === "categoria") abrirCuarto(cuarto.id);
+    if (cuarto.tipo === "categoria") return abrirCuarto(cuarto.id);
+    abrirInfo(cuarto.id);
   });
   renderDestacados(app, catalogo, (p) => { carrito = agregar(carrito, p); refrescarCarrito(); });
 }
@@ -51,6 +52,16 @@ function irACasa() {
 function abrirCuarto(categoria) {
   const app = document.getElementById("app");
   renderCuarto(app, catalogo, categoria, (p) => { carrito = agregar(carrito, p); refrescarCarrito(); });
+  const volver = document.createElement("button");
+  volver.className = "volver";
+  volver.textContent = "← Volver a la casa";
+  volver.addEventListener("click", irACasa);
+  app.appendChild(volver);
+}
+
+function abrirInfo(cuartoId) {
+  const app = document.getElementById("app");
+  renderInfo(app, cuartoId, config);
   const volver = document.createElement("button");
   volver.className = "volver";
   volver.textContent = "← Volver a la casa";

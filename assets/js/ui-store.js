@@ -91,3 +91,27 @@ export function renderDestacados(contenedor, catalogo, alAgregar) {
 
   contenedor.prepend(seccion);
 }
+
+export function renderInfo(contenedor, cuartoId, config) {
+  if (cuartoId === "nosotros") {
+    contenedor.innerHTML = `<h2>Nosotros</h2>
+      <p class="tenue">En TreeHouseWeed cuidamos cada producto. Calidad, sabor y confianza, directo a tu puerta.</p>`;
+  } else {
+    contenedor.innerHTML = `<h2>Cómo pedir</h2>
+      <p>Arma tu carrito y confirma por WhatsApp. Sin pagos en línea.</p>`;
+
+    const zonaP = document.createElement("p");
+    const zonaStrong = document.createElement("strong");
+    zonaStrong.textContent = "Zona de entrega: ";
+    zonaP.appendChild(zonaStrong);
+    zonaP.appendChild(document.createTextNode(config.entrega.zona));
+    contenedor.appendChild(zonaP);
+
+    const horarioP = document.createElement("p");
+    const horarioStrong = document.createElement("strong");
+    horarioStrong.textContent = "Horario: ";
+    horarioP.appendChild(horarioStrong);
+    horarioP.appendChild(document.createTextNode(config.entrega.horario));
+    contenedor.appendChild(horarioP);
+  }
+}
