@@ -64,12 +64,12 @@ body.en-tienda .aviso { display: block; }
 /* En celular (vertical) llena toda la pantalla; en compu (ancha) queda centrado */
 #intro-video { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
 @media (min-aspect-ratio: 1/1) { #intro-video { object-fit: contain; } }
-.saltar {
-  position: absolute; top: 1rem; right: 1rem; z-index: 3;
-  background: rgba(14,20,16,.6); color: var(--texto);
-  border: 1px solid var(--texto-tenue); padding: .55rem 1.1rem;
-  border-radius: 999px; font-weight: 700; backdrop-filter: blur(4px);
+.intro-tap {
+  margin-top: .35rem; color: var(--oro); font-weight: 700; font-size: 1rem;
+  letter-spacing: .02em; text-shadow: 0 2px 12px rgba(0,0,0,.8);
+  animation: latirTap 1.8s ease-in-out infinite;
 }
+@keyframes latirTap { 0%,100% { opacity: .7; } 50% { opacity: 1; } }
 /* Viñeta cinematográfica en los bordes */
 .intro-vignette {
   position: absolute; inset: 0; z-index: 2; pointer-events: none;

@@ -6,7 +6,6 @@ export function montarIntro() {
   const intro = document.getElementById("intro");
   const canvas = document.getElementById("intro-canvas");
   const ctx = canvas.getContext("2d");
-  const saltar = document.getElementById("saltar-intro");
   const marca = intro.querySelector(".intro-marca");
 
   intro.classList.remove("oculto");
@@ -59,10 +58,30 @@ export function montarIntro() {
 
   window.addEventListener("scroll", alScrollear, { passive: true });
   window.addEventListener("resize", () => { ajustar(); dibujar(indiceActual); });
-  saltar.addEventListener("click", () => {
+
+  // Doble tap (o doble clic) = entrar directo a la tienda, saltando el recorrido.
+  function entrarDirecto() {
     const destino = intro.offsetTop + intro.offsetHeight - window.innerHeight;
-    window.scrollTo({ top: destino, behavior: "smooth" });
+    window.scrollTo(0, destino);
+  }
+  function yaEnTienda() {
+    return document.body.classList.contains("en-tienda");
+  }
+  intro.addEventListener("dblclick", () => {
+    if (!yaEnTienda()) entrarDirecto();
   });
+  let ultimoTap = 0;
+  intro.addEventListener("touchend", (e) => {
+    if (yaEnTienda()) return;
+    const ahora = Date.now();
+    if (ahora - ultimoTap < 300) {
+      e.preventDefault();        // evita el zoom por doble tap del navegador
+      entrarDirecto();
+      ultimoTap = 0;
+    } else {
+      ultimoTap = ahora;
+    }
+  }, { passive: false });
 
   ajustar();
   alScrollear();
