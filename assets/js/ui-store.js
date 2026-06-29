@@ -9,12 +9,13 @@ const CUARTOS = [
   { id: "comestibles", nombre: "Comestibles", tipo: "categoria" },
 ];
 
-// Posiciones (centro %, sobre la imagen del interior): 3 hileras de 2, colgando
-// frente a la ventana, dejando ver la galaxia arriba y el atardecer abajo.
+// Posiciones (% sobre la imagen del interior): 2 columnas pegadas a los lados,
+// frente a los marcos de la ventana, para dejar LIBRE el centro (galaxia arriba,
+// atardecer/sol abajo).
 const POS = [
-  { x: 33, y: 31 }, { x: 67, y: 31 },
-  { x: 33, y: 47 }, { x: 67, y: 47 },
-  { x: 33, y: 63 }, { x: 67, y: 63 },
+  { x: 16, y: 28 }, { x: 84, y: 28 },
+  { x: 16, y: 49 }, { x: 84, y: 49 },
+  { x: 16, y: 70 }, { x: 84, y: 70 },
 ];
 
 // Pinta los cartelones DENTRO de la capa que va sobre el video (aparecen al final).
