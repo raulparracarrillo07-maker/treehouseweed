@@ -113,13 +113,19 @@ body.en-tienda .aviso { display: block; }
 .casa-bienvenida { color: var(--oro-claro); font-size: .7rem; letter-spacing: .26em; text-transform: uppercase; text-shadow: 0 2px 8px #000; }
 .casa-titulo { font-size: clamp(1.1rem, 3.6vw, 1.8rem); margin-top: .2rem; text-shadow: 0 2px 12px #000; }
 
+/* Capa de cartelones sobre el video (aparecen cerca del final del recorrido) */
+#cartelones-capa { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
 .cartelon {
   position: absolute; width: 27%; margin-left: -13.5%;
   background: none; border: none; padding: 0; cursor: pointer;
-  opacity: 0; animation: colgar .7s cubic-bezier(.34,1.45,.6,1) var(--d, 0ms) both;
+  opacity: 0; pointer-events: none;
+}
+body.interior-visible .cartelon {
+  pointer-events: auto;
+  animation: colgar .7s cubic-bezier(.34,1.45,.6,1) var(--d, 0ms) both;
 }
 @keyframes colgar { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-@media (prefers-reduced-motion: reduce) { .cartelon { animation: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { body.interior-visible .cartelon { animation: none; opacity: 1; } }
 
 .cartelon-cuerdas { position: absolute; top: -14px; left: 50%; width: 56%; height: 14px; transform: translateX(-50%); z-index: 1; }
 .cartelon-cuerdas::before, .cartelon-cuerdas::after {

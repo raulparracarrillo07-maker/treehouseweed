@@ -40,8 +40,10 @@ export function montarIntro() {
     const p = progreso();
     objetivo = p * (duracion || 5);
     if (marca) marca.style.opacity = String(Math.max(0, 1 - p * 5));
-    // Al pasar el recorrido, ya estamos en la tienda: mostrar carrito/whatsapp.
-    document.body.classList.toggle("en-tienda", p >= 0.985);
+    // Cerca del final (cuando el video ya muestra el interior), aparecen los
+    // cartelones encima del video, y el carrito/WhatsApp.
+    document.body.classList.toggle("interior-visible", p >= 0.9);
+    document.body.classList.toggle("en-tienda", p >= 0.9);
   }
 
   function loop() {

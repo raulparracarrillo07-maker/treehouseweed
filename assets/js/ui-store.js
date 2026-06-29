@@ -17,15 +17,9 @@ const POS = [
   { x: 33, y: 63 }, { x: 67, y: 63 },
 ];
 
+// Pinta los cartelones DENTRO de la capa que va sobre el video (aparecen al final).
 export function renderCasa(contenedor, catalogo, alElegirCuarto) {
-  contenedor.innerHTML = `
-    <section class="escenario">
-      <div class="escena-header">
-        <p class="casa-bienvenida">Casa del árbol</p>
-        <h2 class="casa-titulo">La tienda</h2>
-      </div>
-    </section>`;
-  const esc = contenedor.querySelector(".escenario");
+  contenedor.innerHTML = "";
   CUARTOS.forEach((cuarto, i) => {
     const pos = POS[i % POS.length];
     const c = document.createElement("button");
@@ -33,7 +27,7 @@ export function renderCasa(contenedor, catalogo, alElegirCuarto) {
     c.style.left = pos.x + "%";
     c.style.top = pos.y + "%";
     c.style.setProperty("--n", String(i % 6));
-    c.style.setProperty("--d", (550 + i * 130) + "ms");
+    c.style.setProperty("--d", (i * 120) + "ms");
 
     const cuerdas = document.createElement("span");
     cuerdas.className = "cartelon-cuerdas";
@@ -57,7 +51,7 @@ export function renderCasa(contenedor, catalogo, alElegirCuarto) {
       c.classList.add("empujado");
       setTimeout(() => alElegirCuarto(cuarto), 430);
     });
-    esc.appendChild(c);
+    contenedor.appendChild(c);
   });
 }
 

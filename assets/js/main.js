@@ -44,20 +44,28 @@ async function init() {
 }
 
 function entrarSitio() {
-  irACasa();        // la tienda se renderiza DEBAJO del recorrido, en el mismo scroll
-  iniciarSmooth();  // scroll suave (Lenis)
-  montarIntro();    // el video avanza con el scroll; al pasarlo, ya estás en la tienda
-}
-
-function irACasa() {
-  const app = document.getElementById("app");
-  renderCasa(app, catalogo, (cuarto) => {
+  const capa = document.getElementById("cartelones-capa");
+  renderCasa(capa, catalogo, (cuarto) => {
     if (cuarto.tipo === "categoria") return abrirCuarto(cuarto.id);
     abrirInfo(cuarto.id);
   });
+  iniciarSmooth();  // scroll suave (Lenis)
+  montarIntro();    // el video avanza con el scroll; al final aparecen los cartelones
 }
 
-// Al elegir una sección, ya entraste: se cierra el recorrido y se navega arriba.
+// Vuelve a los cartelones sobre el final del recorrido (sin rehacerlo).
+function volverACartelones() {
+  document.getElementById("app").innerHTML = "";
+  const intro = document.getElementById("intro");
+  intro.classList.remove("oculto");
+  document.body.classList.add("interior-visible", "en-tienda");
+  const video = document.getElementById("intro-video");
+  if (video.duration && isFinite(video.duration)) video.currentTime = video.duration;
+  const destino = intro.offsetTop + intro.offsetHeight - window.innerHeight + 4;
+  window.scrollTo(0, destino);
+}
+
+// Al elegir una sección se cierra el recorrido y se ve esa sección arriba.
 function salirDelRecorrido() {
   document.getElementById("intro").classList.add("oculto");
   document.body.classList.add("en-tienda");
@@ -70,8 +78,8 @@ function abrirCuarto(categoria) {
   renderCuarto(app, catalogo, categoria, (p) => { carrito = agregar(carrito, p); refrescarCarrito(); });
   const volver = document.createElement("button");
   volver.className = "volver";
-  volver.textContent = "← Volver a la casa";
-  volver.addEventListener("click", irACasa);
+  volver.textContent = "← Volver a la tienda";
+  volver.addEventListener("click", volverACartelones);
   app.appendChild(volver);
 }
 
@@ -81,8 +89,8 @@ function abrirInfo(cuartoId) {
   renderInfo(app, cuartoId, config);
   const volver = document.createElement("button");
   volver.className = "volver";
-  volver.textContent = "← Volver a la casa";
-  volver.addEventListener("click", irACasa);
+  volver.textContent = "← Volver a la tienda";
+  volver.addEventListener("click", volverACartelones);
   app.appendChild(volver);
 }
 
