@@ -48,35 +48,39 @@ export function montarIntro() {
     return Math.min(Math.max((window.scrollY - intro.offsetTop) / scrollable, 0), 1);
   }
 
+  let terminado = false;
+
+  // Cierra el recorrido: deja la tienda fija arriba y colapsa la sección de la
+  // animación para que YA NO se pueda volver a ella con scroll (solo con refresh).
+  function finalizar() {
+    if (terminado) return;
+    terminado = true;
+    if (marca) marca.style.opacity = "0";
+    document.body.classList.add("interior-visible", "en-tienda");
+    intro.style.height = "100svh";     // ya no queda recorrido por encima
+    window.scrollTo(0, 0);
+  }
+
   function alScrollear() {
+    if (terminado) return;
     const p = progreso();
     dibujar(Math.round(p * (TOTAL - 1)));
     if (marca) marca.style.opacity = String(Math.max(0, 1 - p * 5));
-    document.body.classList.toggle("interior-visible", p >= 0.97);
-    document.body.classList.toggle("en-tienda", p >= 0.97);
+    if (p >= 0.97) finalizar();
   }
 
   window.addEventListener("scroll", alScrollear, { passive: true });
   window.addEventListener("resize", () => { ajustar(); dibujar(indiceActual); });
 
-  // Doble tap (o doble clic) = entrar directo a la tienda, saltando el recorrido.
-  function entrarDirecto() {
-    const destino = intro.offsetTop + intro.offsetHeight - window.innerHeight;
-    window.scrollTo(0, destino);
-  }
-  function yaEnTienda() {
-    return document.body.classList.contains("en-tienda");
-  }
-  intro.addEventListener("dblclick", () => {
-    if (!yaEnTienda()) entrarDirecto();
-  });
+  // Doble tap (o doble clic) = entrar directo a la tienda y cerrar el recorrido.
+  intro.addEventListener("dblclick", finalizar);
   let ultimoTap = 0;
   intro.addEventListener("touchend", (e) => {
-    if (yaEnTienda()) return;
+    if (terminado) return;
     const ahora = Date.now();
     if (ahora - ultimoTap < 300) {
       e.preventDefault();        // evita el zoom por doble tap del navegador
-      entrarDirecto();
+      finalizar();
       ultimoTap = 0;
     } else {
       ultimoTap = ahora;
