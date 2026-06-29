@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TreeHouseWeed</title>
-  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=2" />
 </head>
 <body>
   <div id="puerta-edad" class="puerta">
@@ -30,7 +30,12 @@
           <span class="intro-tap">Doble tap para entrar a la tienda</span>
         </div>
       </div>
-      <div id="cartelones-capa"></div>
+      <div id="tienda-final" class="tienda-final" aria-hidden="true">
+        <div class="tienda-final-box">
+          <img class="tienda-final-img" src="assets/img/tienda-final.png" alt="Interior de la tienda TreeHouseWeed" />
+          <div id="marcos-capa" class="marcos-capa"></div>
+        </div>
+      </div>
     </div>
   </section>
   <main id="app" class="contenedor"></main>
@@ -39,6 +44,6 @@
   <a id="fab-whatsapp" class="fab fab-wa" target="_blank" rel="noopener">WhatsApp</a>
   <aside id="panel-carrito" class="panel oculto"></aside>
   <script src="assets/js/lib/lenis.min.js"></script>
-  <script type="module" src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/main.js?v=2"></script>
 </body>
 </html>

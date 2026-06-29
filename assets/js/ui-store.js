@@ -1,4 +1,4 @@
-import { productosDe, destacados } from "./catalog.js";
+import { productosDe, destacados } from "./catalog.js?v=2";
 
 const CUARTOS = [
   { id: "mas-vendidos", nombre: "Más vendidos", tipo: "categoria" },
@@ -9,50 +9,30 @@ const CUARTOS = [
   { id: "comestibles", nombre: "Comestibles", tipo: "categoria" },
 ];
 
-// Posiciones (% sobre la imagen del interior): 2 columnas pegadas a los lados,
-// frente a los marcos de la ventana, para dejar LIBRE el centro (galaxia arriba,
-// atardecer/sol abajo).
+// Centros de los 6 marcos de madera de la imagen (en % sobre el cuadro de la
+// tienda). Rejilla 3 columnas x 2 filas, en orden de lectura.
 const POS = [
-  { x: 16, y: 28 }, { x: 84, y: 28 },
-  { x: 16, y: 49 }, { x: 84, y: 49 },
-  { x: 16, y: 70 }, { x: 84, y: 70 },
+  { x: 20.5, y: 36 }, { x: 50, y: 36 }, { x: 79, y: 36 },
+  { x: 20.5, y: 67.3 }, { x: 50, y: 67.3 }, { x: 79, y: 67.3 },
 ];
 
-// Pinta los cartelones DENTRO de la capa que va sobre el video (aparecen al final).
+// Escribe el nombre de cada sección sobre su marco de madera en la imagen.
 export function renderCasa(contenedor, catalogo, alElegirCuarto) {
   contenedor.innerHTML = "";
   CUARTOS.forEach((cuarto, i) => {
-    const pos = POS[i % POS.length];
-    const c = document.createElement("button");
-    c.className = "cartelon";
-    c.style.left = pos.x + "%";
-    c.style.top = pos.y + "%";
-    c.style.setProperty("--n", String(i % 6));
-    c.style.setProperty("--d", (i * 120) + "ms");
-
-    const cuerdas = document.createElement("span");
-    cuerdas.className = "cartelon-cuerdas";
-
-    const cuerpo = document.createElement("span");
-    cuerpo.className = "cartelon-cuerpo";
-
-    const arte = document.createElement("span");
-    arte.className = "cartelon-arte";
-
-    const nombre = document.createElement("span");
-    nombre.className = "cartelon-nombre";
-    nombre.textContent = cuarto.nombre;
-
-    cuerpo.appendChild(arte);
-    cuerpo.appendChild(nombre);
-    c.appendChild(cuerdas);
-    c.appendChild(cuerpo);
-    c.addEventListener("click", () => {
-      if (c.classList.contains("empujado")) return;
-      c.classList.add("empujado");
-      setTimeout(() => alElegirCuarto(cuarto), 430);
+    const pos = POS[i] || POS[POS.length - 1];
+    const b = document.createElement("button");
+    b.className = "marco";
+    b.style.setProperty("--x", pos.x);
+    b.style.setProperty("--y", pos.y);
+    b.style.setProperty("--d", (i * 90) + "ms");
+    b.textContent = cuarto.nombre;
+    b.addEventListener("click", () => {
+      if (b.classList.contains("empujado")) return;
+      b.classList.add("empujado");
+      setTimeout(() => alElegirCuarto(cuarto), 180);
     });
-    contenedor.appendChild(c);
+    contenedor.appendChild(b);
   });
 }
 

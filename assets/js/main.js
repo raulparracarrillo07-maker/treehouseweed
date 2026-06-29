@@ -1,10 +1,10 @@
-import { montarPuertaEdad } from "./age-gate.js";
-import { montarIntro } from "./intro.js";
-import { iniciarSmooth, revelar } from "./anim.js";
-import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js";
-import { carritoVacio, agregar, cambiarCantidad } from "./cart.js";
-import { renderCarrito } from "./ui-cart.js";
-import { construirMensaje, construirURL } from "./whatsapp.js";
+import { montarPuertaEdad } from "./age-gate.js?v=2";
+import { montarIntro } from "./intro.js?v=2";
+import { iniciarSmooth, revelar } from "./anim.js?v=2";
+import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=2";
+import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=2";
+import { renderCarrito } from "./ui-cart.js?v=2";
+import { construirMensaje, construirURL } from "./whatsapp.js?v=2";
 
 let catalogo, config, carrito = carritoVacio();
 
@@ -44,7 +44,7 @@ async function init() {
 }
 
 function entrarSitio() {
-  const capa = document.getElementById("cartelones-capa");
+  const capa = document.getElementById("marcos-capa");
   renderCasa(capa, catalogo, (cuarto) => {
     if (cuarto.tipo === "categoria") return abrirCuarto(cuarto.id);
     abrirInfo(cuarto.id);
