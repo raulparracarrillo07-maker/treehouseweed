@@ -11,7 +11,7 @@ export function montarIntro() {
 
   intro.classList.remove("oculto");
 
-  const TOTAL = 76;
+  const TOTAL = 121;
   const imgs = [];
   for (let i = 1; i <= TOTAL; i++) {
     const img = new Image();
