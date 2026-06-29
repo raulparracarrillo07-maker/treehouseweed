@@ -49,7 +49,6 @@ function entrarSitio() {
     if (cuarto.tipo === "categoria") return abrirCuarto(cuarto.id);
     abrirInfo(cuarto.id);
   });
-  iniciarSmooth();  // scroll suave (Lenis)
   montarIntro();    // el video avanza con el scroll; al final aparecen los cartelones
 }
 
