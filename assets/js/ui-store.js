@@ -1,19 +1,22 @@
-import { productosDe, destacados } from "./catalog.js?v=3";
+import { productosDe, destacados } from "./catalog.js?v=4";
 
+// Cada sección va sobre el estante que le corresponde por producto:
+// fila de arriba = flores / pre-rolls / vapes; fila de abajo = extractos /
+// edibles / smoke shop.
 const CUARTOS = [
-  { id: "mas-vendidos", nombre: "Más vendidos", tipo: "categoria" },
-  { id: "rolados", nombre: "Rolados", tipo: "categoria" },
-  { id: "prerrolados", nombre: "Prerrolados", tipo: "categoria" },
+  { id: "flores", nombre: "Flores", tipo: "categoria" },
+  { id: "pre-rolls", nombre: "Pre-rolls", tipo: "categoria" },
+  { id: "vapes", nombre: "Vapes", tipo: "categoria" },
   { id: "extractos", nombre: "Extractos", tipo: "categoria" },
-  { id: "plumas", nombre: "Plumas", tipo: "categoria" },
-  { id: "comestibles", nombre: "Comestibles", tipo: "categoria" },
+  { id: "edibles", nombre: "Edibles", tipo: "categoria" },
+  { id: "smoke-shop", nombre: "Smoke Shop", tipo: "categoria" },
 ];
 
-// Centros de los 6 marcos de madera de la imagen (en % sobre el cuadro de la
-// tienda). Rejilla 3 columnas x 2 filas, en orden de lectura.
+// Centro de cada marco de madera (en % sobre el cuadro de la tienda),
+// medido uno por uno sobre la imagen.
 const POS = [
-  { x: 20.5, y: 36 }, { x: 50, y: 36 }, { x: 79, y: 36 },
-  { x: 20.5, y: 67.3 }, { x: 50, y: 67.3 }, { x: 79, y: 67.3 },
+  { x: 19, y: 36.3 }, { x: 49.5, y: 36.3 }, { x: 79.5, y: 36.3 },
+  { x: 19, y: 66.8 }, { x: 49.5, y: 66.8 }, { x: 79.5, y: 66.8 },
 ];
 
 // Escribe el nombre de cada sección sobre su marco de madera en la imagen.
