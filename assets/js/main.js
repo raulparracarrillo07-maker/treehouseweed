@@ -52,16 +52,14 @@ function entrarSitio() {
   montarIntro();    // el video avanza con el scroll; al final aparecen los cartelones
 }
 
-// Vuelve a los cartelones sobre el final del recorrido (sin rehacerlo).
+// Vuelve a los cartelones sobre la última toma del video (sin rehacer el recorrido).
 function volverACartelones() {
   document.getElementById("app").innerHTML = "";
-  const intro = document.getElementById("intro");
-  intro.classList.remove("oculto");
+  document.getElementById("intro").classList.remove("oculto");
   document.body.classList.add("interior-visible", "en-tienda");
   const video = document.getElementById("intro-video");
   if (video.duration && isFinite(video.duration)) video.currentTime = video.duration;
-  const destino = intro.offsetTop + intro.offsetHeight - window.innerHeight + 4;
-  window.scrollTo(0, destino);
+  window.scrollTo(0, 0);
 }
 
 // Al elegir una sección se cierra el recorrido y se ve esa sección arriba.

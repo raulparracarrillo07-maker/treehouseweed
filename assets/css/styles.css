@@ -52,7 +52,7 @@ button { font: inherit; cursor: pointer; border: none; }
 body.en-tienda .fab { display: inline-block; }
 body.en-tienda .aviso { display: block; }
 
-.intro { position: relative; height: 100svh; background: #000; overflow: hidden; }
+.intro { position: fixed; inset: 0; z-index: 40; background: #000; }
 #app { position: relative; z-index: 1; }
 .intro-sticky { position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden; background: #000; }
 .intro-sticky::before {
