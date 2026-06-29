@@ -1,4 +1,4 @@
-import { productosDe, destacados } from "./catalog.js?v=2";
+import { productosDe, destacados } from "./catalog.js?v=3";
 
 const CUARTOS = [
   { id: "mas-vendidos", nombre: "Más vendidos", tipo: "categoria" },
