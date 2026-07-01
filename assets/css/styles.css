@@ -139,6 +139,8 @@ body.interior-visible .tienda-final { opacity: 1; pointer-events: auto; }
 }
 .tienda-final-img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .marcos-capa { position: absolute; inset: 0; }
+/* Canvas del humo del porro: cubre de la punta del porro hacia arriba. */
+.humo-capa { position: absolute; left: 24%; top: 26%; width: 16%; height: 24%; pointer-events: none; }
 
 /* Zona invisible clickeable sobre cada panel (los nombres ya vienen
    grabados en neón dentro de la imagen). Centro en --x/--y, tamaño --w/--h. */

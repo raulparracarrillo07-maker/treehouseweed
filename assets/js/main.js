@@ -1,10 +1,11 @@
-import { montarPuertaEdad } from "./age-gate.js?v=6";
-import { montarIntro } from "./intro.js?v=6";
-import { iniciarSmooth, revelar } from "./anim.js?v=6";
-import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=6";
-import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=6";
-import { renderCarrito } from "./ui-cart.js?v=6";
-import { construirMensaje, construirURL } from "./whatsapp.js?v=6";
+import { montarPuertaEdad } from "./age-gate.js?v=7";
+import { montarIntro } from "./intro.js?v=7";
+import { montarHumo } from "./humo.js?v=7";
+import { iniciarSmooth, revelar } from "./anim.js?v=7";
+import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=7";
+import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=7";
+import { renderCarrito } from "./ui-cart.js?v=7";
+import { construirMensaje, construirURL } from "./whatsapp.js?v=7";
 
 let catalogo, config, carrito = carritoVacio();
 
@@ -50,6 +51,7 @@ function entrarSitio() {
     abrirInfo(cuarto.id);
   });
   montarIntro();    // el video avanza con el scroll; al final aparecen los cartelones
+  montarHumo(document.getElementById("humo-canvas"));
 }
 
 // Vuelve a los cartelones sobre la última toma (final del recorrido).
