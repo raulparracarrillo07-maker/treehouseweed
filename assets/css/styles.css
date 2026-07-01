@@ -133,54 +133,34 @@ body.interior-visible .tienda-final { opacity: 1; pointer-events: auto; }
 
 .tienda-final-box {
   position: relative; z-index: 1;
-  aspect-ratio: 1023 / 1537;
-  width: min(100vw, calc(100svh * 1023 / 1537));
+  aspect-ratio: 941 / 1672;
+  width: min(100vw, calc(100svh * 941 / 1672));
   container-type: inline-size;
 }
 .tienda-final-img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .marcos-capa { position: absolute; inset: 0; }
 
-/* Cada nombre se graba sobre su marco de madera (centro en --x / --y).
-   Tipografía de letrero: Oswald condensada, mayúsculas, oro metálico. */
+/* Zona invisible clickeable sobre cada panel (los nombres ya vienen
+   grabados en neón dentro de la imagen). Centro en --x/--y, tamaño --w/--h. */
 .marco {
   position: absolute;
   left: calc(var(--x) * 1%); top: calc(var(--y) * 1%);
+  width: calc(var(--w) * 1%); height: calc(var(--h) * 1%);
   transform: translate(-50%, -50%);
   background: none; border: none; padding: 0; cursor: pointer;
-  white-space: nowrap;
-  font-family: "Oswald", system-ui, sans-serif;
-  font-weight: 600; text-transform: uppercase;
-  letter-spacing: .07em; line-height: 1; text-align: center;
-  font-size: clamp(9px, 3cqi, 19px);
-  /* Oro metálico con degradado recortado al texto */
-  background-image: linear-gradient(180deg, #fbe7a8 0%, #ecc163 42%, #d39a3c 70%, #a06a1d 100%);
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; color: transparent;
-  /* Relieve grabado: filo claro arriba + sombra honda abajo */
-  filter:
-    drop-shadow(0 1px 0 rgba(255,236,176,.25))
-    drop-shadow(0 1px 1px rgba(0,0,0,.55))
-    drop-shadow(0 3px 5px rgba(0,0,0,.6));
-  opacity: 0; pointer-events: none;
-  transition: filter .25s ease, transform .2s ease;
+  border-radius: 16px;
+  pointer-events: none;
+  transition: box-shadow .25s ease, transform .2s ease;
 }
-body.interior-visible .marco {
-  pointer-events: auto;
-  animation: aparecerMarco .6s ease var(--d, 0ms) both;
+body.interior-visible .marco { pointer-events: auto; }
+.marco:hover, .marco:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px rgba(240,196,107,.55),
+    0 0 24px rgba(240,196,107,.35),
+    inset 0 0 20px rgba(240,196,107,.12);
 }
-@keyframes aparecerMarco {
-  from { opacity: 0; transform: translate(-50%, -50%) translateY(-7px); }
-  to { opacity: 1; transform: translate(-50%, -50%); }
-}
-@media (prefers-reduced-motion: reduce) { body.interior-visible .marco { animation: none; opacity: 1; } }
-.marco:hover {
-  filter:
-    drop-shadow(0 0 10px rgba(240,196,107,.7))
-    drop-shadow(0 2px 4px rgba(0,0,0,.7))
-    brightness(1.12);
-  transform: translate(-50%, -50%) scale(1.06);
-}
-.marco.empujado { transform: translate(-50%, -50%) scale(.93); }
+.marco.empujado { transform: translate(-50%, -50%) scale(.97); }
 
 /* --- Reveals premium (aparecen al scrollear, con stagger) --- */
 .anim .reveal {

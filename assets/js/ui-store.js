@@ -1,4 +1,4 @@
-import { productosDe, destacados } from "./catalog.js?v=5";
+import { productosDe, destacados } from "./catalog.js?v=6";
 
 // Cada sección va sobre el estante que le corresponde por producto:
 // fila de arriba = flores / pre-rolls / vapes; fila de abajo = extractos /
@@ -12,14 +12,19 @@ const CUARTOS = [
   { id: "smoke-shop", nombre: "Smoke Shop", tipo: "categoria" },
 ];
 
-// Centro de cada marco de madera (en % sobre el cuadro de la tienda),
-// medido uno por uno sobre la imagen.
+// Rectángulo clickeable de cada panel (centro x/y + ancho/alto, en % sobre
+// la imagen de la tienda), medido uno por uno sobre tienda-final.png.
 const POS = [
-  { x: 19, y: 36.3 }, { x: 49.5, y: 36.3 }, { x: 79.5, y: 36.3 },
-  { x: 19, y: 66.8 }, { x: 49.5, y: 66.8 }, { x: 79.5, y: 66.8 },
+  { x: 14.8, y: 29.0, w: 23.5, h: 19.5 }, // flores (sup-izq)
+  { x: 15.0, y: 49.5, w: 24.0, h: 19.5 }, // pre-rolls (med-izq)
+  { x: 85.8, y: 29.0, w: 23.5, h: 19.5 }, // vapes (sup-der)
+  { x: 85.8, y: 49.5, w: 22.5, h: 19.0 }, // extractos (med-der)
+  { x: 11.5, y: 71.0, w: 20.0, h: 19.0 }, // edibles (inf-izq)
+  { x: 87.5, y: 72.0, w: 23.0, h: 21.0 }, // smoke shop (inf-der)
 ];
 
-// Escribe el nombre de cada sección sobre su marco de madera en la imagen.
+// Pone una zona invisible clickeable sobre cada panel de la imagen
+// (los nombres ya vienen grabados en neón dentro de la propia imagen).
 export function renderCasa(contenedor, catalogo, alElegirCuarto) {
   contenedor.innerHTML = "";
   CUARTOS.forEach((cuarto, i) => {
@@ -28,8 +33,9 @@ export function renderCasa(contenedor, catalogo, alElegirCuarto) {
     b.className = "marco";
     b.style.setProperty("--x", pos.x);
     b.style.setProperty("--y", pos.y);
-    b.style.setProperty("--d", (i * 90) + "ms");
-    b.textContent = cuarto.nombre;
+    b.style.setProperty("--w", pos.w);
+    b.style.setProperty("--h", pos.h);
+    b.setAttribute("aria-label", cuarto.nombre);
     b.addEventListener("click", () => {
       if (b.classList.contains("empujado")) return;
       b.classList.add("empujado");

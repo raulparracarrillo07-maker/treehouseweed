@@ -1,10 +1,10 @@
-import { montarPuertaEdad } from "./age-gate.js?v=5";
-import { montarIntro } from "./intro.js?v=5";
-import { iniciarSmooth, revelar } from "./anim.js?v=5";
-import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=5";
-import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=5";
-import { renderCarrito } from "./ui-cart.js?v=5";
-import { construirMensaje, construirURL } from "./whatsapp.js?v=5";
+import { montarPuertaEdad } from "./age-gate.js?v=6";
+import { montarIntro } from "./intro.js?v=6";
+import { iniciarSmooth, revelar } from "./anim.js?v=6";
+import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=6";
+import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=6";
+import { renderCarrito } from "./ui-cart.js?v=6";
+import { construirMensaje, construirURL } from "./whatsapp.js?v=6";
 
 let catalogo, config, carrito = carritoVacio();
 
