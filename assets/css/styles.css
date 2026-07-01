@@ -142,6 +142,21 @@ body.interior-visible .tienda-final { opacity: 1; pointer-events: auto; }
 /* Canvas del humo del porro: cubre de la punta del porro hacia arriba. */
 .humo-capa { position: absolute; left: 24%; top: 26%; width: 16%; height: 24%; pointer-events: none; }
 
+/* Mascota recortada encima de la pintada, con vaivén suave (pivote en la
+   base para que no se despegue del mostrador). Va apenas más grande (1.03)
+   para tapar la silueta pintada mientras se mece. */
+.mascota-viva {
+  position: absolute; left: 30%; top: 40%; width: 31%; height: 18.5%;
+  transform-origin: 50% 100%;
+  animation: mecerMascota 4.5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes mecerMascota {
+  from { transform: scale(1.03) rotate(-1.2deg); }
+  to   { transform: scale(1.03) rotate(1.2deg); }
+}
+@media (prefers-reduced-motion: reduce) { .mascota-viva { animation: none; } }
+
 /* Zona invisible clickeable sobre cada panel (los nombres ya vienen
    grabados en neón dentro de la imagen). Centro en --x/--y, tamaño --w/--h. */
 .marco {

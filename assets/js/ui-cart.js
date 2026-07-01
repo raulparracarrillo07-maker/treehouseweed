@@ -1,4 +1,4 @@
-import { total, contarItems } from "./cart.js?v=7";
+import { total, contarItems } from "./cart.js?v=8";
 
 export function renderCarrito(panel, badge, carrito, handlers) {
   badge.textContent = String(contarItems(carrito));
