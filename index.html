@@ -7,18 +7,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=8" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=9" />
 </head>
 <body>
   <div id="puerta-edad" class="puerta">
     <div class="puerta-caja">
-      <h1>Tree<span class="oro">House</span>Weed</h1>
-      <p>Para entrar necesitas ser mayor de <strong data-edad-min>18</strong> años.</p>
-      <p>¿Eres mayor de edad?</p>
+      <img class="puerta-logo" src="assets/img/logo/treehouseweed-logo-transparente.png" alt="TreeHouseWeed" />
+      <p class="puerta-lema">Relaxation has never been this simple</p>
+      <div class="puerta-linea"></div>
+      <p class="puerta-pregunta">¿Eres mayor de <strong data-edad-min>18</strong> años?</p>
       <div class="puerta-botones">
-        <button data-si class="btn-oro">Sí, entrar</button>
-        <button data-no class="btn-tenue">No</button>
+        <button data-si class="btn-oro">Sí, soy mayor de edad</button>
+        <button data-no class="btn-tenue">Salir</button>
       </div>
+      <p class="puerta-aviso">Producto exclusivo para adultos. Consume con responsabilidad.</p>
     </div>
   </div>
   <section id="intro" class="intro oculto">
@@ -48,7 +50,8 @@
   <button id="fab-carrito" class="fab">Carrito <span id="badge-carrito">0</span></button>
   <a id="fab-whatsapp" class="fab fab-wa" target="_blank" rel="noopener">WhatsApp</a>
   <aside id="panel-carrito" class="panel oculto"></aside>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="assets/js/lib/lenis.min.js"></script>
-  <script type="module" src="assets/js/main.js?v=8"></script>
+  <script type="module" src="assets/js/main.js?v=9"></script>
 </body>
 </html>

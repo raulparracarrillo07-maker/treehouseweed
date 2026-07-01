@@ -1,4 +1,4 @@
-import { productosDe, destacados } from "./catalog.js?v=8";
+import { productosDe, destacados } from "./catalog.js?v=9";
 
 // Cada sección va sobre el estante que le corresponde por producto:
 // fila de arriba = flores / pre-rolls / vapes; fila de abajo = extractos /
@@ -15,12 +15,12 @@ const CUARTOS = [
 // Rectángulo clickeable de cada panel (centro x/y + ancho/alto, en % sobre
 // la imagen de la tienda), medido uno por uno sobre tienda-final.png.
 const POS = [
-  { x: 14.8, y: 29.0, w: 23.5, h: 19.5 }, // flores (sup-izq)
-  { x: 15.0, y: 49.5, w: 24.0, h: 19.5 }, // pre-rolls (med-izq)
-  { x: 85.8, y: 29.0, w: 23.5, h: 19.5 }, // vapes (sup-der)
-  { x: 85.8, y: 49.5, w: 22.5, h: 19.0 }, // extractos (med-der)
-  { x: 11.5, y: 71.0, w: 20.0, h: 19.0 }, // edibles (inf-izq)
-  { x: 87.5, y: 72.0, w: 23.0, h: 21.0 }, // smoke shop (inf-der)
+  { x: 14.0, y: 30.0, w: 23.0, h: 19.0 }, // flores (sup-izq)
+  { x: 14.25, y: 52.0, w: 23.5, h: 19.0 }, // pre-rolls (med-izq)
+  { x: 85.75, y: 30.0, w: 23.5, h: 19.0 }, // vapes (sup-der)
+  { x: 86.0, y: 51.5, w: 24.0, h: 19.0 }, // extractos (med-der)
+  { x: 11.5, y: 71.75, w: 21.0, h: 20.5 }, // edibles (inf-izq)
+  { x: 87.5, y: 72.75, w: 23.0, h: 19.5 }, // smoke shop (inf-der)
 ];
 
 // Pone una zona invisible clickeable sobre cada panel de la imagen
@@ -45,36 +45,57 @@ export function renderCasa(contenedor, catalogo, alElegirCuarto) {
   });
 }
 
+const NOMBRE_CAT = {
+  "flores": "Flores", "pre-rolls": "Pre-rolls", "vapes": "Vapes",
+  "extractos": "Extractos", "edibles": "Edibles", "smoke-shop": "Smoke Shop",
+};
+
 export function renderCuarto(contenedor, catalogo, categoria, alAgregar) {
   const productos = productosDe(catalogo, categoria);
-  const titulo = categoria.charAt(0).toUpperCase() + categoria.slice(1);
-  contenedor.innerHTML = `<h2>${titulo}</h2><div class="productos"></div>`;
-  const grid = contenedor.querySelector(".productos");
+  const titulo = NOMBRE_CAT[categoria] || categoria;
+  const seccion = document.createElement("section");
+  seccion.className = "seccion-cat";
+  seccion.innerHTML = `
+    <div class="cat-header">
+      <span class="cat-eyebrow">TreeHouseWeed</span>
+      <h2>${titulo}<span class="cat-conteo">${productos.length} ${productos.length === 1 ? "opción" : "opciones"}</span></h2>
+    </div>
+    <div class="productos"></div>`;
+  contenedor.appendChild(seccion);
+  const grid = seccion.querySelector(".productos");
+
   for (const p of productos) {
     const card = document.createElement("article");
     card.className = "producto";
 
-    const titulo = document.createElement("h3");
-    titulo.textContent = p.nombre;
+    const pres = document.createElement("span");
+    pres.className = "pres";
+    pres.textContent = p.presentacion;
+
+    const nombre = document.createElement("h3");
+    nombre.textContent = p.nombre;
 
     const detalle = document.createElement("p");
     detalle.className = "tenue";
-    detalle.textContent = `${p.presentacion} — ${p.descripcion}`;
+    detalle.textContent = p.descripcion;
 
-    const precio = document.createElement("p");
+    const fila = document.createElement("div");
+    fila.className = "precio-fila";
+    const precio = document.createElement("span");
     precio.className = "precio";
-    precio.textContent = `$${p.precio}`;
-
+    precio.textContent = `$${p.precio.toLocaleString("es-MX")}`;
     const btn = document.createElement("button");
-    btn.className = "btn-oro";
+    btn.className = "btn-add";
     btn.dataset.agregar = "";
     btn.textContent = "Agregar";
     btn.addEventListener("click", () => alAgregar(p));
+    fila.appendChild(precio);
+    fila.appendChild(btn);
 
-    card.appendChild(titulo);
+    card.appendChild(pres);
+    card.appendChild(nombre);
     card.appendChild(detalle);
-    card.appendChild(precio);
-    card.appendChild(btn);
+    card.appendChild(fila);
     grid.appendChild(card);
   }
 }

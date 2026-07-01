@@ -1,11 +1,11 @@
-import { montarPuertaEdad } from "./age-gate.js?v=8";
-import { montarIntro } from "./intro.js?v=8";
-import { montarHumo } from "./humo.js?v=8";
-import { iniciarSmooth, revelar } from "./anim.js?v=8";
-import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=8";
-import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=8";
-import { renderCarrito } from "./ui-cart.js?v=8";
-import { construirMensaje, construirURL } from "./whatsapp.js?v=8";
+import { montarPuertaEdad } from "./age-gate.js?v=9";
+import { montarIntro } from "./intro.js?v=9";
+import { montarHumo } from "./humo.js?v=9";
+import { iniciarSmooth, revelar } from "./anim.js?v=9";
+import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=9";
+import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=9";
+import { renderCarrito } from "./ui-cart.js?v=9";
+import { construirMensaje, construirURL } from "./whatsapp.js?v=9";
 
 let catalogo, config, carrito = carritoVacio();
 
@@ -15,6 +15,7 @@ function refrescarCarrito() {
     document.getElementById("badge-carrito"),
     carrito,
     {
+      entrega: config.entrega,
       onCambiar: (id, cant) => { carrito = cambiarCantidad(carrito, id, cant); refrescarCarrito(); },
       onPedir: () => {
         const url = construirURL(config.whatsapp, construirMensaje(carrito, config));
@@ -22,6 +23,26 @@ function refrescarCarrito() {
       },
     }
   );
+}
+
+let toastTimer;
+function mostrarToast(texto) {
+  const el = document.getElementById("toast");
+  el.innerHTML = texto;
+  el.classList.add("visible");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("visible"), 1600);
+}
+
+// Agrega al carrito con feedback: toast + rebote del badge.
+function agregarConFeedback(p) {
+  carrito = agregar(carrito, p);
+  refrescarCarrito();
+  mostrarToast(`Agregado <span class="oro">${p.nombre}</span>`);
+  const fab = document.getElementById("fab-carrito");
+  fab.classList.remove("rebote");
+  void fab.offsetWidth;   // reinicia la animación
+  fab.classList.add("rebote");
 }
 
 function cablearFabs() {
@@ -74,7 +95,7 @@ function salirDelRecorrido() {
 function abrirCuarto(categoria) {
   salirDelRecorrido();
   const app = document.getElementById("app");
-  renderCuarto(app, catalogo, categoria, (p) => { carrito = agregar(carrito, p); refrescarCarrito(); });
+  renderCuarto(app, catalogo, categoria, agregarConFeedback);
   const volver = document.createElement("button");
   volver.className = "volver";
   volver.textContent = "← Volver a la tienda";

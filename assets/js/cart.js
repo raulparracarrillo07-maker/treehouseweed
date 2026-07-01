@@ -7,7 +7,7 @@ export function agregar(carrito, producto) {
   if (existe) {
     return cambiarCantidad(carrito, producto.id, existe.cantidad + 1);
   }
-  const item = { id: producto.id, nombre: producto.nombre, precio: producto.precio, cantidad: 1 };
+  const item = { id: producto.id, nombre: producto.nombre, precio: producto.precio, presentacion: producto.presentacion, cantidad: 1 };
   return { items: [...carrito.items, item] };
 }
 
