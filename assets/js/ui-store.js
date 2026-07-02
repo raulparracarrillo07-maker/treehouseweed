@@ -1,4 +1,4 @@
-import { productosDe, destacados } from "./catalog.js?v=12";
+import { productosDe, destacados } from "./catalog.js?v=13";
 
 // Cada sección va sobre el estante que le corresponde por producto:
 // fila de arriba = flores / pre-rolls / vapes; fila de abajo = extractos /
@@ -35,12 +35,23 @@ export function renderCasa(contenedor, catalogo, alElegirCuarto) {
     b.style.setProperty("--y", pos.y);
     b.style.setProperty("--w", pos.w);
     b.style.setProperty("--h", pos.h);
-    b.setAttribute("aria-label", cuarto.nombre);
-    b.addEventListener("click", () => {
+    b.setAttribute("aria-label", cuarto.nombre + " (doble toque para entrar)");
+
+    function activar() {
       if (b.classList.contains("empujado")) return;
       b.classList.add("empujado");
-      setTimeout(() => alElegirCuarto(cuarto), 180);
-    });
+      setTimeout(() => alElegirCuarto(cuarto), 160);
+    }
+    // Se entra con DOBLE clic / doble toque (evita entradas accidentales).
+    b.addEventListener("dblclick", activar);
+    let ultimoTap = 0;
+    b.addEventListener("touchend", (e) => {
+      const ahora = Date.now();
+      if (ahora - ultimoTap < 320) { e.preventDefault(); activar(); ultimoTap = 0; }
+      else { ultimoTap = ahora; }
+    }, { passive: false });
+    b.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); activar(); } });
+
     contenedor.appendChild(b);
   });
 }

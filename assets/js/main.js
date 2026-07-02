@@ -1,12 +1,12 @@
-import { montarPuertaEdad } from "./age-gate.js?v=12";
-import { montarIntro } from "./intro.js?v=12";
-import { montarHumo } from "./humo.js?v=12";
-import { montarMonito } from "./monito.js?v=12";
-import { iniciarSmooth, revelar } from "./anim.js?v=12";
-import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=12";
-import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=12";
-import { renderCarrito } from "./ui-cart.js?v=12";
-import { construirMensaje, construirURL } from "./whatsapp.js?v=12";
+import { montarPuertaEdad } from "./age-gate.js?v=13";
+import { montarIntro } from "./intro.js?v=13";
+import { montarHumo } from "./humo.js?v=13";
+import { montarMonito } from "./monito.js?v=13";
+import { iniciarSmooth, revelar } from "./anim.js?v=13";
+import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=13";
+import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=13";
+import { renderCarrito } from "./ui-cart.js?v=13";
+import { construirMensaje, construirURL } from "./whatsapp.js?v=13";
 
 let catalogo, config, carrito = carritoVacio();
 let monito;
@@ -52,8 +52,9 @@ function cablearFabs() {
     document.getElementById("panel-carrito").classList.toggle("oculto");
   });
   document.getElementById("fab-nosotros").addEventListener("click", () => monito.abrir("nosotros"));
-  const ig = config.contacto && config.contacto.instagram;
-  document.getElementById("fab-instagram").href = ig ? `https://instagram.com/${ig}` : "#";
+  const c = config.contacto || {};
+  if (c.instagram) document.getElementById("soc-ig").href = `https://instagram.com/${c.instagram}`;
+  if (c.tiktok) document.getElementById("soc-tt").href = `https://tiktok.com/@${c.tiktok}`;
 }
 
 // Polvo dorado flotando en la puerta de edad (detalle premium del inicio).
@@ -160,5 +161,13 @@ function abrirInfo(cuartoId) {
   volver.addEventListener("click", volverACartelones);
   app.appendChild(volver);
 }
+
+// Bloqueo del scroll táctil en la tienda final (iOS ignora overflow:hidden).
+document.addEventListener("touchmove", (e) => {
+  const b = document.body.classList;
+  if (b.contains("interior-visible") && !b.contains("en-seccion") && !b.contains("modal-abierto")) {
+    e.preventDefault();
+  }
+}, { passive: false });
 
 init();
