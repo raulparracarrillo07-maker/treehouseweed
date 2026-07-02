@@ -437,7 +437,7 @@ body.modal-abierto .fab { display: none !important; }
   position: absolute; transform: translateX(-50%);
   background: none; border: 0; padding: 0; cursor: pointer; line-height: 0;
 }
-.vit-item img { height: 12.5cqh; width: auto; display: block; filter: drop-shadow(0 6px 10px rgba(0,0,0,.6)); transition: transform .18s ease; }
+.vit-item img { height: var(--vh, 12.5cqh); width: auto; display: block; filter: drop-shadow(0 6px 10px rgba(0,0,0,.6)); transition: transform .18s ease; }
 .vit-item:hover img, .vit-item:focus-visible img { transform: scale(1.08); }
 .vit-item:active img { transform: scale(.96); }
 

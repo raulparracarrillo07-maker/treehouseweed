@@ -1,4 +1,4 @@
-import { productosDe, destacados } from "./catalog.js?v=30";
+import { productosDe, destacados } from "./catalog.js?v=31";
 
 // Cada sección va sobre el estante que le corresponde por producto:
 // fila de arriba = flores / pre-rolls / vapes; fila de abajo = extractos /
@@ -83,33 +83,35 @@ function agrupar(productos) {
   return grupos;
 }
 
-// Posiciones (centro x %, base y % = superficie del estante) de cada producto
-// en la vitrina de fondo. Por ahora solo flores (prueba).
+// Vitrina por categoría: alto de la foto (en cqh del fondo) y posiciones
+// [centro x %, base y % = superficie del estante] de cada producto.
 const VITRINA = {
-  "flores": [
-    { x: 36, y: 31.5 }, { x: 64, y: 31.5 },
-    { x: 36, y: 44 },   { x: 64, y: 44 },
-    { x: 36, y: 56 },   { x: 64, y: 56 },
-  ],
+  "flores":     { alto: 12.5, pos: [[36,31.5],[64,31.5],[36,44],[64,44],[36,56],[64,56],[50,70]] },
+  "pre-rolls":  { alto: 12.5, pos: [[36,32],[64,32],[36,44.5],[64,44.5],[50,57]] },
+  "vapes":      { alto: 10,   pos: [[28,32],[50,32],[72,32],[28,44.5],[50,44.5],[72,44.5],[36,57],[64,57],[36,70],[64,70]] },
+  "extractos":  { alto: 17,   pos: [[50,45]] },
+  "edibles":    { alto: 12,   pos: [[36,32],[64,32],[36,44.5],[64,44.5],[36,57],[64,57],[50,70]] },
+  "smoke-shop": { alto: 11,   pos: [[36,32],[64,32],[36,44.5],[64,44.5],[50,57]] },
 };
 
 // Vitrina: fondo de estantería con las fotos acomodadas en los estantes.
 function renderVitrina(contenedor, catalogo, categoria, alAgregar) {
   const grupos = agrupar(productosDe(catalogo, categoria));
-  const pos = VITRINA[categoria];
+  const conf = VITRINA[categoria];
   const seccion = document.createElement("section");
   seccion.className = "vitrina-sec";
   seccion.innerHTML = `<div class="vitrina" style="background-image:url(assets/img/fondos/${categoria}.png)"><div class="vitrina-items"></div></div>`;
   const cont = seccion.querySelector(".vitrina-items");
   grupos.forEach((g, i) => {
-    const p = pos[i];
+    const p = conf.pos[i];
     if (!p) return;
     const foto = g.items.find((it) => it.imagen);
     const precioMin = Math.min(...g.items.map((it) => it.precio));
     const item = document.createElement("button");
     item.className = "vit-item";
-    item.style.left = p.x + "%";
-    item.style.bottom = (100 - p.y) + "%";
+    item.style.left = p[0] + "%";
+    item.style.bottom = (100 - p[1]) + "%";
+    item.style.setProperty("--vh", conf.alto + "cqh");
     item.setAttribute("aria-label", g.nombre);
     item.title = `${g.nombre} · desde ${money(precioMin)}`;
     const im = document.createElement("img");
