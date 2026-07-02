@@ -18,12 +18,24 @@ export function montarIntro() {
 
   const TOTAL = 121;
   const imgs = [];
+  // Pantalla de carga del recorrido: muestra el progreso de los cuadros y se
+  // quita cuando ya cargaron todos, para que el recorrido no se sienta trabado.
+  const loader = document.getElementById("intro-loader");
+  const barra = loader ? loader.querySelector("i") : null;
+  let cargados = 0;
+  function alCargar() {
+    cargados++;
+    if (barra) barra.style.width = Math.round((cargados / TOTAL) * 100) + "%";
+    if (cargados === 1) { ajustar(); dibujar(0); }
+    if (cargados >= TOTAL && loader) loader.classList.add("oculto");
+  }
   for (let i = 1; i <= TOTAL; i++) {
     const img = new Image();
+    img.onload = alCargar;
+    img.onerror = alCargar;   // si falla uno, no dejamos atorada la barra
     img.src = "assets/img/frames/f" + String(i).padStart(3, "0") + ".jpg";
     imgs.push(img);
   }
-  imgs[0].onload = () => { ajustar(); dibujar(0); };
 
   let w = 0, h = 0, indiceActual = 0;
   function ajustar() {

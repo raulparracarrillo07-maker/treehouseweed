@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=28" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=29" />
   <style>
     /* Pantalla de carga (crítico inline: se ve al instante, sin esperar el CSS externo) */
     #loader{position:fixed;inset:0;z-index:200;display:grid;place-items:center;align-content:center;gap:1.1rem;
@@ -51,6 +51,12 @@
   <section id="intro" class="intro oculto">
     <div class="intro-sticky">
       <canvas id="intro-canvas"></canvas>
+      <div id="intro-loader" class="intro-loader">
+        <img src="assets/img/logo/treehouseweed-logo-transparente.png" alt="" aria-hidden="true" />
+        <div class="loader-spin" aria-hidden="true"></div>
+        <div class="intro-loader-txt">Preparando el recorrido…</div>
+        <div class="intro-loader-barra"><i></i></div>
+      </div>
       <div class="intro-vignette"></div>
       <div class="intro-marca">
         <img class="intro-logo" src="assets/img/logo/treehouseweed-logo-transparente.png" alt="TreeHouseWeed" />
@@ -140,6 +146,6 @@
     })();
   </script>
   <script src="assets/js/lib/lenis.min.js"></script>
-  <script type="module" src="assets/js/main.js?v=28"></script>
+  <script type="module" src="assets/js/main.js?v=29"></script>
 </body>
 </html>

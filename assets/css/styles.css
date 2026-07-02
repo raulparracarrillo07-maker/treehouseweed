@@ -443,6 +443,18 @@ body.interior-visible:not(.en-seccion) {
 }
 
 .intro { position: relative; height: 420vh; z-index: 40; background: #000; }
+/* Pantalla de carga del recorrido (mientras cargan los cuadros) */
+.intro-loader {
+  position: absolute; inset: 0; z-index: 5;
+  display: grid; place-items: center; align-content: center; gap: 1rem;
+  background: radial-gradient(circle at 50% 40%, #16201a, #050807);
+  text-align: center; padding: 1.5rem; transition: opacity .5s ease;
+}
+.intro-loader.oculto { opacity: 0; pointer-events: none; }
+.intro-loader img { width: min(58vw, 230px); height: auto; filter: drop-shadow(0 0 24px rgba(217,164,65,.4)); }
+.intro-loader-txt { color: var(--oro-claro); font-family: system-ui, sans-serif; font-size: .88rem; letter-spacing: .02em; }
+.intro-loader-barra { width: min(62vw, 240px); height: 5px; background: rgba(255,255,255,.12); border-radius: 999px; overflow: hidden; }
+.intro-loader-barra i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--oro), var(--oro-claro)); border-radius: 999px; transition: width .25s ease; }
 #app { position: relative; z-index: 1; }
 .intro-sticky { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; background: #000; }
 #intro-canvas { position: relative; z-index: 1; width: 100%; height: 100%; display: block; }
