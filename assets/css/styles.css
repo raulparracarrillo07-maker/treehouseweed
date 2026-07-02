@@ -127,17 +127,19 @@ body.en-seccion::before {
   .brillo-oro, .cat-eyebrow, #app h2, .nosotros-lema { animation: none; }
 }
 
-.productos { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1rem; margin-top: 1rem; position: relative; z-index: 1; }
+/* Dos columnas siempre (queda compacto y listo para las fotos de producto). */
+.productos { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .7rem; margin-top: 1rem; position: relative; z-index: 1; }
+@media (min-width: 700px) { .productos { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1rem; } }
 .producto {
-  position: relative; display: grid; gap: .4rem; align-content: start;
+  position: relative; display: grid; gap: .35rem; align-content: start;
   background: linear-gradient(180deg, #1a241d, #131b16);
-  padding: 1.2rem; border-radius: var(--radio);
+  padding: .85rem; border-radius: var(--radio);
   border: 1px solid rgba(217,164,65,.16);
   box-shadow: 0 8px 22px rgba(0,0,0,.35);
   transition: transform .2s cubic-bezier(.22,1,.36,1), border-color .2s ease;
 }
 .producto:hover { transform: translateY(-4px); border-color: rgba(217,164,65,.5); }
-.producto h3 { font-family: "Oswald", sans-serif; font-weight: 600; font-size: 1.2rem; letter-spacing: .01em; line-height: 1.15; }
+.producto h3 { font-family: "Oswald", sans-serif; font-weight: 600; font-size: 1.02rem; letter-spacing: .01em; line-height: 1.15; }
 .producto .pres { display: inline-block; align-self: start; font-size: .72rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--oro-claro); background: rgba(217,164,65,.12); border: 1px solid rgba(217,164,65,.22); padding: .18rem .55rem; border-radius: 999px; }
 /* Badge de tipo de flor */
 .tipo { display: inline-block; align-self: start; font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: .18rem .6rem; border-radius: 999px; border: 1px solid; }
@@ -150,12 +152,13 @@ body.en-seccion::before {
 .chip:hover { border-color: rgba(217,164,65,.5); color: var(--texto); }
 .chip.activo { color: #241701; background: linear-gradient(180deg, var(--oro-claro), var(--oro)); border-color: transparent; }
 .tenue { color: var(--texto-tenue); font-size: .88rem; line-height: 1.4; }
-.producto .precio-fila { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-top: .4rem; }
-.precio { color: var(--oro-claro); font-family: "Oswald", sans-serif; font-weight: 700; font-size: 1.35rem; }
+.producto .tenue { font-size: .8rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.producto .precio-fila { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .4rem; margin-top: .4rem; }
+.precio { color: var(--oro-claro); font-family: "Oswald", sans-serif; font-weight: 700; font-size: 1.15rem; }
 .producto .btn-add {
   background: linear-gradient(180deg, var(--oro-claro), var(--oro)); color: #241701;
-  font-weight: 700; padding: .5rem .9rem; border-radius: 999px; font-size: .9rem;
-  transition: transform .15s ease, filter .15s ease;
+  font-weight: 700; padding: .42rem .8rem; border-radius: 999px; font-size: .82rem;
+  transition: transform .15s ease, filter .15s ease; flex: 1 0 auto;
 }
 .producto .btn-add:hover { filter: brightness(1.06); }
 .producto .btn-add:active { transform: scale(.94); }
