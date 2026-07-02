@@ -1,4 +1,4 @@
-import { productosDe, destacados } from "./catalog.js?v=31";
+import { productosDe, destacados } from "./catalog.js?v=32";
 
 // Cada sección va sobre el estante que le corresponde por producto:
 // fila de arriba = flores / pre-rolls / vapes; fila de abajo = extractos /
@@ -83,93 +83,96 @@ function agrupar(productos) {
   return grupos;
 }
 
-// Vitrina por categoría: alto de la foto (en cqh del fondo) y posiciones
-// [centro x %, base y % = superficie del estante] de cada producto.
-const VITRINA = {
-  "flores":     { alto: 12.5, pos: [[36,31.5],[64,31.5],[36,44],[64,44],[36,56],[64,56],[50,70]] },
-  "pre-rolls":  { alto: 12.5, pos: [[36,32],[64,32],[36,44.5],[64,44.5],[50,57]] },
-  "vapes":      { alto: 10,   pos: [[28,32],[50,32],[72,32],[28,44.5],[50,44.5],[72,44.5],[36,57],[64,57],[36,70],[64,70]] },
-  "extractos":  { alto: 17,   pos: [[50,45]] },
-  "edibles":    { alto: 12,   pos: [[36,32],[64,32],[36,44.5],[64,44.5],[36,57],[64,57],[50,70]] },
-  "smoke-shop": { alto: 11,   pos: [[36,32],[64,32],[36,44.5],[64,44.5],[50,57]] },
-};
+// Categorías que se muestran como vitrina (fondo de estantería + recuadros).
+const CON_FONDO = new Set(["flores", "pre-rolls", "vapes", "extractos", "edibles", "smoke-shop"]);
 
-// Vitrina: fondo de estantería con las fotos acomodadas en los estantes.
+// Crea una tarjeta de producto (foto + tipo + nombre + desc + chips + precio + agregar).
+function crearTarjeta(g, alAgregar) {
+  const { tipo, resto } = partirTipo(g.desc);
+  const card = document.createElement("article");
+  card.className = "producto";
+
+  const conFoto = g.items.find((it) => it.imagen);
+  const foto = document.createElement("div");
+  foto.className = "producto-foto" + (conFoto ? "" : " sin-foto");
+  const im = document.createElement("img");
+  im.src = conFoto ? conFoto.imagen : "assets/img/logo/treehouseweed-logo-transparente.png";
+  im.alt = g.nombre; im.loading = "lazy";
+  if (!conFoto) im.className = "ph";
+  foto.appendChild(im);
+  if (tipo) {
+    const b = document.createElement("span");
+    b.className = "tipo tipo-" + tipo.toLowerCase().replace("í", "i");
+    b.textContent = tipo;
+    foto.appendChild(b);
+  }
+  card.appendChild(foto);
+
+  const nombre = document.createElement("h3");
+  nombre.textContent = g.nombre;
+  card.appendChild(nombre);
+
+  if (resto) {
+    const detalle = document.createElement("p");
+    detalle.className = "tenue";
+    detalle.textContent = resto;
+    card.appendChild(detalle);
+  }
+
+  let elegido = g.items[0];
+  const precio = document.createElement("span");
+  precio.className = "precio";
+  if (g.items.length > 1) {
+    const chips = document.createElement("div");
+    chips.className = "chips";
+    g.items.forEach((it, i) => {
+      const chip = document.createElement("button");
+      chip.className = "chip" + (i === 0 ? " activo" : "");
+      chip.textContent = it.presentacion;
+      chip.addEventListener("click", () => {
+        elegido = it;
+        chips.querySelectorAll(".chip").forEach((c) => c.classList.remove("activo"));
+        chip.classList.add("activo");
+        precio.textContent = money(it.precio);
+      });
+      chips.appendChild(chip);
+    });
+    card.appendChild(chips);
+  } else {
+    const pres = document.createElement("span");
+    pres.className = "pres";
+    pres.textContent = g.items[0].presentacion;
+    card.insertBefore(pres, nombre);
+  }
+
+  const fila = document.createElement("div");
+  fila.className = "precio-fila";
+  precio.textContent = money(elegido.precio);
+  const btn = document.createElement("button");
+  btn.className = "btn-add";
+  btn.dataset.agregar = "";
+  btn.textContent = "Agregar";
+  btn.addEventListener("click", () => alAgregar(elegido));
+  fila.appendChild(precio);
+  fila.appendChild(btn);
+  card.appendChild(fila);
+  return card;
+}
+
+// Vitrina: fondo de estantería fijo con las tarjetas del catálogo por encima,
+// dentro del recuadro central, con scroll.
 function renderVitrina(contenedor, catalogo, categoria, alAgregar) {
   const grupos = agrupar(productosDe(catalogo, categoria));
-  const conf = VITRINA[categoria];
   const seccion = document.createElement("section");
   seccion.className = "vitrina-sec";
-  seccion.innerHTML = `<div class="vitrina" style="background-image:url(assets/img/fondos/${categoria}.png)"><div class="vitrina-items"></div></div>`;
-  const cont = seccion.querySelector(".vitrina-items");
-  grupos.forEach((g, i) => {
-    const p = conf.pos[i];
-    if (!p) return;
-    const foto = g.items.find((it) => it.imagen);
-    const precioMin = Math.min(...g.items.map((it) => it.precio));
-    const item = document.createElement("button");
-    item.className = "vit-item";
-    item.style.left = p[0] + "%";
-    item.style.bottom = (100 - p[1]) + "%";
-    item.style.setProperty("--vh", conf.alto + "cqh");
-    item.setAttribute("aria-label", g.nombre);
-    item.title = `${g.nombre} · desde ${money(precioMin)}`;
-    const im = document.createElement("img");
-    im.src = foto ? foto.imagen : "assets/img/logo/treehouseweed-logo-transparente.png";
-    im.alt = g.nombre; im.loading = "lazy";
-    item.appendChild(im);
-    item.addEventListener("click", () => abrirDetalleVitrina(g, alAgregar));
-    cont.appendChild(item);
-  });
+  seccion.innerHTML = `<div class="vitrina" style="background-image:url(assets/img/fondos/${categoria}.png)"><div class="vitrina-scroll"><div class="productos"></div></div></div>`;
+  const grid = seccion.querySelector(".productos");
+  for (const g of grupos) grid.appendChild(crearTarjeta(g, alAgregar));
   contenedor.appendChild(seccion);
 }
 
-// Panel inferior al tocar un producto de la vitrina: elige tamaño y agrega.
-function abrirDetalleVitrina(g, alAgregar) {
-  let hoja = document.getElementById("vit-hoja");
-  if (!hoja) {
-    hoja = document.createElement("div");
-    hoja.id = "vit-hoja"; hoja.className = "vit-hoja oculto";
-    document.body.appendChild(hoja);
-    hoja.addEventListener("click", (e) => { if (e.target === hoja) hoja.classList.add("oculto"); });
-  }
-  const foto = g.items.find((it) => it.imagen);
-  const { tipo, resto } = partirTipo(g.desc);
-  let elegido = g.items[0];
-  hoja.innerHTML = `
-    <div class="vit-card">
-      <button class="vit-cerrar" aria-label="Cerrar">✕</button>
-      <img class="vit-card-foto" src="${foto ? foto.imagen : ""}" alt="${g.nombre}" />
-      <div class="vit-card-info">
-        ${tipo ? `<span class="tipo tipo-${tipo.toLowerCase().replace("í", "i")}">${tipo}</span>` : ""}
-        <h3>${g.nombre}</h3>
-        ${resto ? `<p class="tenue">${resto}</p>` : ""}
-        <div class="chips"></div>
-        <div class="precio-fila"><span class="precio"></span><button class="btn-add">Agregar</button></div>
-      </div>
-    </div>`;
-  const chips = hoja.querySelector(".chips");
-  const precio = hoja.querySelector(".precio");
-  g.items.forEach((it, i) => {
-    const chip = document.createElement("button");
-    chip.className = "chip" + (i === 0 ? " activo" : "");
-    chip.textContent = it.presentacion;
-    chip.addEventListener("click", () => {
-      elegido = it;
-      chips.querySelectorAll(".chip").forEach((c) => c.classList.remove("activo"));
-      chip.classList.add("activo");
-      precio.textContent = money(it.precio);
-    });
-    chips.appendChild(chip);
-  });
-  precio.textContent = money(elegido.precio);
-  hoja.querySelector(".btn-add").addEventListener("click", () => { alAgregar(elegido); hoja.classList.add("oculto"); });
-  hoja.querySelector(".vit-cerrar").addEventListener("click", () => hoja.classList.add("oculto"));
-  hoja.classList.remove("oculto");
-}
-
 export function renderCuarto(contenedor, catalogo, categoria, alAgregar) {
-  if (VITRINA[categoria]) return renderVitrina(contenedor, catalogo, categoria, alAgregar);
+  if (CON_FONDO.has(categoria)) return renderVitrina(contenedor, catalogo, categoria, alAgregar);
   const productos = productosDe(catalogo, categoria);
   const grupos = agrupar(productos);
   const titulo = NOMBRE_CAT[categoria] || categoria;
@@ -184,86 +187,7 @@ export function renderCuarto(contenedor, catalogo, categoria, alAgregar) {
     <div class="productos"></div>`;
   contenedor.appendChild(seccion);
   const grid = seccion.querySelector(".productos");
-
-  for (const g of grupos) {
-    const { tipo, resto } = partirTipo(g.desc);
-    const card = document.createElement("article");
-    card.className = "producto";
-
-    // Foto del producto (con el badge de tipo encima, en la esquina).
-    const conFoto = g.items.find((it) => it.imagen);
-    const foto = document.createElement("div");
-    foto.className = "producto-foto" + (conFoto ? "" : " sin-foto");
-    if (conFoto) {
-      const im = document.createElement("img");
-      im.src = conFoto.imagen; im.alt = g.nombre; im.loading = "lazy";
-      foto.appendChild(im);
-    } else {
-      const ph = document.createElement("img");
-      ph.src = "assets/img/logo/treehouseweed-logo-transparente.png"; ph.alt = ""; ph.className = "ph";
-      foto.appendChild(ph);
-    }
-    if (tipo) {
-      const b = document.createElement("span");
-      b.className = "tipo tipo-" + tipo.toLowerCase().replace("í", "i");
-      b.textContent = tipo;
-      foto.appendChild(b);
-    }
-    card.appendChild(foto);
-
-    const nombre = document.createElement("h3");
-    nombre.textContent = g.nombre;
-    card.appendChild(nombre);
-
-    if (resto) {
-      const detalle = document.createElement("p");
-      detalle.className = "tenue";
-      detalle.textContent = resto;
-      card.appendChild(detalle);
-    }
-
-    // Chips de presentación (uno por variante). Al elegir cambia el precio.
-    let elegido = g.items[0];
-    const precio = document.createElement("span");
-    precio.className = "precio";
-
-    if (g.items.length > 1) {
-      const chips = document.createElement("div");
-      chips.className = "chips";
-      g.items.forEach((it, i) => {
-        const chip = document.createElement("button");
-        chip.className = "chip" + (i === 0 ? " activo" : "");
-        chip.textContent = it.presentacion;
-        chip.addEventListener("click", () => {
-          elegido = it;
-          chips.querySelectorAll(".chip").forEach((c) => c.classList.remove("activo"));
-          chip.classList.add("activo");
-          precio.textContent = money(it.precio);
-        });
-        chips.appendChild(chip);
-      });
-      card.appendChild(chips);
-    } else {
-      const pres = document.createElement("span");
-      pres.className = "pres";
-      pres.textContent = g.items[0].presentacion;
-      card.insertBefore(pres, nombre);
-    }
-
-    const fila = document.createElement("div");
-    fila.className = "precio-fila";
-    precio.textContent = money(elegido.precio);
-    const btn = document.createElement("button");
-    btn.className = "btn-add";
-    btn.dataset.agregar = "";
-    btn.textContent = "Agregar";
-    btn.addEventListener("click", () => alAgregar(elegido));
-    fila.appendChild(precio);
-    fila.appendChild(btn);
-    card.appendChild(fila);
-
-    grid.appendChild(card);
-  }
+  for (const g of grupos) grid.appendChild(crearTarjeta(g, alAgregar));
 }
 
 export function renderDestacados(contenedor, catalogo, alAgregar) {

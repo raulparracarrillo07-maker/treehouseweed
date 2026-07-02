@@ -422,34 +422,31 @@ body.modal-abierto .fab { display: none !important; }
   .monito-fig.hablando { animation: none !important; }
 }
 
-/* --- Vitrina (sección con fondo de estantería y productos en los estantes) --- */
+/* --- Vitrina: fondo de estantería (marco fijo) + catálogo con scroll dentro --- */
 .vitrina-sec { display: grid; place-items: start center; }
 .vitrina {
-  position: relative; container-type: size;
+  position: relative;
   aspect-ratio: 941 / 1672;
   width: min(100%, calc((100svh - 5.5rem) * 941 / 1672));
   background-size: cover; background-position: center; background-repeat: no-repeat;
   border-radius: 12px; overflow: hidden;
   box-shadow: 0 12px 34px rgba(0,0,0,.5);
 }
-.vitrina-items { position: absolute; inset: 0; }
-.vit-item {
-  position: absolute; transform: translateX(-50%);
-  background: none; border: 0; padding: 0; cursor: pointer; line-height: 0;
+/* Recuadro central donde va el catálogo (encima de la estantería), con scroll */
+.vitrina-scroll {
+  position: absolute; left: 19.5%; right: 19.5%; top: 18.5%; bottom: 27%;
+  overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch;
+  padding: .35rem; scrollbar-width: thin;
 }
-.vit-item img { height: var(--vh, 12.5cqh); width: auto; display: block; filter: drop-shadow(0 6px 10px rgba(0,0,0,.6)); transition: transform .18s ease; }
-.vit-item:hover img, .vit-item:focus-visible img { transform: scale(1.08); }
-.vit-item:active img { transform: scale(.96); }
-
-/* Panel inferior de detalle al tocar un producto de la vitrina */
-.vit-hoja { position: fixed; inset: 0; z-index: 80; display: grid; align-items: end; background: rgba(6,9,7,.6); backdrop-filter: blur(3px); animation: aparecerModal .25s ease both; }
-.vit-hoja.oculto { display: none; }
-.vit-card { position: relative; width: 100%; max-width: 520px; margin: 0 auto; background: linear-gradient(180deg, #1b241d, #121812); border: 1px solid rgba(217,164,65,.3); border-radius: 20px 20px 0 0; padding: 1.3rem; display: flex; gap: 1rem; align-items: center; box-shadow: 0 -12px 40px rgba(0,0,0,.6); animation: subirPanel .3s cubic-bezier(.22,1,.36,1) both; }
-.vit-card-foto { width: 34%; max-width: 130px; height: auto; object-fit: contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.5)); }
-.vit-card-info { flex: 1; display: grid; gap: .4rem; align-content: center; }
-.vit-card-info h3 { font-family: "Oswald", sans-serif; font-weight: 600; font-size: 1.25rem; }
-.vit-cerrar { position: absolute; top: .7rem; right: .7rem; width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16); color: var(--texto); }
-@media (prefers-reduced-motion: reduce) { .vit-hoja, .vit-card { animation: none !important; } }
+.vitrina-scroll::-webkit-scrollbar { width: 5px; }
+.vitrina-scroll::-webkit-scrollbar-thumb { background: rgba(217,164,65,.4); border-radius: 999px; }
+.vitrina-scroll .productos { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; margin: 0; }
+.vitrina-scroll .producto { padding: .5rem; background: rgba(16,22,17,.92); box-shadow: 0 4px 12px rgba(0,0,0,.5); }
+.vitrina-scroll .producto h3 { font-size: .82rem; }
+.vitrina-scroll .producto .tenue { font-size: .68rem; -webkit-line-clamp: 2; }
+.vitrina-scroll .producto .precio { font-size: .95rem; }
+.vitrina-scroll .producto .btn-add { font-size: .72rem; padding: .35rem .6rem; }
+.vitrina-scroll .producto .chip { font-size: .68rem; padding: .22rem .5rem; }
 
 .aviso { text-align: center; color: var(--texto-tenue); font-size: .8rem; padding: 2rem 1rem 5rem; }
 @media (prefers-reduced-motion: reduce) {
