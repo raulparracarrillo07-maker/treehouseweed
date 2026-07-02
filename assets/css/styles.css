@@ -448,6 +448,39 @@ body.modal-abierto .fab { display: none !important; }
 .vitrina-scroll .producto .btn-add { font-size: .72rem; padding: .35rem .6rem; }
 .vitrina-scroll .producto .chip { font-size: .68rem; padding: .22rem .5rem; }
 
+/* Anfitrión: el personaje se asoma por abajo con un globo hablando de la calidad. */
+.anfitrion-cal {
+  position: fixed; left: .4rem; bottom: 0; z-index: 30;
+  display: flex; align-items: flex-end; gap: .3rem;
+  pointer-events: none;
+  animation: anfEntra .6s cubic-bezier(.22,1,.36,1) .35s both;
+}
+.anf-fig {
+  width: min(30vw, 128px); height: auto; display: block;
+  transform: translateY(16%);          /* se asoma desde el borde inferior */
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,.55));
+  animation: anfFlota 4.5s ease-in-out infinite;
+}
+.anf-globo {
+  position: relative; max-width: min(56vw, 250px); margin-bottom: 2.4rem;
+  background: rgba(12,18,13,.94); color: var(--texto);
+  border: 1px solid rgba(217,164,65,.4); border-radius: 14px;
+  padding: .6rem .75rem; font-size: .8rem; line-height: 1.32;
+  box-shadow: 0 10px 24px rgba(0,0,0,.5);
+}
+.anf-globo::after {                     /* colita del globo hacia el personaje */
+  content: ""; position: absolute; left: 16px; bottom: -7px;
+  width: 12px; height: 12px; background: inherit;
+  border-right: 1px solid rgba(217,164,65,.4);
+  border-bottom: 1px solid rgba(217,164,65,.4);
+  transform: rotate(45deg);
+}
+@keyframes anfFlota { 0%, 100% { transform: translateY(16%); } 50% { transform: translateY(10%); } }
+@keyframes anfEntra { from { opacity: 0; transform: translateY(34px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .anf-fig, .anfitrion-cal { animation: none !important; }
+}
+
 .aviso { text-align: center; color: var(--texto-tenue); font-size: .8rem; padding: 2rem 1rem 5rem; }
 @media (prefers-reduced-motion: reduce) {
   .puerta-caja, .panel, .producto, .fab, .toast { animation: none !important; transition: none !important; }

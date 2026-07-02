@@ -1,4 +1,4 @@
-import { productosDe, destacados } from "./catalog.js?v=34";
+import { productosDe, destacados } from "./catalog.js?v=35";
 
 // Cada sección va sobre el estante que le corresponde por producto:
 // fila de arriba = flores / pre-rolls / vapes; fila de abajo = extractos /
@@ -159,8 +159,19 @@ function crearTarjeta(g, alAgregar) {
   return card;
 }
 
+// Lo que el anfitrión (personaje) cuenta sobre la calidad de cada sección.
+const CALIDAD = {
+  "flores": "Cada flor la elijo a mano: aroma, potencia y frescura de verdad.",
+  "pre-rolls": "Enrollados con flor premium, listos para prender sin batallar.",
+  "vapes": "Aceite puro y limpio, con sabor parejo hasta la última bocanada.",
+  "extractos": "Extracción cuidada para conservar todo el sabor y la fuerza.",
+  "edibles": "Dosis precisa y sabor real: comestibles que sí saben rico.",
+  "smoke-shop": "Accesorios de calidad para que disfrutes la experiencia completa.",
+};
+
 // Vitrina: fondo de estantería fijo con las tarjetas del catálogo por encima,
-// dentro del recuadro central, con scroll.
+// dentro del recuadro central, con scroll. Abajo se asoma el anfitrión (personaje)
+// con un globo platicando de la calidad de esa sección.
 function renderVitrina(contenedor, catalogo, categoria, alAgregar) {
   const grupos = agrupar(productosDe(catalogo, categoria));
   const seccion = document.createElement("section");
@@ -168,6 +179,15 @@ function renderVitrina(contenedor, catalogo, categoria, alAgregar) {
   seccion.innerHTML = `<div class="vitrina" style="background-image:url(assets/img/fondos/${categoria}.png)"><div class="vitrina-scroll"><div class="productos"></div></div></div>`;
   const grid = seccion.querySelector(".productos");
   for (const g of grupos) grid.appendChild(crearTarjeta(g, alAgregar));
+
+  const cal = CALIDAD[categoria];
+  if (cal) {
+    const anf = document.createElement("div");
+    anf.className = "anfitrion-cal";
+    anf.innerHTML = `<div class="anf-globo">${cal}</div><img class="anf-fig" src="assets/img/mascota-viva.png" alt="" aria-hidden="true" />`;
+    seccion.appendChild(anf);
+  }
+
   contenedor.appendChild(seccion);
 }
 
