@@ -1,4 +1,4 @@
-import { total, contarItems } from "./cart.js?v=29";
+import { total, contarItems } from "./cart.js?v=30";
 
 const money = (n) => `$${n.toLocaleString("es-MX")}`;
 

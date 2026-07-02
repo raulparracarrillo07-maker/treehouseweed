@@ -1,4 +1,4 @@
-import { productosDe, destacados } from "./catalog.js?v=29";
+import { productosDe, destacados } from "./catalog.js?v=30";
 
 // Cada sección va sobre el estante que le corresponde por producto:
 // fila de arriba = flores / pre-rolls / vapes; fila de abajo = extractos /
@@ -83,7 +83,91 @@ function agrupar(productos) {
   return grupos;
 }
 
+// Posiciones (centro x %, base y % = superficie del estante) de cada producto
+// en la vitrina de fondo. Por ahora solo flores (prueba).
+const VITRINA = {
+  "flores": [
+    { x: 36, y: 31.5 }, { x: 64, y: 31.5 },
+    { x: 36, y: 44 },   { x: 64, y: 44 },
+    { x: 36, y: 56 },   { x: 64, y: 56 },
+  ],
+};
+
+// Vitrina: fondo de estantería con las fotos acomodadas en los estantes.
+function renderVitrina(contenedor, catalogo, categoria, alAgregar) {
+  const grupos = agrupar(productosDe(catalogo, categoria));
+  const pos = VITRINA[categoria];
+  const seccion = document.createElement("section");
+  seccion.className = "vitrina-sec";
+  seccion.innerHTML = `<div class="vitrina" style="background-image:url(assets/img/fondos/${categoria}.png)"><div class="vitrina-items"></div></div>`;
+  const cont = seccion.querySelector(".vitrina-items");
+  grupos.forEach((g, i) => {
+    const p = pos[i];
+    if (!p) return;
+    const foto = g.items.find((it) => it.imagen);
+    const precioMin = Math.min(...g.items.map((it) => it.precio));
+    const item = document.createElement("button");
+    item.className = "vit-item";
+    item.style.left = p.x + "%";
+    item.style.bottom = (100 - p.y) + "%";
+    item.setAttribute("aria-label", g.nombre);
+    item.title = `${g.nombre} · desde ${money(precioMin)}`;
+    const im = document.createElement("img");
+    im.src = foto ? foto.imagen : "assets/img/logo/treehouseweed-logo-transparente.png";
+    im.alt = g.nombre; im.loading = "lazy";
+    item.appendChild(im);
+    item.addEventListener("click", () => abrirDetalleVitrina(g, alAgregar));
+    cont.appendChild(item);
+  });
+  contenedor.appendChild(seccion);
+}
+
+// Panel inferior al tocar un producto de la vitrina: elige tamaño y agrega.
+function abrirDetalleVitrina(g, alAgregar) {
+  let hoja = document.getElementById("vit-hoja");
+  if (!hoja) {
+    hoja = document.createElement("div");
+    hoja.id = "vit-hoja"; hoja.className = "vit-hoja oculto";
+    document.body.appendChild(hoja);
+    hoja.addEventListener("click", (e) => { if (e.target === hoja) hoja.classList.add("oculto"); });
+  }
+  const foto = g.items.find((it) => it.imagen);
+  const { tipo, resto } = partirTipo(g.desc);
+  let elegido = g.items[0];
+  hoja.innerHTML = `
+    <div class="vit-card">
+      <button class="vit-cerrar" aria-label="Cerrar">✕</button>
+      <img class="vit-card-foto" src="${foto ? foto.imagen : ""}" alt="${g.nombre}" />
+      <div class="vit-card-info">
+        ${tipo ? `<span class="tipo tipo-${tipo.toLowerCase().replace("í", "i")}">${tipo}</span>` : ""}
+        <h3>${g.nombre}</h3>
+        ${resto ? `<p class="tenue">${resto}</p>` : ""}
+        <div class="chips"></div>
+        <div class="precio-fila"><span class="precio"></span><button class="btn-add">Agregar</button></div>
+      </div>
+    </div>`;
+  const chips = hoja.querySelector(".chips");
+  const precio = hoja.querySelector(".precio");
+  g.items.forEach((it, i) => {
+    const chip = document.createElement("button");
+    chip.className = "chip" + (i === 0 ? " activo" : "");
+    chip.textContent = it.presentacion;
+    chip.addEventListener("click", () => {
+      elegido = it;
+      chips.querySelectorAll(".chip").forEach((c) => c.classList.remove("activo"));
+      chip.classList.add("activo");
+      precio.textContent = money(it.precio);
+    });
+    chips.appendChild(chip);
+  });
+  precio.textContent = money(elegido.precio);
+  hoja.querySelector(".btn-add").addEventListener("click", () => { alAgregar(elegido); hoja.classList.add("oculto"); });
+  hoja.querySelector(".vit-cerrar").addEventListener("click", () => hoja.classList.add("oculto"));
+  hoja.classList.remove("oculto");
+}
+
 export function renderCuarto(contenedor, catalogo, categoria, alAgregar) {
+  if (VITRINA[categoria]) return renderVitrina(contenedor, catalogo, categoria, alAgregar);
   const productos = productosDe(catalogo, categoria);
   const grupos = agrupar(productos);
   const titulo = NOMBRE_CAT[categoria] || categoria;
