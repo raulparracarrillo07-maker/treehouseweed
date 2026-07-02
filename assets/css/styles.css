@@ -267,11 +267,9 @@ body.interior-visible:not(.en-seccion) .fab-nosotros { display: inline-block; an
 .tuto-tipos { border-top: 1px solid rgba(255,255,255,.08); padding-top: 1rem; margin-bottom: 1rem; display: grid; gap: .8rem; justify-items: center; }
 .tt-titulo { font-family: "Oswald", sans-serif; color: var(--oro); font-size: 1rem; letter-spacing: .12em; text-transform: uppercase; }
 .tt-caras { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; width: 100%; }
-.tt-cara { display: grid; justify-items: center; gap: .3rem; text-align: center; }
-.tt-cara span { font-size: 2rem; line-height: 1; width: 62px; height: 62px; display: grid; place-items: center; border-radius: 50%; border: 2px solid; }
-.tt-cara:nth-child(1) span { border-color: rgba(196,143,255,.55); background: rgba(150,90,220,.14); box-shadow: 0 0 16px rgba(150,90,220,.25); }
-.tt-cara:nth-child(2) span { border-color: rgba(217,164,65,.55); background: rgba(217,164,65,.14); box-shadow: 0 0 16px rgba(217,164,65,.25); }
-.tt-cara:nth-child(3) span { border-color: rgba(150,220,110,.55); background: rgba(110,180,70,.14); box-shadow: 0 0 16px rgba(110,180,70,.25); }
+.tt-cara { display: grid; justify-items: center; gap: .25rem; text-align: center; }
+.tt-cara img { width: 74px; height: 74px; object-fit: contain; filter: drop-shadow(0 3px 8px rgba(0,0,0,.5)); transition: transform .2s ease; }
+.tt-cara:hover img { transform: scale(1.08); }
 .tt-cara b { color: var(--texto); font-weight: 700; font-size: .86rem; }
 .tt-cara small { color: var(--texto-tenue); font-size: .74rem; }
 .tuto-ok { width: 100%; justify-self: center; }
