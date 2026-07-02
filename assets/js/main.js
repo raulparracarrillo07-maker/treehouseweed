@@ -1,12 +1,12 @@
-import { montarPuertaEdad } from "./age-gate.js?v=13";
-import { montarIntro } from "./intro.js?v=13";
-import { montarHumo } from "./humo.js?v=13";
-import { montarMonito } from "./monito.js?v=13";
-import { iniciarSmooth, revelar } from "./anim.js?v=13";
-import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=13";
-import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=13";
-import { renderCarrito } from "./ui-cart.js?v=13";
-import { construirMensaje, construirURL } from "./whatsapp.js?v=13";
+import { montarPuertaEdad } from "./age-gate.js?v=14";
+import { montarIntro } from "./intro.js?v=14";
+import { montarHumo } from "./humo.js?v=14";
+import { montarMonito } from "./monito.js?v=14";
+import { iniciarSmooth, revelar } from "./anim.js?v=14";
+import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=14";
+import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=14";
+import { renderCarrito } from "./ui-cart.js?v=14";
+import { construirMensaje, construirURL } from "./whatsapp.js?v=14";
 
 let catalogo, config, carrito = carritoVacio();
 let monito;
@@ -79,6 +79,7 @@ async function init() {
   config = await fetch("data/config.json").then((r) => r.json());
   catalogo = await fetch("data/productos.json").then((r) => r.json());
   monito = montarMonito(config);
+  montarTutorial();
   cablearFabs();
   sembrarMotas();
   refrescarCarrito();
@@ -113,6 +114,20 @@ function entrarSitio() {
     mascota.addEventListener("click", () => monito.abrir("nosotros"));
     mascota.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); monito.abrir("nosotros"); } });
   }
+}
+
+// Mini tutorial: se muestra la primera vez que se llega a la tienda (por sesión).
+function montarTutorial() {
+  const tuto = document.getElementById("tutorial");
+  if (!tuto) return;
+  const cerrar = () => tuto.classList.add("oculto");
+  tuto.querySelector(".tuto-ok").addEventListener("click", cerrar);
+  tuto.addEventListener("click", (e) => { if (e.target === tuto) cerrar(); });
+  window.addEventListener("thw:tienda", () => {
+    if (sessionStorage.getItem("thw_tuto") === "visto") return;
+    sessionStorage.setItem("thw_tuto", "visto");
+    tuto.classList.remove("oculto");
+  });
 }
 
 function cerrarCarrito() {

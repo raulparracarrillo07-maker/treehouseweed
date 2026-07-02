@@ -67,6 +67,7 @@ export function montarIntro() {
     document.body.classList.add("interior-visible");
     intro.style.height = "100svh";     // ya no queda recorrido por encima
     window.scrollTo(0, 0);
+    window.dispatchEvent(new Event("thw:tienda"));  // avisa que ya se ve la tienda
   }
 
   function alScrollear() {

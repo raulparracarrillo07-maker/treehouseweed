@@ -171,7 +171,8 @@ body.en-seccion #fab-carrito { display: inline-flex; }
 @keyframes reboteBadge { 0%,100% { transform: scale(1); } 35% { transform: scale(1.14); } }
 /* Bolitas de redes (abajo-izquierda): entrar a IG/TikTok desde la tienda */
 .social { position: fixed; left: 1rem; bottom: 1.2rem; z-index: 46; display: none; gap: .6rem; }
-body.interior-visible:not(.en-seccion) .social { display: flex; animation: subirNos .5s ease .3s both; }
+body.interior-visible:not(.en-seccion) .social { display: flex; animation: aparecerSocial .5s ease .3s both; }
+@keyframes aparecerSocial { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 .soc { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; box-shadow: 0 8px 22px rgba(0,0,0,.5); transition: transform .18s ease; }
 .soc:hover { transform: translateY(-3px); }
 .soc svg { width: 23px; height: 23px; fill: #fff; }
@@ -207,12 +208,12 @@ body.interior-visible:not(.en-seccion) .social { display: flex; animation: subir
 
 /* Texto guía sobre la tienda final: cómo entrar a una sección */
 .tienda-hint {
-  position: fixed; left: 50%; top: 1.1rem; transform: translateX(-50%);
-  z-index: 45; display: none; text-align: center; max-width: 90vw;
-  background: rgba(16,22,17,.62); backdrop-filter: blur(8px);
-  border: 1px solid rgba(217,164,65,.4); color: var(--oro-claro);
-  padding: .5rem 1.1rem; border-radius: 999px; font-size: .85rem; font-weight: 600;
-  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  position: fixed; left: 50%; top: .7rem; transform: translateX(-50%);
+  z-index: 45; display: none; text-align: center;
+  background: rgba(16,22,17,.5); backdrop-filter: blur(6px);
+  border: 1px solid rgba(217,164,65,.28); color: var(--oro-claro);
+  padding: .28rem .7rem; border-radius: 999px; font-size: .68rem; font-weight: 600;
+  letter-spacing: .01em; opacity: .82;
 }
 body.interior-visible:not(.en-seccion) .tienda-hint { display: inline-block; animation: latirHint 2.6s ease-in-out .4s infinite; }
 @keyframes latirHint { 0%,100% { opacity: .78; } 50% { opacity: 1; } }
@@ -237,6 +238,31 @@ body.interior-visible:not(.en-seccion) .fab-nosotros { display: inline-block; an
 .valores { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.6rem; position: relative; z-index: 1; }
 .valor { background: linear-gradient(180deg, #1a241d, #131b16); border: 1px solid rgba(217,164,65,.16); border-radius: var(--radio); padding: 1.3rem; display: grid; gap: .5rem; align-content: start; }
 .valor h3 { font-family: "Oswald", sans-serif; font-weight: 600; font-size: 1.15rem; color: var(--oro-claro); }
+
+/* --- Mini tutorial --- */
+.tutorial {
+  position: fixed; inset: 0; z-index: 90; display: grid; place-items: center;
+  padding: 1.5rem; background: rgba(6,9,7,.72); backdrop-filter: blur(6px);
+  animation: aparecerModal .3s ease both;
+}
+.tutorial.oculto { display: none; }
+.tuto-caja {
+  position: relative; width: min(420px, 92vw);
+  background: linear-gradient(180deg, #1b241d, #121812);
+  border: 1px solid rgba(217,164,65,.3); border-radius: 20px;
+  padding: 1.6rem 1.4rem; box-shadow: 0 24px 60px rgba(0,0,0,.6);
+  display: grid; gap: .3rem; text-align: center;
+  animation: entrarPuerta .5s cubic-bezier(.22,1,.36,1) both;
+}
+.tuto-eyebrow { font-family: "Oswald", sans-serif; color: var(--oro); font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; }
+.tuto-titulo { font-family: "Oswald", sans-serif; font-size: 1.7rem; font-weight: 700; color: var(--texto); margin-bottom: .6rem; }
+.tuto-pasos { list-style: none; display: grid; gap: .9rem; text-align: left; margin: .2rem 0 1.2rem; }
+.tuto-pasos li { display: grid; grid-template-columns: auto 1fr; gap: .8rem; align-items: start; }
+.tuto-num { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(180deg, var(--oro-claro), var(--oro)); color: #241701; font-family: "Oswald", sans-serif; font-weight: 700; }
+.tuto-pasos b { color: var(--oro-claro); font-weight: 700; }
+.tuto-pasos p { color: var(--texto-tenue); font-size: .88rem; margin-top: .1rem; line-height: 1.4; }
+.tuto-ok { width: 100%; justify-self: center; }
+@media (prefers-reduced-motion: reduce) { .tutorial, .tuto-caja { animation: none !important; } }
 
 /* --- Modal del anfitrión (el monito habla) --- */
 body.modal-abierto { overflow: hidden; }
