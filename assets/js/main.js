@@ -1,12 +1,12 @@
-import { montarPuertaEdad } from "./age-gate.js?v=15";
-import { montarIntro } from "./intro.js?v=15";
-import { montarHumo } from "./humo.js?v=15";
-import { montarMonito } from "./monito.js?v=15";
-import { iniciarSmooth, revelar } from "./anim.js?v=15";
-import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=15";
-import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=15";
-import { renderCarrito } from "./ui-cart.js?v=15";
-import { construirMensaje } from "./whatsapp.js?v=15";
+import { montarPuertaEdad } from "./age-gate.js?v=16";
+import { montarIntro } from "./intro.js?v=16";
+import { montarHumo } from "./humo.js?v=16";
+import { montarMonito } from "./monito.js?v=16";
+import { iniciarSmooth, revelar } from "./anim.js?v=16";
+import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=16";
+import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=16";
+import { renderCarrito } from "./ui-cart.js?v=16";
+import { construirMensaje } from "./whatsapp.js?v=16";
 
 let catalogo, config, carrito = carritoVacio();
 let monito;
@@ -111,6 +111,7 @@ function entrarSitio() {
   });
   montarIntro();    // el video avanza con el scroll; al final aparecen los cartelones
   montarHumo(document.getElementById("humo-canvas"));
+  montarBrisa();
 
   // Tocar al monito abre la charla con el anfitrión.
   const mascota = document.querySelector(".mascota-viva");
@@ -123,6 +124,33 @@ function entrarSitio() {
     mascota.addEventListener("click", () => monito.abrir("nosotros"));
     mascota.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); monito.abrir("nosotros"); } });
   }
+}
+
+// Hojas que se mecen con la brisa sobre las zonas de vegetación de la tienda.
+function montarBrisa() {
+  const box = document.querySelector(".tienda-final-box");
+  if (!box || box.querySelector(".brisa")) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cont = document.createElement("div");
+  cont.className = "brisa";
+  cont.setAttribute("aria-hidden", "true");
+  const hoja = '<svg viewBox="0 0 24 40"><path d="M12 0C5 11 5 27 12 40 19 27 19 11 12 0Z"/></svg>';
+  // Puntos sobre las enredaderas de los bordes (x%, y%).
+  const puntos = [[4,30],[5.5,48],[3.5,64],[7,80],[95,30],[96,48],[94,64],[92,80],[10,20],[90,20]];
+  for (const [x, y] of puntos) {
+    const h = document.createElement("span");
+    h.className = "hoja-brisa";
+    h.innerHTML = hoja;
+    h.style.left = x + "%";
+    h.style.top = y + "%";
+    h.style.setProperty("--s", (14 + Math.random() * 14).toFixed(0) + "px");
+    h.style.setProperty("--dur", (2.6 + Math.random() * 2.2).toFixed(1) + "s");
+    h.style.setProperty("--delay", (-Math.random() * 3).toFixed(1) + "s");
+    h.style.setProperty("--r1", (-7 - Math.random() * 6).toFixed(0) + "deg");
+    h.style.setProperty("--r2", (7 + Math.random() * 6).toFixed(0) + "deg");
+    cont.appendChild(h);
+  }
+  box.appendChild(cont);
 }
 
 // Mini tutorial: se muestra la primera vez que se llega a la tienda (por sesión).

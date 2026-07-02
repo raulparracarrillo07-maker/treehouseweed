@@ -261,6 +261,12 @@ body.interior-visible:not(.en-seccion) .fab-nosotros { display: inline-block; an
 .tuto-num { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(180deg, var(--oro-claro), var(--oro)); color: #241701; font-family: "Oswald", sans-serif; font-weight: 700; }
 .tuto-pasos b { color: var(--oro-claro); font-weight: 700; }
 .tuto-pasos p { color: var(--texto-tenue); font-size: .88rem; margin-top: .1rem; line-height: 1.4; }
+.tuto-tipos { border-top: 1px solid rgba(255,255,255,.08); padding-top: 1rem; margin-bottom: 1rem; display: grid; gap: .6rem; }
+.tt-titulo { font-family: "Oswald", sans-serif; color: var(--oro); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; }
+.tt-grid { display: grid; gap: .5rem; text-align: left; }
+.tt-grid > div { display: grid; gap: .05rem; }
+.tt-grid b { color: var(--texto); font-weight: 700; font-size: .92rem; }
+.tt-grid p { color: var(--texto-tenue); font-size: .82rem; margin: 0; }
 .tuto-ok { width: 100%; justify-self: center; }
 @media (prefers-reduced-motion: reduce) { .tutorial, .tuto-caja { animation: none !important; } }
 
@@ -487,6 +493,11 @@ body.interior-visible .tienda-final { opacity: 1; pointer-events: auto; }
   width: auto; height: auto;
 }
 .marcos-capa { position: absolute; inset: 0; }
+/* Hojas que se mecen con la brisa sobre la vegetación */
+.brisa { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 2; }
+.hoja-brisa { position: absolute; width: var(--s); color: #2f5a24; opacity: .5; transform-origin: 50% 100%; animation: swayHoja var(--dur) ease-in-out var(--delay) infinite alternate; filter: drop-shadow(0 2px 3px rgba(0,0,0,.5)); }
+.hoja-brisa svg { width: 100%; height: auto; display: block; fill: currentColor; }
+@keyframes swayHoja { from { transform: rotate(var(--r1)); } to { transform: rotate(var(--r2)); } }
 /* Canvas del humo del porro: angosto y alineado con la estela pintada; la
    brasa queda en la base-centro. */
 .humo-capa { position: absolute; left: 27.5%; top: 18%; width: 10%; height: 31%; pointer-events: none; filter: blur(1.5px); }
@@ -497,15 +508,15 @@ body.interior-visible .tienda-final { opacity: 1; pointer-events: auto; }
 .mascota-viva {
   position: absolute; left: 30%; top: 40%; width: 31%; height: 18.5%;
   transform-origin: 50% 100%;
-  animation: mecerMascota 3s ease-in-out infinite alternate;
+  transform-origin: 50% 55%;
+  animation: respirarMascota 3.2s ease-in-out infinite alternate;
   pointer-events: none;
 }
-/* Se mece desde la base (pivote en los pies) sin subir, para no descubrir al
-   monito que viene pintado debajo; va un poco más grande para taparlo bien. */
-@keyframes mecerMascota {
-  0%   { transform: scale(1.07) rotate(-1.8deg); }
-  50%  { transform: scale(1.09) rotate(0deg); }
-  100% { transform: scale(1.07) rotate(1.8deg); }
+/* "Respira" desde su centro (siempre a escala ≥ 1): así SIEMPRE cubre al monito
+   que viene pintado debajo y nunca se ve doble. */
+@keyframes respirarMascota {
+  from { transform: scale(1.02); }
+  to   { transform: scale(1.075); }
 }
 @media (prefers-reduced-motion: reduce) { .mascota-viva { animation: none; } }
 

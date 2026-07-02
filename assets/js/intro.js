@@ -70,12 +70,23 @@ export function montarIntro() {
     window.dispatchEvent(new Event("thw:tienda"));  // avisa que ya se ve la tienda
   }
 
+  // Scroll fluido: el scroll marca un frame OBJETIVO; un loop acerca el frame
+  // ACTUAL a ese objetivo suavemente (lerp), dibujando los intermedios. Así el
+  // recorrido fluye aunque el scroll salte.
+  let objetivo = 0, actual = 0, corriendo = false;
   function alScrollear() {
     if (terminado) return;
     const p = progreso();
-    dibujar(Math.round(p * (TOTAL - 1)));
+    objetivo = p * (TOTAL - 1);
     if (marca) marca.style.opacity = String(Math.max(0, 1 - p * 5));
     if (p >= 0.97) finalizar();
+    if (!corriendo) { corriendo = true; requestAnimationFrame(animarFrames); }
+  }
+  function animarFrames() {
+    actual += (objetivo - actual) * 0.16;
+    if (Math.abs(objetivo - actual) < 0.35) { actual = objetivo; corriendo = false; }
+    dibujar(Math.round(actual));
+    if (corriendo) requestAnimationFrame(animarFrames);
   }
 
   window.addEventListener("scroll", alScrollear, { passive: true });
