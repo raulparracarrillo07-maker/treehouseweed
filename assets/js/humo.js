@@ -1,18 +1,17 @@
-// Humo del porro: bocanadas difusas sin forma definida que suben desde la
-// brasa, se expanden y se disipan. Dibujadas en un canvas chico (.humo-capa)
-// sobre la imagen final. Nada de líneas ni hebras: solo manchas suaves con
-// blur para que nunca se vea "raro". Todo en fracciones del canvas para que
-// escale con la imagen.
+// Humo del porro: una estela continua que sube desde la brasa, serpentea de
+// forma coherente (todas las volutas a la misma altura comparten la ondulación,
+// que "fluye" hacia arriba) y se ensancha al disiparse. Dibujada en el canvas
+// chico (.humo-capa) sobre la imagen. Todo en fracciones del canvas para escalar.
 const EMISOR = { x: 0.5, y: 0.98 }; // brasa del porro dentro del canvas
-const MAX = 9;                      // bocanadas vivas a la vez
-const CADA_MS = 340;                // ritmo de emisión
+const MAX = 20;                     // volutas vivas a la vez
+const CADA_MS = 150;                // ritmo de emisión (columna continua)
 
 export function montarHumo(canvas) {
   if (!canvas) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   const ctx = canvas.getContext("2d");
-  const nubes = [];
+  const volutas = [];
   let ultima = 0;
 
   function ajustar() {
@@ -24,17 +23,13 @@ export function montarHumo(canvas) {
   window.addEventListener("resize", ajustar);
 
   function emitir() {
-    if (nubes.length >= MAX) return;
-    nubes.push({
-      x: EMISOR.x + (Math.random() - 0.5) * 0.04,
-      y: EMISOR.y,
-      r: 0.03 + Math.random() * 0.025,    // radio inicial (fracción del alto)
-      sube: 0.0015 + Math.random() * 0.001,
-      deriva: -0.0004 + (Math.random() - 0.5) * 0.0005, // sesgo a la izquierda (sigue la estela)
-      giro: Math.random() * 0.5 + 0.2,
-      fase: Math.random() * Math.PI * 2,
+    if (volutas.length >= MAX) return;
+    volutas.push({
+      x0: EMISOR.x + (Math.random() - 0.5) * 0.02,
+      r: 0.016 + Math.random() * 0.014,   // delgado cerca de la brasa
+      sube: 0.0015 + Math.random() * 0.0007,
       vida: 0,
-      dur: 150 + Math.random() * 60,
+      dur: 230 + Math.random() * 90,
     });
   }
 
@@ -48,21 +43,25 @@ export function montarHumo(canvas) {
     const w = canvas.width, h = canvas.height;
     ctx.clearRect(0, 0, w, h);
 
-    for (let i = nubes.length - 1; i >= 0; i--) {
-      const n = nubes[i];
-      n.vida++;
-      if (n.vida > n.dur) { nubes.splice(i, 1); continue; }
+    for (let i = volutas.length - 1; i >= 0; i--) {
+      const v = volutas[i];
+      v.vida++;
+      if (v.vida > v.dur) { volutas.splice(i, 1); continue; }
 
-      const t = n.vida / n.dur;                       // 0 → 1
-      const y = n.y - n.sube * n.vida;                // sube constante
-      const x = n.x + n.deriva * n.vida
-        + Math.sin(n.fase + n.vida * 0.05) * 0.02 * n.giro * t; // vaivén leve
-      const r = n.r * (1 + t * 1.9);                  // se expande al subir
-      const alfa = Math.sin(Math.PI * t) * 0.17;      // aparece y se disuelve
+      const t = v.vida / v.dur;                 // 0 → 1
+      const subido = v.sube * v.vida;           // cuánto ha subido
+      const y = EMISOR.y - subido;
+      // Serpenteo coherente: depende de la altura subida + el tiempo (fluye
+      // hacia arriba). La amplitud crece con la altura (la estela se abre).
+      const x = v.x0
+        + Math.sin(subido * 42 + ahora * 0.0026) * (0.012 + subido * 0.55);
+      const r = v.r * (1 + t * 3.2);            // se ensancha al subir
+      // Más densa cerca de la brasa, se disuelve arriba.
+      const alfa = Math.sin(Math.PI * t) * 0.22 * (1 - t * 0.35);
 
       const g = ctx.createRadialGradient(x * w, y * h, 0, x * w, y * h, r * h);
-      g.addColorStop(0, `rgba(214, 218, 224, ${alfa})`);
-      g.addColorStop(0.6, `rgba(214, 218, 224, ${alfa * 0.4})`);
+      g.addColorStop(0, `rgba(220, 224, 230, ${alfa})`);
+      g.addColorStop(0.55, `rgba(214, 218, 224, ${alfa * 0.45})`);
       g.addColorStop(1, "rgba(214, 218, 224, 0)");
       ctx.fillStyle = g;
       ctx.beginPath();
