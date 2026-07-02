@@ -149,11 +149,12 @@ body.en-seccion::before {
 .volver:hover { border-color: var(--texto-tenue); color: var(--texto); }
 
 .fab { position: fixed; bottom: 1rem; z-index: 50; padding: .85rem 1.3rem; border-radius: 999px; font-weight: 700; box-shadow: var(--sombra); transition: transform .18s ease; }
-#fab-carrito { right: 1rem; background: linear-gradient(180deg, var(--oro-claro), var(--oro)); color: #241701; display: inline-flex; align-items: center; gap: .5rem; }
+#fab-carrito { right: 1rem; background: linear-gradient(180deg, var(--oro-claro), var(--oro)); color: #241701; align-items: center; gap: .5rem; }
+body.en-seccion #fab-carrito { display: inline-flex; }
 #fab-carrito #badge-carrito { background: #241701; color: var(--oro-claro); min-width: 1.4rem; height: 1.4rem; padding: 0 .3rem; border-radius: 999px; display: inline-grid; place-items: center; font-size: .82rem; }
 #fab-carrito.rebote { animation: reboteBadge .45s ease; }
 @keyframes reboteBadge { 0%,100% { transform: scale(1); } 35% { transform: scale(1.14); } }
-.fab-wa { left: 1rem; background: var(--verde); color: #fff; text-decoration: none; }
+.fab-ig { left: 1rem; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; text-decoration: none; }
 
 /* --- Carrito tipo cajón --- */
 .panel { position: fixed; right: 1rem; bottom: 4.8rem; z-index: 50; width: min(380px, 92vw); background: linear-gradient(180deg, #18211b, #121812); border: 1px solid rgba(217,164,65,.2); border-radius: 18px; padding: 1.1rem; box-shadow: 0 20px 50px rgba(0,0,0,.6); display: grid; gap: .55rem; max-height: 74vh; overflow: auto; animation: subirPanel .3s cubic-bezier(.22,1,.36,1) both; }

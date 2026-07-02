@@ -1,12 +1,12 @@
-import { montarPuertaEdad } from "./age-gate.js?v=11";
-import { montarIntro } from "./intro.js?v=11";
-import { montarHumo } from "./humo.js?v=11";
-import { montarMonito } from "./monito.js?v=11";
-import { iniciarSmooth, revelar } from "./anim.js?v=11";
-import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=11";
-import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=11";
-import { renderCarrito } from "./ui-cart.js?v=11";
-import { construirMensaje, construirURL } from "./whatsapp.js?v=11";
+import { montarPuertaEdad } from "./age-gate.js?v=12";
+import { montarIntro } from "./intro.js?v=12";
+import { montarHumo } from "./humo.js?v=12";
+import { montarMonito } from "./monito.js?v=12";
+import { iniciarSmooth, revelar } from "./anim.js?v=12";
+import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=12";
+import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=12";
+import { renderCarrito } from "./ui-cart.js?v=12";
+import { construirMensaje, construirURL } from "./whatsapp.js?v=12";
 
 let catalogo, config, carrito = carritoVacio();
 let monito;
@@ -52,7 +52,8 @@ function cablearFabs() {
     document.getElementById("panel-carrito").classList.toggle("oculto");
   });
   document.getElementById("fab-nosotros").addEventListener("click", () => monito.abrir("nosotros"));
-  document.getElementById("fab-whatsapp").href = construirURL(config.whatsapp, `Hola ${config.marca}, tengo una duda.`);
+  const ig = config.contacto && config.contacto.instagram;
+  document.getElementById("fab-instagram").href = ig ? `https://instagram.com/${ig}` : "#";
 }
 
 // Polvo dorado flotando en la puerta de edad (detalle premium del inicio).
