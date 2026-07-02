@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=25" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=26" />
   <style>
     /* Pantalla de carga (crítico inline: se ve al instante, sin esperar el CSS externo) */
     #loader{position:fixed;inset:0;z-index:200;display:grid;place-items:center;align-content:center;gap:1.1rem;
@@ -70,7 +70,10 @@
   <main id="app" class="contenedor"></main>
   <footer class="aviso">Consume con responsabilidad. Producto solo para mayores de edad.</footer>
   <div id="tienda-hint" class="tienda-hint" aria-hidden="true">Doble toca una sección</div>
-  <button id="fab-nosotros" class="fab-nosotros">Sobre nosotros</button>
+  <button id="fab-nosotros" class="fab-nosotros">
+    <img src="assets/img/tipos/sativa.png" alt="" aria-hidden="true" />
+    <span>Sobre nosotros</span>
+  </button>
   <button id="fab-carrito" class="fab">Carrito <span id="badge-carrito">0</span></button>
   <div id="social" class="social">
     <a id="soc-ig" class="soc soc-ig" target="_blank" rel="noopener" aria-label="Instagram de TreeHouseWeed">
@@ -134,6 +137,6 @@
     })();
   </script>
   <script src="assets/js/lib/lenis.min.js"></script>
-  <script type="module" src="assets/js/main.js?v=25"></script>
+  <script type="module" src="assets/js/main.js?v=26"></script>
 </body>
 </html>

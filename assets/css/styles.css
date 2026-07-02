@@ -174,15 +174,15 @@ body.en-seccion #fab-carrito { display: inline-flex; }
 #fab-carrito #badge-carrito { background: #241701; color: var(--oro-claro); min-width: 1.4rem; height: 1.4rem; padding: 0 .3rem; border-radius: 999px; display: inline-grid; place-items: center; font-size: .82rem; }
 #fab-carrito.rebote { animation: reboteBadge .45s ease; }
 @keyframes reboteBadge { 0%,100% { transform: scale(1); } 35% { transform: scale(1.14); } }
-/* Bolitas de redes (abajo-izquierda): entrar a IG/TikTok desde la tienda */
-.social { position: fixed; left: 1rem; bottom: 1.2rem; z-index: 46; display: none; gap: .6rem; }
-body.interior-visible:not(.en-seccion) .social { display: flex; animation: aparecerSocial .5s ease .3s both; }
+/* Bolitas de redes (abajo-izquierda, alineadas con "Sobre nosotros") */
+.social { position: fixed; left: 1.1rem; bottom: 1.5rem; z-index: 46; display: none; gap: .55rem; align-items: center; }
+body.interior-visible:not(.en-seccion) .social { display: flex; animation: aparecerSocial .5s ease .45s both; }
 @keyframes aparecerSocial { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-.soc { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; box-shadow: 0 8px 22px rgba(0,0,0,.5); transition: transform .18s ease; }
-.soc:hover { transform: translateY(-3px); }
-.soc svg { width: 23px; height: 23px; fill: #fff; }
+.soc { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; box-shadow: 0 8px 22px rgba(0,0,0,.55); border: 2px solid rgba(255,255,255,.14); transition: transform .18s ease, box-shadow .18s ease; }
+.soc:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 26px rgba(0,0,0,.6); }
+.soc svg { width: 24px; height: 24px; fill: #fff; }
 .soc-ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-.soc-tt { background: #010101; border: 1px solid rgba(255,255,255,.18); }
+.soc-tt { background: #010101; }
 
 /* --- Carrito tipo cajón --- */
 .panel { position: fixed; right: 1rem; bottom: 4.8rem; z-index: 50; width: min(380px, 92vw); background: linear-gradient(180deg, #18211b, #121812); border: 1px solid rgba(217,164,65,.2); border-radius: 18px; padding: 1.1rem; box-shadow: 0 20px 50px rgba(0,0,0,.6); display: grid; gap: .55rem; max-height: 74vh; overflow: auto; animation: subirPanel .3s cubic-bezier(.22,1,.36,1) both; }
@@ -226,18 +226,26 @@ body.interior-visible:not(.en-seccion) .tienda-hint { display: inline-block; ani
 @keyframes latirHint { 0%,100% { opacity: .78; } 50% { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .tienda-hint { animation: none !important; } }
 
-/* Acceso "Sobre nosotros": pill discreto sobre la tienda final */
+/* Acceso "Sobre nosotros": pill premium con la carita del monito y glow que late */
 .fab-nosotros {
-  position: fixed; left: 50%; bottom: 1.3rem; transform: translateX(-50%);
-  z-index: 45; display: none;
-  background: rgba(16,22,17,.6); backdrop-filter: blur(8px);
-  border: 1px solid rgba(217,164,65,.4); color: var(--oro-claro);
-  padding: .55rem 1.2rem; border-radius: 999px; font-size: .85rem; font-weight: 600;
-  box-shadow: 0 8px 24px rgba(0,0,0,.4); transition: transform .18s ease, border-color .18s ease;
+  position: fixed; left: 50%; bottom: 1.5rem; transform: translateX(-50%);
+  z-index: 45; display: none; align-items: center; gap: .5rem;
+  background: linear-gradient(180deg, rgba(26,36,29,.92), rgba(18,24,18,.92)); backdrop-filter: blur(10px);
+  border: 1px solid rgba(217,164,65,.55); color: var(--oro-claro);
+  padding: .3rem 1.1rem .3rem .35rem; border-radius: 999px; font-size: .92rem; font-weight: 700;
+  letter-spacing: .01em;
+  box-shadow: 0 10px 26px rgba(0,0,0,.55), 0 0 20px rgba(217,164,65,.22);
+  transition: transform .18s ease, border-color .18s ease;
 }
-.fab-nosotros:hover { transform: translateX(-50%) translateY(-2px); border-color: var(--oro); }
-body.interior-visible:not(.en-seccion) .fab-nosotros { display: inline-block; animation: subirNos .5s ease .3s both; }
+.fab-nosotros img { width: 36px; height: 36px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,.5)); }
+.fab-nosotros:hover { border-color: var(--oro); transform: translateX(-50%) translateY(-2px); }
+body.interior-visible:not(.en-seccion) .fab-nosotros { display: inline-flex; animation: subirNos .5s ease .3s both, latirNos 2.8s ease-in-out 1s infinite; }
 @keyframes subirNos { from { opacity: 0; transform: translateX(-50%) translateY(10px); } to { opacity: 1; transform: translateX(-50%); } }
+@keyframes latirNos {
+  0%,100% { box-shadow: 0 10px 26px rgba(0,0,0,.55), 0 0 18px rgba(217,164,65,.2); }
+  50%     { box-shadow: 0 10px 26px rgba(0,0,0,.55), 0 0 32px rgba(217,164,65,.5); }
+}
+@media (prefers-reduced-motion: reduce) { .fab-nosotros { animation: none !important; } }
 
 /* --- Sobre nosotros --- */
 .nosotros-lema { font-family: "Oswald", sans-serif; color: var(--oro-claro); font-size: 1.25rem; font-weight: 500; letter-spacing: .04em; margin-top: .2rem; }

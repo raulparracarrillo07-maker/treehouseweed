@@ -1,4 +1,4 @@
-import { productosDe, destacados } from "./catalog.js?v=25";
+import { productosDe, destacados } from "./catalog.js?v=26";
 
 // Cada sección va sobre el estante que le corresponde por producto:
 // fila de arriba = flores / pre-rolls / vapes; fila de abajo = extractos /
