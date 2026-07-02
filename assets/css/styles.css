@@ -506,7 +506,7 @@ body.interior-visible .tienda-final { opacity: 1; pointer-events: auto; }
 .marcos-capa { position: absolute; inset: 0; }
 /* Canvas del humo del porro: angosto y alineado con la estela pintada; la
    brasa queda en la base-centro. */
-.humo-capa { position: absolute; left: 27.5%; top: 18%; width: 10%; height: 31%; pointer-events: none; filter: blur(1.5px); }
+.humo-capa { position: absolute; left: 26%; top: 15%; width: 13%; height: 34%; pointer-events: none; filter: blur(3px); }
 
 /* Mascota recortada encima de la pintada, con vaivén suave (pivote en la
    base para que no se despegue del mostrador). Va apenas más grande (1.03)
