@@ -514,16 +514,16 @@ body.interior-visible .tienda-final { opacity: 1; pointer-events: auto; }
 .mascota-viva {
   position: absolute; left: 30%; top: 40%; width: 31%; height: 18.5%;
   transform-origin: 50% 100%;
-  transform-origin: 50% 56%;
-  animation: respirarMascota 2.8s ease-in-out infinite alternate;
+  transform-origin: 50% 92%;
+  animation: vivirMascota 3.2s ease-in-out infinite alternate;
   pointer-events: none;
 }
-/* SOLO respira (crece/encoge desde su centro, siempre a escala alta): así el
-   recorte SIEMPRE es más grande y concéntrico al monito pintado y NUNCA lo
-   descubre. Sin movimiento lateral = imposible verse doble. */
-@keyframes respirarMascota {
-  from { transform: scale(1.1); }
-  to   { transform: scale(1.17); }
+/* Ya NO hay monito pintado debajo (imagen nueva con mostrador vacío): el mono
+   puede moverse libre. Se mece de lado a lado, da un leve saltito y respira. */
+@keyframes vivirMascota {
+  0%   { transform: rotate(-3.5deg) translateY(0) scale(1); }
+  50%  { transform: rotate(0deg) translateY(-2.5%) scale(1.03); }
+  100% { transform: rotate(3.5deg) translateY(0) scale(1); }
 }
 @media (prefers-reduced-motion: reduce) { .mascota-viva { animation: none; } }
 
