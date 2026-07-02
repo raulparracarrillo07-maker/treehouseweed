@@ -8,8 +8,28 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/styles.css?v=20" />
+  <style>
+    /* Pantalla de carga (crítico inline: se ve al instante, sin esperar el CSS externo) */
+    #loader{position:fixed;inset:0;z-index:200;display:grid;place-items:center;align-content:center;gap:1.1rem;
+      background:radial-gradient(circle at 50% 38%,#16201a,#080c09);color:#f0c46b;text-align:center;padding:1.5rem;
+      transition:opacity .5s ease}
+    #loader.oculto{opacity:0;pointer-events:none}
+    #loader img{width:min(62vw,240px);height:auto;filter:drop-shadow(0 0 26px rgba(217,164,65,.45));
+      animation:loaderLatir 1.8s ease-in-out infinite}
+    @keyframes loaderLatir{0%,100%{opacity:.85}50%{opacity:1}}
+    .loader-spin{width:34px;height:34px;border:3px solid rgba(217,164,65,.22);border-top-color:#d9a441;
+      border-radius:50%;animation:loaderGira .8s linear infinite}
+    @keyframes loaderGira{to{transform:rotate(360deg)}}
+    .loader-txt{font-family:system-ui,-apple-system,sans-serif;font-size:.85rem;color:#b9c2b6;letter-spacing:.02em}
+    @media (prefers-reduced-motion:reduce){#loader img,.loader-spin{animation:none}}
+  </style>
 </head>
 <body>
+  <div id="loader">
+    <img src="assets/img/logo/treehouseweed-logo-transparente.png" alt="TreeHouseWeed" />
+    <div class="loader-spin" aria-hidden="true"></div>
+    <div class="loader-txt">Entrando a la casa del árbol…</div>
+  </div>
   <div id="puerta-edad" class="puerta">
     <div class="puerta-motas" aria-hidden="true"></div>
     <div class="puerta-caja">
@@ -101,6 +121,18 @@
       <button class="mt" data-sec="contacto" role="tab">Contacto</button>
     </div>
   </div>
+  <script>
+    // Quita la pantalla de carga cuando todo cargó (o a los 7 s como respaldo).
+    (function () {
+      function ocultar() {
+        var l = document.getElementById("loader");
+        if (l && !l.classList.contains("oculto")) { l.classList.add("oculto"); setTimeout(function () { if (l.parentNode) l.remove(); }, 600); }
+      }
+      if (document.readyState === "complete") ocultar();
+      else window.addEventListener("load", ocultar);
+      setTimeout(ocultar, 7000);
+    })();
+  </script>
   <script src="assets/js/lib/lenis.min.js"></script>
   <script type="module" src="assets/js/main.js?v=20"></script>
 </body>
