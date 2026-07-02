@@ -40,11 +40,29 @@ button { font: inherit; cursor: pointer; border: none; }
   background: radial-gradient(circle at 50% 38%, rgba(217,164,65,.10), transparent 55%),
               linear-gradient(to bottom, rgba(8,12,9,.55), rgba(8,12,9,.85));
 }
+/* Motas de luz dorada flotando (polvo mágico de la casa del árbol) */
+.puerta-motas { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.mota { position: absolute; bottom: -10px; width: var(--s); height: var(--s); border-radius: 50%; background: radial-gradient(circle, rgba(240,196,107,.9), rgba(240,196,107,0) 70%); animation: flotarMota var(--dur) linear var(--delay) infinite; }
+@keyframes flotarMota {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .8; }
+  90% { opacity: .5; }
+  100% { transform: translateY(-102vh) translateX(var(--dx)); opacity: 0; }
+}
 .puerta-caja {
   position: relative; z-index: 2;
   max-width: 400px; display: grid; justify-items: center; gap: 1.1rem;
   animation: entrarPuerta .8s cubic-bezier(.22,1,.36,1) both;
 }
+.puerta-badge {
+  display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%;
+  border: 2px solid var(--oro); color: var(--oro-claro);
+  font-family: "Oswald", sans-serif; font-weight: 700; font-size: 1.15rem;
+  letter-spacing: .02em; background: rgba(217,164,65,.08);
+  box-shadow: 0 0 20px rgba(217,164,65,.25), inset 0 0 12px rgba(217,164,65,.15);
+  margin-bottom: .2rem;
+}
+.puerta-badge strong { font-weight: 700; }
 @keyframes entrarPuerta { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 .puerta-logo {
   width: min(74vw, 300px); height: auto;
@@ -147,6 +165,26 @@ button { font: inherit; cursor: pointer; border: none; }
 .toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
 .toast .oro { color: var(--oro-claro); }
 
+/* Acceso "Sobre nosotros": pill discreto sobre la tienda final */
+.fab-nosotros {
+  position: fixed; left: 50%; bottom: 1.3rem; transform: translateX(-50%);
+  z-index: 45; display: none;
+  background: rgba(16,22,17,.6); backdrop-filter: blur(8px);
+  border: 1px solid rgba(217,164,65,.4); color: var(--oro-claro);
+  padding: .55rem 1.2rem; border-radius: 999px; font-size: .85rem; font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0,0,0,.4); transition: transform .18s ease, border-color .18s ease;
+}
+.fab-nosotros:hover { transform: translateX(-50%) translateY(-2px); border-color: var(--oro); }
+body.interior-visible:not(.en-seccion) .fab-nosotros { display: inline-block; animation: subirNos .5s ease .3s both; }
+@keyframes subirNos { from { opacity: 0; transform: translateX(-50%) translateY(10px); } to { opacity: 1; transform: translateX(-50%); } }
+
+/* --- Sobre nosotros --- */
+.nosotros-lema { font-family: "Oswald", sans-serif; color: var(--oro-claro); font-size: 1.25rem; font-weight: 500; letter-spacing: .04em; margin-top: .2rem; }
+.nosotros-intro { color: var(--texto); max-width: 62ch; margin-top: .8rem; line-height: 1.65; }
+.valores { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.6rem; position: relative; z-index: 1; }
+.valor { background: linear-gradient(180deg, #1a241d, #131b16); border: 1px solid rgba(217,164,65,.16); border-radius: var(--radio); padding: 1.3rem; display: grid; gap: .5rem; align-content: start; }
+.valor h3 { font-family: "Oswald", sans-serif; font-weight: 600; font-size: 1.15rem; color: var(--oro-claro); }
+
 .aviso { text-align: center; color: var(--texto-tenue); font-size: .8rem; padding: 2rem 1rem 5rem; }
 @media (prefers-reduced-motion: reduce) {
   .puerta-caja, .panel, .producto, .fab, .toast { animation: none !important; transition: none !important; }
@@ -154,10 +192,13 @@ button { font: inherit; cursor: pointer; border: none; }
 }
 
 /* --- Intro de video (recorrido cinemático, primera sección del scroll) --- */
-/* Carrito/WhatsApp/aviso aparecen solo cuando ya pasaste el recorrido. */
+/* Carrito/WhatsApp/aviso SOLO dentro de una sección; nunca sobre la puerta
+   de edad, el recorrido ni la tienda final. */
 .fab, .aviso { display: none; }
-body.en-tienda .fab { display: inline-block; }
-body.en-tienda .aviso { display: block; }
+body.en-seccion .fab { display: inline-flex; }
+body.en-seccion .aviso { display: block; }
+/* En la tienda final la imagen queda FIJA: sin scroll = sin juego ni trabas. */
+body.interior-visible:not(.en-seccion) { overflow: hidden; }
 
 .intro { position: relative; height: 420vh; z-index: 40; background: #000; }
 #app { position: relative; z-index: 1; }
@@ -238,16 +279,22 @@ body.en-tienda .aviso { display: block; }
 }
 body.interior-visible .tienda-final { opacity: 1; pointer-events: auto; }
 
+/* El tamaño lo DEFINE la imagen (shrink-to-fit): así las zonas clickeables,
+   que van en % de este box, coinciden exactas con la imagen — sin franjas de
+   object-fit que las desalineen. */
 .tienda-final-box {
   position: relative; z-index: 1;
-  aspect-ratio: 941 / 1672;
-  width: min(100vw, calc(100svh * 941 / 1672));
-  container-type: inline-size;
+  line-height: 0;
 }
-.tienda-final-img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.tienda-final-img {
+  display: block;
+  max-width: 100vw; max-height: 100svh;
+  width: auto; height: auto;
+}
 .marcos-capa { position: absolute; inset: 0; }
-/* Canvas del humo del porro: la brasa queda en la base-centro del canvas. */
-.humo-capa { position: absolute; left: 30%; top: 16%; width: 16%; height: 32%; pointer-events: none; filter: blur(2px); }
+/* Canvas del humo del porro: angosto y alineado con la estela pintada; la
+   brasa queda en la base-centro. */
+.humo-capa { position: absolute; left: 27.5%; top: 18%; width: 10%; height: 31%; pointer-events: none; filter: blur(1.5px); }
 
 /* Mascota recortada encima de la pintada, con vaivén suave (pivote en la
    base para que no se despegue del mostrador). Va apenas más grande (1.03)

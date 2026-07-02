@@ -3,9 +3,9 @@
 // sobre la imagen final. Nada de líneas ni hebras: solo manchas suaves con
 // blur para que nunca se vea "raro". Todo en fracciones del canvas para que
 // escale con la imagen.
-const EMISOR = { x: 0.5, y: 0.95 }; // brasa del porro dentro del canvas
-const MAX = 10;                     // bocanadas vivas a la vez
-const CADA_MS = 320;                // ritmo de emisión
+const EMISOR = { x: 0.5, y: 0.98 }; // brasa del porro dentro del canvas
+const MAX = 9;                      // bocanadas vivas a la vez
+const CADA_MS = 340;                // ritmo de emisión
 
 export function montarHumo(canvas) {
   if (!canvas) return;
@@ -26,11 +26,11 @@ export function montarHumo(canvas) {
   function emitir() {
     if (nubes.length >= MAX) return;
     nubes.push({
-      x: EMISOR.x + (Math.random() - 0.5) * 0.05,
+      x: EMISOR.x + (Math.random() - 0.5) * 0.04,
       y: EMISOR.y,
-      r: 0.05 + Math.random() * 0.04,     // radio inicial (fracción del alto)
-      sube: 0.0016 + Math.random() * 0.001,
-      deriva: (Math.random() - 0.5) * 0.0006,
+      r: 0.03 + Math.random() * 0.025,    // radio inicial (fracción del alto)
+      sube: 0.0015 + Math.random() * 0.001,
+      deriva: -0.0004 + (Math.random() - 0.5) * 0.0005, // sesgo a la izquierda (sigue la estela)
       giro: Math.random() * 0.5 + 0.2,
       fase: Math.random() * Math.PI * 2,
       vida: 0,
@@ -57,8 +57,8 @@ export function montarHumo(canvas) {
       const y = n.y - n.sube * n.vida;                // sube constante
       const x = n.x + n.deriva * n.vida
         + Math.sin(n.fase + n.vida * 0.05) * 0.02 * n.giro * t; // vaivén leve
-      const r = n.r * (1 + t * 2.6);                  // se expande al subir
-      const alfa = Math.sin(Math.PI * t) * 0.20;      // aparece y se disuelve
+      const r = n.r * (1 + t * 1.9);                  // se expande al subir
+      const alfa = Math.sin(Math.PI * t) * 0.17;      // aparece y se disuelve
 
       const g = ctx.createRadialGradient(x * w, y * h, 0, x * w, y * h, r * h);
       g.addColorStop(0, `rgba(214, 218, 224, ${alfa})`);

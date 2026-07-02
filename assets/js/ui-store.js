@@ -1,4 +1,4 @@
-import { productosDe, destacados } from "./catalog.js?v=9";
+import { productosDe, destacados } from "./catalog.js?v=10";
 
 // Cada sección va sobre el estante que le corresponde por producto:
 // fila de arriba = flores / pre-rolls / vapes; fila de abajo = extractos /
@@ -15,12 +15,12 @@ const CUARTOS = [
 // Rectángulo clickeable de cada panel (centro x/y + ancho/alto, en % sobre
 // la imagen de la tienda), medido uno por uno sobre tienda-final.png.
 const POS = [
-  { x: 14.0, y: 30.0, w: 23.0, h: 19.0 }, // flores (sup-izq)
-  { x: 14.25, y: 52.0, w: 23.5, h: 19.0 }, // pre-rolls (med-izq)
-  { x: 85.75, y: 30.0, w: 23.5, h: 19.0 }, // vapes (sup-der)
+  { x: 14.0, y: 29.5, w: 23.0, h: 20.0 }, // flores (sup-izq)
+  { x: 14.25, y: 51.0, w: 23.5, h: 20.5 }, // pre-rolls (med-izq)
+  { x: 85.75, y: 29.5, w: 23.5, h: 19.5 }, // vapes (sup-der)
   { x: 86.0, y: 51.5, w: 24.0, h: 19.0 }, // extractos (med-der)
-  { x: 11.5, y: 71.75, w: 21.0, h: 20.5 }, // edibles (inf-izq)
-  { x: 87.5, y: 72.75, w: 23.0, h: 19.5 }, // smoke shop (inf-der)
+  { x: 11.5, y: 71.5, w: 21.0, h: 20.5 }, // edibles (inf-izq)
+  { x: 87.5, y: 72.5, w: 23.0, h: 19.5 }, // smoke shop (inf-der)
 ];
 
 // Pone una zona invisible clickeable sobre cada panel de la imagen
@@ -139,11 +139,50 @@ export function renderDestacados(contenedor, catalogo, alAgregar) {
   contenedor.prepend(seccion);
 }
 
+export function renderNosotros(contenedor, config) {
+  const zona = config?.entrega?.zona || "tu ciudad";
+  const horario = config?.entrega?.horario || "todos los días";
+  const seccion = document.createElement("section");
+  seccion.className = "seccion-cat nosotros";
+  seccion.innerHTML = `
+    <div class="cat-header">
+      <span class="cat-eyebrow">TreeHouseWeed</span>
+      <h2>Sobre nosotros</h2>
+    </div>
+    <p class="nosotros-lema">Relaxation has never been this simple.</p>
+    <p class="nosotros-intro">
+      Somos una casa que selecciona a mano cada flor, extracto y comestible.
+      Nuestro compromiso es simple: producto de la más alta calidad, entrega
+      rápida y discreta, y un trato honesto en cada pedido. Tu tranquilidad
+      es nuestra prioridad.
+    </p>
+    <div class="valores">
+      <article class="valor">
+        <h3>Calidad seleccionada</h3>
+        <p class="tenue">Flores, extractos y comestibles elegidos por sabor, potencia y frescura. Nada entra al menú si no lo probaríamos nosotros.</p>
+      </article>
+      <article class="valor">
+        <h3>Entrega segura y discreta</h3>
+        <p class="tenue">Protocolos claros en cada envío para que tu compra llegue tranquila. Cuidamos tu privacidad de principio a fin.</p>
+      </article>
+      <article class="valor">
+        <h3>Siempre disponibles</h3>
+        <p class="tenue">${horario}. Haz tu pedido cuando lo necesites en ${zona} y te acompañamos en todo el proceso.</p>
+      </article>
+      <article class="valor">
+        <h3>Pago sin complicaciones</h3>
+        <p class="tenue">Efectivo, transferencia o terminal. Sin pagos en línea: cierras tu pedido por WhatsApp, fácil y directo.</p>
+      </article>
+    </div>`;
+  contenedor.appendChild(seccion);
+}
+
 export function renderInfo(contenedor, cuartoId, config) {
   if (cuartoId === "nosotros") {
-    contenedor.innerHTML = `<h2>Nosotros</h2>
-      <p class="tenue">En TreeHouseWeed cuidamos cada producto. Calidad, sabor y confianza, directo a tu puerta.</p>`;
-  } else {
+    renderNosotros(contenedor, config);
+    return;
+  }
+  {
     contenedor.innerHTML = `<h2>Cómo pedir</h2>
       <p>Arma tu carrito y confirma por WhatsApp. Sin pagos en línea.</p>`;
 

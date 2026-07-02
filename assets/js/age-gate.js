@@ -14,7 +14,7 @@ export function montarPuertaEdad({ storage, overlay, onEntrar, edadMinima }) {
     onEntrar();
     return;
   }
-  overlay.querySelector("[data-edad-min]").textContent = String(edadMinima);
+  overlay.querySelectorAll("[data-edad-min]").forEach((el) => { el.textContent = String(edadMinima); });
   overlay.querySelector("[data-si]").addEventListener("click", () => {
     guardarMayoria(storage);
     overlay.classList.add("oculto");

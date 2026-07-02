@@ -7,17 +7,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=9" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=10" />
 </head>
 <body>
   <div id="puerta-edad" class="puerta">
+    <div class="puerta-motas" aria-hidden="true"></div>
     <div class="puerta-caja">
+      <span class="puerta-badge"><strong data-edad-min>18</strong>+</span>
       <img class="puerta-logo" src="assets/img/logo/treehouseweed-logo-transparente.png" alt="TreeHouseWeed" />
       <p class="puerta-lema">Relaxation has never been this simple</p>
       <div class="puerta-linea"></div>
-      <p class="puerta-pregunta">¿Eres mayor de <strong data-edad-min>18</strong> años?</p>
+      <p class="puerta-pregunta">Para entrar, confirma que eres mayor de edad</p>
       <div class="puerta-botones">
-        <button data-si class="btn-oro">Sí, soy mayor de edad</button>
+        <button data-si class="btn-oro">Sí, soy mayor de <span data-edad-min>18</span></button>
         <button data-no class="btn-tenue">Salir</button>
       </div>
       <p class="puerta-aviso">Producto exclusivo para adultos. Consume con responsabilidad.</p>
@@ -47,11 +49,12 @@
   </section>
   <main id="app" class="contenedor"></main>
   <footer class="aviso">Consume con responsabilidad. Producto solo para mayores de edad.</footer>
+  <button id="fab-nosotros" class="fab-nosotros">Sobre nosotros</button>
   <button id="fab-carrito" class="fab">Carrito <span id="badge-carrito">0</span></button>
   <a id="fab-whatsapp" class="fab fab-wa" target="_blank" rel="noopener">WhatsApp</a>
   <aside id="panel-carrito" class="panel oculto"></aside>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="assets/js/lib/lenis.min.js"></script>
-  <script type="module" src="assets/js/main.js?v=9"></script>
+  <script type="module" src="assets/js/main.js?v=10"></script>
 </body>
 </html>

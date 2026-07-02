@@ -10,6 +10,12 @@ export function montarIntro() {
 
   intro.classList.remove("oculto");
 
+  // El recorrido SIEMPRE debe empezar desde el frame 0. Si el navegador
+  // restaura una posición de scroll anterior, el recorrido "arrancaría en
+  // otra parte" y se vería trabado; por eso lo forzamos a cero.
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  window.scrollTo(0, 0);
+
   const TOTAL = 121;
   const imgs = [];
   for (let i = 1; i <= TOTAL; i++) {
@@ -56,7 +62,9 @@ export function montarIntro() {
     if (terminado) return;
     terminado = true;
     if (marca) marca.style.opacity = "0";
-    document.body.classList.add("interior-visible", "en-tienda");
+    // Muestra la tienda final. NO ponemos "en-tienda" aquí: el carrito y el
+    // WhatsApp solo aparecen dentro de una sección, no sobre esta pantalla.
+    document.body.classList.add("interior-visible");
     intro.style.height = "100svh";     // ya no queda recorrido por encima
     window.scrollTo(0, 0);
   }
