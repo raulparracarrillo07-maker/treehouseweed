@@ -1,4 +1,4 @@
-import { productosDe, destacados } from "./catalog.js?v=10";
+import { productosDe, destacados } from "./catalog.js?v=11";
 
 // Cada sección va sobre el estante que le corresponde por producto:
 // fila de arriba = flores / pre-rolls / vapes; fila de abajo = extractos /
@@ -50,52 +50,107 @@ const NOMBRE_CAT = {
   "extractos": "Extractos", "edibles": "Edibles", "smoke-shop": "Smoke Shop",
 };
 
+const money = (n) => `$${Number(n).toLocaleString("es-MX")}`;
+
+// Extrae el tipo (Indica/Sativa/Híbrida) del inicio de la descripción y
+// devuelve { tipo, resto } para pintar el badge y limpiar el texto.
+function partirTipo(desc = "") {
+  const m = desc.match(/^(Indica|Sativa|Híbrida)\s*·?\s*(.*)$/i);
+  if (!m) return { tipo: null, resto: desc };
+  return { tipo: m[1], resto: m[2] };
+}
+
+// Agrupa las presentaciones del mismo producto (mismo nombre) en un solo
+// grupo para mostrarlas como una tarjeta con chips de tamaño.
+function agrupar(productos) {
+  const grupos = [];
+  const idx = new Map();
+  for (const p of productos) {
+    if (!idx.has(p.nombre)) { idx.set(p.nombre, grupos.length); grupos.push({ nombre: p.nombre, desc: p.descripcion, items: [] }); }
+    grupos[idx.get(p.nombre)].items.push(p);
+  }
+  return grupos;
+}
+
 export function renderCuarto(contenedor, catalogo, categoria, alAgregar) {
   const productos = productosDe(catalogo, categoria);
+  const grupos = agrupar(productos);
   const titulo = NOMBRE_CAT[categoria] || categoria;
   const seccion = document.createElement("section");
   seccion.className = "seccion-cat";
   seccion.innerHTML = `
     <div class="cat-header">
       <span class="cat-eyebrow">TreeHouseWeed</span>
-      <h2>${titulo}<span class="cat-conteo">${productos.length} ${productos.length === 1 ? "opción" : "opciones"}</span></h2>
+      <h2>${titulo}<span class="cat-conteo">${grupos.length} ${grupos.length === 1 ? "producto" : "productos"}</span></h2>
     </div>
+    <img class="cat-marca" src="assets/img/logo/treehouseweed-logo-transparente.png" alt="" aria-hidden="true" />
     <div class="productos"></div>`;
   contenedor.appendChild(seccion);
   const grid = seccion.querySelector(".productos");
 
-  for (const p of productos) {
+  for (const g of grupos) {
+    const { tipo, resto } = partirTipo(g.desc);
     const card = document.createElement("article");
     card.className = "producto";
 
-    const pres = document.createElement("span");
-    pres.className = "pres";
-    pres.textContent = p.presentacion;
+    if (tipo) {
+      const b = document.createElement("span");
+      b.className = "tipo tipo-" + tipo.toLowerCase().replace("í", "i");
+      b.textContent = tipo;
+      card.appendChild(b);
+    }
 
     const nombre = document.createElement("h3");
-    nombre.textContent = p.nombre;
+    nombre.textContent = g.nombre;
+    card.appendChild(nombre);
 
-    const detalle = document.createElement("p");
-    detalle.className = "tenue";
-    detalle.textContent = p.descripcion;
+    if (resto) {
+      const detalle = document.createElement("p");
+      detalle.className = "tenue";
+      detalle.textContent = resto;
+      card.appendChild(detalle);
+    }
+
+    // Chips de presentación (uno por variante). Al elegir cambia el precio.
+    let elegido = g.items[0];
+    const precio = document.createElement("span");
+    precio.className = "precio";
+
+    if (g.items.length > 1) {
+      const chips = document.createElement("div");
+      chips.className = "chips";
+      g.items.forEach((it, i) => {
+        const chip = document.createElement("button");
+        chip.className = "chip" + (i === 0 ? " activo" : "");
+        chip.textContent = it.presentacion;
+        chip.addEventListener("click", () => {
+          elegido = it;
+          chips.querySelectorAll(".chip").forEach((c) => c.classList.remove("activo"));
+          chip.classList.add("activo");
+          precio.textContent = money(it.precio);
+        });
+        chips.appendChild(chip);
+      });
+      card.appendChild(chips);
+    } else {
+      const pres = document.createElement("span");
+      pres.className = "pres";
+      pres.textContent = g.items[0].presentacion;
+      card.insertBefore(pres, nombre);
+    }
 
     const fila = document.createElement("div");
     fila.className = "precio-fila";
-    const precio = document.createElement("span");
-    precio.className = "precio";
-    precio.textContent = `$${p.precio.toLocaleString("es-MX")}`;
+    precio.textContent = money(elegido.precio);
     const btn = document.createElement("button");
     btn.className = "btn-add";
     btn.dataset.agregar = "";
     btn.textContent = "Agregar";
-    btn.addEventListener("click", () => alAgregar(p));
+    btn.addEventListener("click", () => alAgregar(elegido));
     fila.appendChild(precio);
     fila.appendChild(btn);
-
-    card.appendChild(pres);
-    card.appendChild(nombre);
-    card.appendChild(detalle);
     card.appendChild(fila);
+
     grid.appendChild(card);
   }
 }

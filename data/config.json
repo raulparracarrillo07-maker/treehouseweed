@@ -5,5 +5,10 @@
   "entrega": {
     "zona": "Chihuahua capital",
     "horario": "365 días del año, de 8 AM a 11 PM"
+  },
+  "contacto": {
+    "correo": "contacto.treehouseweed@gmail.com",
+    "instagram": "treehouseweed_",
+    "tiktok": "treehouseweed"
   }
 }

@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=10" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=11" />
 </head>
 <body>
   <div id="puerta-edad" class="puerta">
@@ -54,7 +54,24 @@
   <a id="fab-whatsapp" class="fab fab-wa" target="_blank" rel="noopener">WhatsApp</a>
   <aside id="panel-carrito" class="panel oculto"></aside>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Anfitrión: el monito te cuenta sobre la marca (zoom + habla + secciones) -->
+  <div id="monito-modal" class="monito-modal oculto" role="dialog" aria-modal="true" aria-label="Conoce TreeHouseWeed con el anfitrión">
+    <button class="monito-cerrar" aria-label="Cerrar">✕</button>
+    <div class="monito-escena">
+      <div class="monito-fig-wrap">
+        <img class="monito-fig" src="assets/img/mascota-viva.png" alt="Anfitrión de TreeHouseWeed" />
+      </div>
+      <div class="monito-globo" aria-live="polite"></div>
+    </div>
+    <div class="monito-tabs" role="tablist">
+      <button class="mt" data-sec="nosotros" role="tab">Nosotros</button>
+      <button class="mt" data-sec="trabajo" role="tab">Cómo trabajamos</button>
+      <button class="mt" data-sec="calidad" role="tab">Nuestra calidad</button>
+      <button class="mt" data-sec="contacto" role="tab">Contacto</button>
+    </div>
+  </div>
   <script src="assets/js/lib/lenis.min.js"></script>
-  <script type="module" src="assets/js/main.js?v=10"></script>
+  <script type="module" src="assets/js/main.js?v=11"></script>
 </body>
 </html>

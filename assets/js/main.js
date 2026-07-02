@@ -1,13 +1,15 @@
-import { montarPuertaEdad } from "./age-gate.js?v=10";
-import { montarIntro } from "./intro.js?v=10";
-import { montarHumo } from "./humo.js?v=10";
-import { iniciarSmooth, revelar } from "./anim.js?v=10";
-import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=10";
-import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=10";
-import { renderCarrito } from "./ui-cart.js?v=10";
-import { construirMensaje, construirURL } from "./whatsapp.js?v=10";
+import { montarPuertaEdad } from "./age-gate.js?v=11";
+import { montarIntro } from "./intro.js?v=11";
+import { montarHumo } from "./humo.js?v=11";
+import { montarMonito } from "./monito.js?v=11";
+import { iniciarSmooth, revelar } from "./anim.js?v=11";
+import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=11";
+import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=11";
+import { renderCarrito } from "./ui-cart.js?v=11";
+import { construirMensaje, construirURL } from "./whatsapp.js?v=11";
 
 let catalogo, config, carrito = carritoVacio();
+let monito;
 
 function refrescarCarrito() {
   renderCarrito(
@@ -49,7 +51,7 @@ function cablearFabs() {
   document.getElementById("fab-carrito").addEventListener("click", () => {
     document.getElementById("panel-carrito").classList.toggle("oculto");
   });
-  document.getElementById("fab-nosotros").addEventListener("click", () => abrirInfo("nosotros"));
+  document.getElementById("fab-nosotros").addEventListener("click", () => monito.abrir("nosotros"));
   document.getElementById("fab-whatsapp").href = construirURL(config.whatsapp, `Hola ${config.marca}, tengo una duda.`);
 }
 
@@ -74,6 +76,7 @@ function sembrarMotas() {
 async function init() {
   config = await fetch("data/config.json").then((r) => r.json());
   catalogo = await fetch("data/productos.json").then((r) => r.json());
+  monito = montarMonito(config);
   cablearFabs();
   sembrarMotas();
   refrescarCarrito();
@@ -96,6 +99,18 @@ function entrarSitio() {
   });
   montarIntro();    // el video avanza con el scroll; al final aparecen los cartelones
   montarHumo(document.getElementById("humo-canvas"));
+
+  // Tocar al monito abre la charla con el anfitrión.
+  const mascota = document.querySelector(".mascota-viva");
+  if (mascota) {
+    mascota.style.pointerEvents = "auto";
+    mascota.style.cursor = "pointer";
+    mascota.setAttribute("role", "button");
+    mascota.setAttribute("tabindex", "0");
+    mascota.setAttribute("aria-label", "Habla con el anfitrión de TreeHouseWeed");
+    mascota.addEventListener("click", () => monito.abrir("nosotros"));
+    mascota.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); monito.abrir("nosotros"); } });
+  }
 }
 
 function cerrarCarrito() {
