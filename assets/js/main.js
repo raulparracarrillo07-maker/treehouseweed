@@ -1,12 +1,12 @@
-import { montarPuertaEdad } from "./age-gate.js?v=27";
-import { montarIntro } from "./intro.js?v=27";
-import { montarHumo } from "./humo.js?v=27";
-import { montarMonito } from "./monito.js?v=27";
-import { iniciarSmooth, revelar } from "./anim.js?v=27";
-import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=27";
-import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=27";
-import { renderCarrito } from "./ui-cart.js?v=27";
-import { construirMensaje } from "./whatsapp.js?v=27";
+import { montarPuertaEdad } from "./age-gate.js?v=28";
+import { montarIntro } from "./intro.js?v=28";
+import { montarHumo } from "./humo.js?v=28";
+import { montarMonito } from "./monito.js?v=28";
+import { iniciarSmooth, revelar } from "./anim.js?v=28";
+import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=28";
+import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=28";
+import { renderCarrito } from "./ui-cart.js?v=28";
+import { construirMensaje } from "./whatsapp.js?v=28";
 
 let catalogo, config, carrito = carritoVacio();
 let monito;

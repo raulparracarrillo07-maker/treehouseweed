@@ -169,6 +169,11 @@ body.en-seccion::before {
   transition: transform .2s cubic-bezier(.22,1,.36,1), border-color .2s ease;
 }
 .producto:hover { transform: translateY(-4px); border-color: rgba(217,164,65,.5); }
+/* Foto del producto */
+.producto-foto { position: relative; width: 100%; aspect-ratio: 1 / 1; display: grid; place-items: center; padding: .4rem; margin-bottom: .35rem; border-radius: 12px; background: radial-gradient(circle at 50% 42%, rgba(255,255,255,.06), rgba(0,0,0,.12) 72%); overflow: hidden; }
+.producto-foto img { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 5px 10px rgba(0,0,0,.5)); }
+.producto-foto.sin-foto .ph { max-width: 55%; opacity: .12; filter: none; }
+.producto-foto .tipo { position: absolute; top: .4rem; left: .4rem; }
 .producto h3 { font-family: "Oswald", sans-serif; font-weight: 600; font-size: 1.02rem; letter-spacing: .01em; line-height: 1.15; }
 .producto .pres { display: inline-block; align-self: start; font-size: .72rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--oro-claro); background: rgba(217,164,65,.12); border: 1px solid rgba(217,164,65,.22); padding: .18rem .55rem; border-radius: 999px; }
 /* Badge de tipo de flor */

@@ -1,4 +1,4 @@
-import { productosDe, destacados } from "./catalog.js?v=27";
+import { productosDe, destacados } from "./catalog.js?v=28";
 
 // Cada sección va sobre el estante que le corresponde por producto:
 // fila de arriba = flores / pre-rolls / vapes; fila de abajo = extractos /
@@ -104,12 +104,26 @@ export function renderCuarto(contenedor, catalogo, categoria, alAgregar) {
     const card = document.createElement("article");
     card.className = "producto";
 
+    // Foto del producto (con el badge de tipo encima, en la esquina).
+    const conFoto = g.items.find((it) => it.imagen);
+    const foto = document.createElement("div");
+    foto.className = "producto-foto" + (conFoto ? "" : " sin-foto");
+    if (conFoto) {
+      const im = document.createElement("img");
+      im.src = conFoto.imagen; im.alt = g.nombre; im.loading = "lazy";
+      foto.appendChild(im);
+    } else {
+      const ph = document.createElement("img");
+      ph.src = "assets/img/logo/treehouseweed-logo-transparente.png"; ph.alt = ""; ph.className = "ph";
+      foto.appendChild(ph);
+    }
     if (tipo) {
       const b = document.createElement("span");
       b.className = "tipo tipo-" + tipo.toLowerCase().replace("í", "i");
       b.textContent = tipo;
-      card.appendChild(b);
+      foto.appendChild(b);
     }
+    card.appendChild(foto);
 
     const nombre = document.createElement("h3");
     nombre.textContent = g.nombre;
