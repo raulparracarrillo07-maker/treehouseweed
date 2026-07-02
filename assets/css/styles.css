@@ -194,7 +194,7 @@ body.interior-visible:not(.en-seccion) .social { display: flex; animation: apare
 .panel-total { display: flex; align-items: baseline; justify-content: space-between; margin-top: .5rem; }
 .panel-total span { color: var(--texto-tenue); font-size: .9rem; }
 .panel-total strong { color: var(--oro-claro); font-family: "Oswald", sans-serif; font-size: 1.5rem; }
-.panel .btn-pedir { display: flex; align-items: center; justify-content: center; gap: .5rem; background: var(--verde); color: #fff; font-weight: 700; padding: .85rem; border-radius: 999px; margin-top: .3rem; transition: filter .15s ease, transform .15s ease; }
+.panel .btn-pedir { display: flex; align-items: center; justify-content: center; gap: .5rem; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; font-weight: 700; padding: .85rem; border-radius: 999px; margin-top: .3rem; transition: filter .15s ease, transform .15s ease; }
 .panel .btn-pedir:hover { filter: brightness(1.08); }
 .panel .btn-pedir:active { transform: scale(.98); }
 .panel-confianza { color: var(--texto-tenue); font-size: .76rem; text-align: center; margin-top: .3rem; line-height: 1.5; }
@@ -266,6 +266,12 @@ body.interior-visible:not(.en-seccion) .fab-nosotros { display: inline-block; an
 
 /* --- Modal del anfitrión (el monito habla) --- */
 body.modal-abierto { overflow: hidden; }
+/* Con un modal/tutorial abierto, ocultar todo lo flotante para que no se
+   asome borroso por detrás. */
+body.modal-abierto .social,
+body.modal-abierto .fab-nosotros,
+body.modal-abierto .tienda-hint,
+body.modal-abierto .fab { display: none !important; }
 .monito-modal {
   position: fixed; inset: 0; z-index: 80;
   display: grid; grid-template-rows: 1fr auto; align-items: center;
@@ -491,14 +497,15 @@ body.interior-visible .tienda-final { opacity: 1; pointer-events: auto; }
 .mascota-viva {
   position: absolute; left: 30%; top: 40%; width: 31%; height: 18.5%;
   transform-origin: 50% 100%;
-  animation: mecerMascota 2.8s ease-in-out infinite alternate;
+  animation: mecerMascota 3s ease-in-out infinite alternate;
   pointer-events: none;
 }
-/* Vaivén más notorio: se mece a los lados, da un leve saltito y respira. */
+/* Se mece desde la base (pivote en los pies) sin subir, para no descubrir al
+   monito que viene pintado debajo; va un poco más grande para taparlo bien. */
 @keyframes mecerMascota {
-  0%   { transform: scale(1.03) rotate(-3deg) translateY(0); }
-  50%  { transform: scale(1.06) rotate(0deg) translateY(-2.4%); }
-  100% { transform: scale(1.03) rotate(3deg) translateY(0); }
+  0%   { transform: scale(1.07) rotate(-1.8deg); }
+  50%  { transform: scale(1.09) rotate(0deg); }
+  100% { transform: scale(1.07) rotate(1.8deg); }
 }
 @media (prefers-reduced-motion: reduce) { .mascota-viva { animation: none; } }
 

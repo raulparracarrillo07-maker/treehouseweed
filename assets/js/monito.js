@@ -13,7 +13,7 @@ function seccionTrabajo(config) {
   return `
     <p>Es bien fácil pedir:</p>
     <p><b>1.</b> Elige tus productos y arma tu carrito.<br>
-       <b>2.</b> Mándanos el pedido por WhatsApp.<br>
+       <b>2.</b> Mándanos el pedido por Instagram (se copia solo, tú lo pegas).<br>
        <b>3.</b> Dinos si es a domicilio, punto medio o pasas por él.</p>
     <p>Entregamos en <b>${zona}</b>. Compras mayores a $500 llevan envío gratis según la zona. Pagas en efectivo, transferencia o terminal.</p>`;
 }
@@ -26,13 +26,11 @@ function seccionCalidad() {
 
 function seccionContacto(config) {
   const c = config?.contacto || {};
-  const wa = config?.whatsapp ? `https://wa.me/${config.whatsapp}` : "#";
   const horario = config?.entrega?.horario || "todos los días";
   const filas = [];
-  filas.push(`<a href="${wa}" target="_blank" rel="noopener">WhatsApp — escríbenos directo</a>`);
-  if (c.correo) filas.push(`<a href="mailto:${c.correo}">${c.correo}</a>`);
-  if (c.instagram) filas.push(`<a href="https://instagram.com/${c.instagram}" target="_blank" rel="noopener">Instagram @${c.instagram}</a>`);
+  if (c.instagram) filas.push(`<a href="https://ig.me/m/${c.instagram}" target="_blank" rel="noopener">Instagram @${c.instagram} — pedidos y dudas</a>`);
   if (c.tiktok) filas.push(`<a href="https://tiktok.com/@${c.tiktok}" target="_blank" rel="noopener">TikTok @${c.tiktok}</a>`);
+  if (c.correo) filas.push(`<a href="mailto:${c.correo}">${c.correo}</a>`);
   return `
     <p>Escríbenos cuando quieras, estamos <b>${horario}</b>:</p>
     <div class="monito-contacto">${filas.map((f) => `<span>${f}</span>`).join("")}</div>`;

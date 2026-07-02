@@ -1,12 +1,12 @@
-import { montarPuertaEdad } from "./age-gate.js?v=14";
-import { montarIntro } from "./intro.js?v=14";
-import { montarHumo } from "./humo.js?v=14";
-import { montarMonito } from "./monito.js?v=14";
-import { iniciarSmooth, revelar } from "./anim.js?v=14";
-import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=14";
-import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=14";
-import { renderCarrito } from "./ui-cart.js?v=14";
-import { construirMensaje, construirURL } from "./whatsapp.js?v=14";
+import { montarPuertaEdad } from "./age-gate.js?v=15";
+import { montarIntro } from "./intro.js?v=15";
+import { montarHumo } from "./humo.js?v=15";
+import { montarMonito } from "./monito.js?v=15";
+import { iniciarSmooth, revelar } from "./anim.js?v=15";
+import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=15";
+import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=15";
+import { renderCarrito } from "./ui-cart.js?v=15";
+import { construirMensaje } from "./whatsapp.js?v=15";
 
 let catalogo, config, carrito = carritoVacio();
 let monito;
@@ -19,12 +19,21 @@ function refrescarCarrito() {
     {
       entrega: config.entrega,
       onCambiar: (id, cant) => { carrito = cambiarCantidad(carrito, id, cant); refrescarCarrito(); },
-      onPedir: () => {
-        const url = construirURL(config.whatsapp, construirMensaje(carrito, config));
-        window.open(url, "_blank");
-      },
+      onPedir: hacerPedido,
     }
   );
+}
+
+// El pedido se cierra por Instagram: como IG no deja pre-cargar el mensaje,
+// se copia el pedido al portapapeles y se abre el chat para pegarlo.
+async function hacerPedido() {
+  if (carrito.items.length === 0) return;
+  const msg = construirMensaje(carrito, config);
+  try { await navigator.clipboard.writeText(msg); } catch (e) { /* sin permiso: igual abrimos el chat */ }
+  const ig = config.contacto && config.contacto.instagram;
+  const url = ig ? `https://ig.me/m/${ig}` : "https://instagram.com/";
+  window.open(url, "_blank");
+  mostrarToast("Pedido copiado. Pégalo en el chat de Instagram y envíalo");
 }
 
 let toastTimer;
@@ -120,13 +129,14 @@ function entrarSitio() {
 function montarTutorial() {
   const tuto = document.getElementById("tutorial");
   if (!tuto) return;
-  const cerrar = () => tuto.classList.add("oculto");
+  const cerrar = () => { tuto.classList.add("oculto"); document.body.classList.remove("modal-abierto"); };
   tuto.querySelector(".tuto-ok").addEventListener("click", cerrar);
   tuto.addEventListener("click", (e) => { if (e.target === tuto) cerrar(); });
   window.addEventListener("thw:tienda", () => {
     if (sessionStorage.getItem("thw_tuto") === "visto") return;
     sessionStorage.setItem("thw_tuto", "visto");
     tuto.classList.remove("oculto");
+    document.body.classList.add("modal-abierto");
   });
 }
 

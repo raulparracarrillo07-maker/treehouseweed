@@ -1,4 +1,4 @@
-import { total, contarItems } from "./cart.js?v=14";
+import { total, contarItems } from "./cart.js?v=15";
 
 const money = (n) => `$${n.toLocaleString("es-MX")}`;
 
@@ -63,9 +63,14 @@ export function renderCarrito(panel, badge, carrito, handlers) {
 
   const btn = document.createElement("button");
   btn.className = "btn-pedir";
-  btn.textContent = "Pedir por WhatsApp";
+  btn.textContent = "Pedir por Instagram";
   btn.addEventListener("click", handlers.onPedir);
   panel.appendChild(btn);
+
+  const nota = document.createElement("p");
+  nota.className = "panel-confianza";
+  nota.textContent = "Copiamos tu pedido y abrimos tu chat: solo pégalo y envíalo.";
+  panel.appendChild(nota);
 
   if (handlers.entrega) {
     const conf = document.createElement("p");
