@@ -423,14 +423,13 @@ body.modal-abierto .fab { display: none !important; }
 }
 
 /* --- Vitrina: fondo de estantería (marco fijo) + catálogo con scroll dentro --- */
-.vitrina-sec { display: grid; place-items: start center; }
+.vitrina-sec { width: 100vw; margin-left: calc(50% - 50vw); display: grid; place-items: start center; }
 .vitrina {
   position: relative;
   aspect-ratio: 941 / 1672;
-  width: min(100%, calc((100svh - 5.5rem) * 941 / 1672));
+  width: min(100vw, calc(100svh * 941 / 1672));
   background-size: cover; background-position: center; background-repeat: no-repeat;
-  border-radius: 12px; overflow: hidden;
-  box-shadow: 0 12px 34px rgba(0,0,0,.5);
+  overflow: hidden;
 }
 /* Recuadro central donde va el catálogo (encima de la estantería), con scroll */
 .vitrina-scroll {
