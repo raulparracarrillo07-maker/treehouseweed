@@ -51,19 +51,47 @@ button { font: inherit; cursor: pointer; border: none; }
 }
 .puerta-caja {
   position: relative; z-index: 2;
-  max-width: 400px; display: grid; justify-items: center; gap: 1.1rem;
-  animation: entrarPuerta .8s cubic-bezier(.22,1,.36,1) both;
+  max-width: 380px; display: grid; justify-items: center; gap: .9rem;
+}
+/* Entrada escalonada de cada elemento */
+.puerta-caja > * { animation: entrarPuerta .7s cubic-bezier(.22,1,.36,1) both; }
+.puerta-caja > :nth-child(1) { animation-delay: .05s; }
+.puerta-caja > :nth-child(2) { animation-delay: .16s; }
+.puerta-caja > :nth-child(3) { animation-delay: .26s; }
+.puerta-caja > :nth-child(4) { animation-delay: .36s; }
+.puerta-caja > :nth-child(5) { animation-delay: .48s; }
+@keyframes entrarPuerta { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+/* Tagline en español bajo el lema */
+.puerta-tagline { color: var(--texto); font-size: .95rem; max-width: 30ch; line-height: 1.5; margin-top: -.3rem; }
+
+/* Tarjeta premium de verificación, con la carita del monito asomando arriba */
+.puerta-tarjeta {
+  position: relative; margin-top: 2.4rem; width: 100%;
+  padding: 2.6rem 1.4rem 1.5rem;
+  background: rgba(20,28,22,.5); backdrop-filter: blur(12px);
+  border: 1px solid rgba(217,164,65,.3); border-radius: 22px;
+  display: grid; justify-items: center; gap: .8rem;
+  box-shadow: 0 20px 50px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06);
+}
+.puerta-mascota {
+  position: absolute; top: 0; left: 50%; width: 88px; height: 88px; object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,.55));
+  animation: saludarMascota 2.8s ease-in-out infinite;
+}
+@keyframes saludarMascota {
+  0%,100% { transform: translate(-50%, -60%) rotate(-6deg); }
+  50%     { transform: translate(-50%, -63%) rotate(6deg); }
 }
 .puerta-badge {
-  display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%;
+  display: grid; place-items: center; width: 50px; height: 50px; border-radius: 50%;
   border: 2px solid var(--oro); color: var(--oro-claro);
-  font-family: "Oswald", sans-serif; font-weight: 700; font-size: 1.15rem;
+  font-family: "Oswald", sans-serif; font-weight: 700; font-size: 1rem;
   letter-spacing: .02em; background: rgba(217,164,65,.08);
   box-shadow: 0 0 20px rgba(217,164,65,.25), inset 0 0 12px rgba(217,164,65,.15);
-  margin-bottom: .2rem;
 }
 .puerta-badge strong { font-weight: 700; }
-@keyframes entrarPuerta { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .puerta-mascota, .puerta-logo { animation: none !important; } }
 .puerta-logo {
   width: min(74vw, 300px); height: auto;
   filter: drop-shadow(0 0 30px rgba(217,164,65,.45)) drop-shadow(0 10px 30px rgba(0,0,0,.7));
@@ -337,7 +365,9 @@ body.modal-abierto .fab { display: none !important; }
   filter: drop-shadow(0 18px 34px rgba(0,0,0,.6));
   animation: zoomMonito .5s cubic-bezier(.22,1,.36,1) both;
 }
-@keyframes zoomMonito { from { transform: scale(.62); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+/* El recorte carga el brazo/porro a la izquierda; se empuja un poco a la
+   derecha para que el monito se vea centrado. */
+@keyframes zoomMonito { from { transform: scale(.62) translateX(6%); opacity: 0; } to { transform: scale(1) translateX(6%); opacity: 1; } }
 .monito-fig { display: block; width: 100%; height: auto; transform-origin: 50% 100%; }
 .monito-fig.hablando { animation: hablar .26s ease-in-out 5; }
 @keyframes hablar {

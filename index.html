@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=26" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=27" />
   <style>
     /* Pantalla de carga (crítico inline: se ve al instante, sin esperar el CSS externo) */
     #loader{position:fixed;inset:0;z-index:200;display:grid;place-items:center;align-content:center;gap:1.1rem;
@@ -33,14 +33,17 @@
   <div id="puerta-edad" class="puerta">
     <div class="puerta-motas" aria-hidden="true"></div>
     <div class="puerta-caja">
-      <span class="puerta-badge"><strong data-edad-min>18</strong>+</span>
       <img class="puerta-logo" src="assets/img/logo/treehouseweed-logo-transparente.png" alt="TreeHouseWeed" />
       <p class="puerta-lema">Relaxation has never been this simple</p>
-      <div class="puerta-linea"></div>
-      <p class="puerta-pregunta">Para entrar, confirma que eres mayor de edad</p>
-      <div class="puerta-botones">
-        <button data-si class="btn-oro">Sí, soy mayor de <span data-edad-min>18</span></button>
-        <button data-no class="btn-tenue">Salir</button>
+      <p class="puerta-tagline">Tu dispensario premium, escondido en la casa del árbol.</p>
+      <div class="puerta-tarjeta">
+        <img class="puerta-mascota" src="assets/img/tipos/sativa.png" alt="" aria-hidden="true" />
+        <span class="puerta-badge"><strong data-edad-min>18</strong>+</span>
+        <p class="puerta-pregunta">¿Ya eres mayor de edad?</p>
+        <div class="puerta-botones">
+          <button data-si class="btn-oro">Sí, entrar</button>
+          <button data-no class="btn-tenue">Aún no</button>
+        </div>
       </div>
       <p class="puerta-aviso">Producto exclusivo para adultos. Consume con responsabilidad.</p>
     </div>
@@ -137,6 +140,6 @@
     })();
   </script>
   <script src="assets/js/lib/lenis.min.js"></script>
-  <script type="module" src="assets/js/main.js?v=26"></script>
+  <script type="module" src="assets/js/main.js?v=27"></script>
 </body>
 </html>
