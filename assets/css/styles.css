@@ -97,15 +97,17 @@ button { font: inherit; cursor: pointer; border: none; }
 /* Marca de agua fija del logo detrás de todas las secciones */
 body.en-seccion::before {
   content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background: url(../img/logo/treehouseweed-logo-transparente.png) center 40%/min(58vw, 420px) no-repeat;
-  opacity: .028;
+  background:
+    url(../img/logo/treehouseweed-logo-transparente.png) center 30%/min(56vw, 400px) no-repeat,
+    url(../img/logo/treehouseweed-logo-transparente.png) center 82%/min(40vw, 280px) no-repeat;
+  opacity: .05;
 }
 #app > * { position: relative; z-index: 1; }
 .seccion-cat { position: relative; overflow: hidden; }
 /* Marca de agua grande del logo, tenue, detrás del contenido */
 .cat-marca {
   position: absolute; top: 2%; right: -6%; width: min(48vw, 360px); height: auto;
-  opacity: .045; pointer-events: none; z-index: 0; user-select: none;
+  opacity: .07; pointer-events: none; z-index: 0; user-select: none;
 }
 .cat-header { position: relative; z-index: 1; display: grid; gap: .35rem; margin-bottom: .4rem; }
 .cat-eyebrow { font-family: "Oswald", sans-serif; font-size: .8rem; letter-spacing: .22em; text-transform: uppercase; }
@@ -184,6 +186,8 @@ body.interior-visible:not(.en-seccion) .social { display: flex; animation: apare
 
 /* --- Carrito tipo cajón --- */
 .panel { position: fixed; right: 1rem; bottom: 4.8rem; z-index: 50; width: min(380px, 92vw); background: linear-gradient(180deg, #18211b, #121812); border: 1px solid rgba(217,164,65,.2); border-radius: 18px; padding: 1.1rem; box-shadow: 0 20px 50px rgba(0,0,0,.6); display: grid; gap: .55rem; max-height: 74vh; overflow: auto; animation: subirPanel .3s cubic-bezier(.22,1,.36,1) both; }
+.panel::after { content: ""; position: absolute; right: -12%; bottom: -8%; width: 190px; height: 190px; background: url(../img/logo/treehouseweed-logo-transparente.png) center/contain no-repeat; opacity: .06; pointer-events: none; z-index: 0; }
+.panel > * { position: relative; z-index: 1; }
 @keyframes subirPanel { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 .panel h3 { font-family: "Oswald", sans-serif; font-size: 1.3rem; font-weight: 600; margin-bottom: .2rem; }
 .panel .fila { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: .6rem; padding: .55rem 0; border-bottom: 1px solid rgba(255,255,255,.06); }
@@ -250,13 +254,15 @@ body.interior-visible:not(.en-seccion) .fab-nosotros { display: inline-block; an
 }
 .tutorial.oculto { display: none; }
 .tuto-caja {
-  position: relative; width: min(420px, 92vw);
+  position: relative; width: min(420px, 92vw); overflow: hidden;
   background: linear-gradient(180deg, #1b241d, #121812);
   border: 1px solid rgba(217,164,65,.3); border-radius: 20px;
   padding: 1.6rem 1.4rem; box-shadow: 0 24px 60px rgba(0,0,0,.6);
   display: grid; gap: .3rem; text-align: center;
   animation: entrarPuerta .5s cubic-bezier(.22,1,.36,1) both;
 }
+.tuto-caja::after { content: ""; position: absolute; right: -14%; bottom: -12%; width: 230px; height: 230px; background: url(../img/logo/treehouseweed-logo-transparente.png) center/contain no-repeat; opacity: .05; pointer-events: none; z-index: 0; }
+.tuto-caja > * { position: relative; z-index: 1; }
 .tuto-eyebrow { font-family: "Oswald", sans-serif; color: var(--oro); font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; }
 .tuto-titulo { font-family: "Oswald", sans-serif; font-size: 1.7rem; font-weight: 700; color: var(--texto); margin-bottom: .6rem; }
 .tuto-pasos { list-style: none; display: grid; gap: .9rem; text-align: left; margin: .2rem 0 1.2rem; }
@@ -498,11 +504,6 @@ body.interior-visible .tienda-final { opacity: 1; pointer-events: auto; }
   width: auto; height: auto;
 }
 .marcos-capa { position: absolute; inset: 0; }
-/* Hojas que se mecen con la brisa sobre la vegetación */
-.brisa { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 2; }
-.hoja-brisa { position: absolute; width: var(--s); color: #2f5a24; opacity: .5; transform-origin: 50% 100%; animation: swayHoja var(--dur) ease-in-out var(--delay) infinite alternate; filter: drop-shadow(0 2px 3px rgba(0,0,0,.5)); }
-.hoja-brisa svg { width: 100%; height: auto; display: block; fill: currentColor; }
-@keyframes swayHoja { from { transform: rotate(var(--r1)); } to { transform: rotate(var(--r2)); } }
 /* Canvas del humo del porro: angosto y alineado con la estela pintada; la
    brasa queda en la base-centro. */
 .humo-capa { position: absolute; left: 27.5%; top: 18%; width: 10%; height: 31%; pointer-events: none; filter: blur(1.5px); }
@@ -513,15 +514,16 @@ body.interior-visible .tienda-final { opacity: 1; pointer-events: auto; }
 .mascota-viva {
   position: absolute; left: 30%; top: 40%; width: 31%; height: 18.5%;
   transform-origin: 50% 100%;
-  transform-origin: 50% 55%;
-  animation: respirarMascota 3.2s ease-in-out infinite alternate;
+  transform-origin: 50% 58%;
+  animation: vivirMascota 3s ease-in-out infinite alternate;
   pointer-events: none;
 }
-/* "Respira" desde su centro (siempre a escala ≥ 1): así SIEMPRE cubre al monito
-   que viene pintado debajo y nunca se ve doble. */
-@keyframes respirarMascota {
-  from { transform: scale(1.02); }
-  to   { transform: scale(1.075); }
+/* Va MÁS GRANDE (escala alta) para tapar por completo al monito pintado; con
+   ese margen puede mecerse y respirar sin que asome el de atrás. */
+@keyframes vivirMascota {
+  0%   { transform: scale(1.16) translateX(-1%) rotate(-1.6deg); }
+  50%  { transform: scale(1.19) translateX(0) rotate(0deg); }
+  100% { transform: scale(1.16) translateX(1%) rotate(1.6deg); }
 }
 @media (prefers-reduced-motion: reduce) { .mascota-viva { animation: none; } }
 
