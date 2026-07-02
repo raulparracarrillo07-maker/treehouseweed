@@ -514,16 +514,16 @@ body.interior-visible .tienda-final { opacity: 1; pointer-events: auto; }
 .mascota-viva {
   position: absolute; left: 30%; top: 40%; width: 31%; height: 18.5%;
   transform-origin: 50% 100%;
-  transform-origin: 50% 58%;
-  animation: vivirMascota 3s ease-in-out infinite alternate;
+  transform-origin: 50% 56%;
+  animation: respirarMascota 2.8s ease-in-out infinite alternate;
   pointer-events: none;
 }
-/* Va MÁS GRANDE (escala alta) para tapar por completo al monito pintado; con
-   ese margen puede mecerse y respirar sin que asome el de atrás. */
-@keyframes vivirMascota {
-  0%   { transform: scale(1.16) translateX(-1%) rotate(-1.6deg); }
-  50%  { transform: scale(1.19) translateX(0) rotate(0deg); }
-  100% { transform: scale(1.16) translateX(1%) rotate(1.6deg); }
+/* SOLO respira (crece/encoge desde su centro, siempre a escala alta): así el
+   recorte SIEMPRE es más grande y concéntrico al monito pintado y NUNCA lo
+   descubre. Sin movimiento lateral = imposible verse doble. */
+@keyframes respirarMascota {
+  from { transform: scale(1.1); }
+  to   { transform: scale(1.17); }
 }
 @media (prefers-reduced-motion: reduce) { .mascota-viva { animation: none; } }
 
