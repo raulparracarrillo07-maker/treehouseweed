@@ -423,7 +423,7 @@ body.modal-abierto .fab { display: none !important; }
 }
 
 /* --- Vitrina: fondo de estantería (marco fijo) + catálogo con scroll dentro --- */
-.vitrina-sec { width: 100vw; margin-left: calc(50% - 50vw); display: grid; place-items: start center; }
+.vitrina-sec { width: 100vw; margin-left: calc(50% - 50vw); min-height: 100svh; display: grid; place-items: center; }
 .vitrina {
   position: relative;
   aspect-ratio: 941 / 1672;
@@ -436,6 +436,7 @@ body.modal-abierto .fab { display: none !important; }
   position: absolute; left: 19.5%; right: 19.5%; top: 18.5%; bottom: 27%;
   overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch;
   padding: .35rem; scrollbar-width: thin;
+  touch-action: pan-y; overscroll-behavior: contain;
 }
 .vitrina-scroll::-webkit-scrollbar { width: 5px; }
 .vitrina-scroll::-webkit-scrollbar-thumb { background: rgba(217,164,65,.4); border-radius: 999px; }
@@ -458,7 +459,17 @@ body.modal-abierto .fab { display: none !important; }
    de edad, el recorrido ni la tienda final. */
 .fab, .aviso { display: none; }
 body.en-seccion .fab { display: inline-flex; }
-body.en-seccion .aviso { display: block; }
+/* Dentro de una sección (vitrina) la página queda FIJA a pantalla completa:
+   solo hace scroll el recuadro interno de la vitrina (sin juego de página). */
+body.en-seccion { overflow: hidden; height: 100svh; touch-action: none; overscroll-behavior: none; }
+body.en-seccion #app { padding-top: 0; }
+body.en-seccion .aviso { display: none; }
+/* El botón de volver flota fijo para alcanzarlo sin necesidad de scroll. */
+body.en-seccion .volver {
+  position: fixed; top: .8rem; left: .8rem; margin: 0; z-index: 40;
+  background: rgba(8,12,9,.72); backdrop-filter: blur(8px); color: var(--texto);
+  border-color: rgba(217,164,65,.35);
+}
 /* En la tienda final la imagen queda FIJA: sin scroll = sin juego ni trabas.
    En iOS `overflow:hidden` no basta (deja el rebote táctil); por eso además
    se bloquea el gesto con touch-action y overscroll, y en JS con touchmove. */

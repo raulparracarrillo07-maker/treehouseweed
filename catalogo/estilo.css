@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;600;700&family=Outfit:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&display=swap');
+
+:root{
+  --gold:#E7B53C;
+  --gold-hi:#F8DE8A;
+  --gold-deep:#B8862A;
+  --ink:#F4F1E9;
+  --ink-dim:rgba(244,241,233,.72);
+}
+
+/* ---------- TEMAS ---------- */
+.tema-negro{
+  --page-bg:radial-gradient(120% 80% at 20% -5%, #12251b 0%, #0a130e 42%, #050705 100%);
+  --glow:radial-gradient(60% 40% at 78% 22%, rgba(45,120,85,.28), transparent 70%);
+  --card:rgba(255,255,255,.045);
+  --card-line:rgba(231,181,60,.38);
+  --rail:rgba(255,255,255,.04);
+}
+.tema-verde{
+  --page-bg:radial-gradient(120% 85% at 25% -8%, #1f6b4e 0%, #0c3a2a 45%, #041d14 100%);
+  --glow:radial-gradient(55% 40% at 80% 18%, rgba(120,220,160,.20), transparent 70%);
+  --card:rgba(0,0,0,.30);
+  --card-line:rgba(231,181,60,.40);
+  --rail:rgba(0,0,0,.28);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+@page{size:1080px 1300px;margin:0}
+html,body{background:#000}
+body{font-family:'Outfit',system-ui,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+.page{
+  position:relative;width:1080px;height:1300px;overflow:hidden;
+  background:var(--page-bg);color:var(--ink);
+  page-break-after:always;
+}
+.page:last-child{page-break-after:auto}
+
+/* brillo cósmico + marca de agua de hojas */
+.page::before{
+  content:"";position:absolute;inset:0;background:var(--glow);pointer-events:none;
+}
+.wm{
+  position:absolute;inset:-40px;pointer-events:none;opacity:1;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23E7B53C' fill-opacity='0.045' d='M12 2c.3 2 .7 3.9 1.9 5.6-.9-.4-1.8-.9-2.6-1.6.6 2 1.5 3.9 3.2 5.3-1.1-.2-2.2-.6-3.2-1.2 1 1.9 2.4 3.6 4.4 4.6-1.3.1-2.6-.1-3.8-.6 1.3 1.7 3.1 2.9 5.3 3.4-2 .5-4.1.4-6-.3.2 1 .6 2 1.2 2.8h-4c.6-.8 1-1.8 1.2-2.8-1.9.7-4 .8-6 .3 2.2-.5 4-1.7 5.3-3.4-1.2.5-2.5.7-3.8.6 2-1 3.4-2.7 4.4-4.6-1 .6-2.1 1-3.2 1.2 1.7-1.4 2.6-3.3 3.2-5.3-.8.7-1.7 1.2-2.6 1.6C11.3 5.9 11.7 4 12 2z'/%3E%3C/svg%3E");
+  background-size:150px 150px;transform:rotate(-8deg);
+}
+
+/* vignette inferior para profundidad */
+.page::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 70% at 50% 115%, rgba(0,0,0,.55), transparent 60%);
+}
+
+.content{position:relative;z-index:3;height:100%}
+
+/* ---------- marca dorada (hoja pequeña arriba) ---------- */
+.leaf-mark{width:64px;height:64px;display:block;filter:drop-shadow(0 3px 8px rgba(0,0,0,.5))}
+.leaf-mark path{fill:url(#goldgrad)}
+
+/* brillo dorado en títulos */
+.gold-text{
+  background:linear-gradient(180deg,var(--gold-hi) 0%,var(--gold) 45%,var(--gold-deep) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.45));
+}
+
+/* ================= PORTADA ================= */
+.cover{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 90px}
+.cover .topmark{position:absolute;top:70px;left:50%;transform:translateX(-50%)}
+.cover-logo{width:760px;max-width:82%;filter:drop-shadow(0 12px 40px rgba(231,181,60,.28)) drop-shadow(0 4px 10px rgba(0,0,0,.6))}
+.cover .eyebrow{margin-top:8px;font-family:'Oswald';font-weight:600;letter-spacing:.42em;font-size:22px;color:var(--gold);text-indent:.42em}
+.cover .tag{margin-top:30px;font-family:'Oswald';font-weight:700;text-transform:uppercase;font-size:40px;line-height:1.06;letter-spacing:.01em}
+.cover .sub{margin-top:16px;font-size:20px;color:var(--ink-dim);max-width:640px}
+.chevrons{position:absolute;bottom:78px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:2px;align-items:center}
+.chevrons svg{width:52px;height:26px}
+.chevrons svg path{stroke:#fff;stroke-width:2.4;fill:none;opacity:.9}
+.chevrons svg:nth-child(2) path{opacity:.6}
+.chevrons svg:nth-child(3) path{opacity:.3}
+
+/* ================= RAIL NAV ================= */
+.rail{position:absolute;left:46px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:34px;z-index:4}
+.rail-item{display:flex;align-items:center;gap:20px}
+.rail-ic{width:80px;height:80px;border-radius:22px;background:var(--rail);
+  border:1px solid rgba(231,181,60,.22);display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 8px 18px rgba(0,0,0,.45)}
+.rail-ic svg{width:42px;height:42px;stroke:#fff;stroke-width:1.7;fill:none;opacity:.9}
+.rail-ic svg .fillw{fill:#fff;stroke:none;opacity:.92}
+.rail-item span{font-family:'Oswald';font-weight:600;letter-spacing:.06em;font-size:22px;color:#fff}
+.rail-item.on .rail-ic{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 8px 22px rgba(231,181,60,.25)}
+.rail-item.on span{color:var(--gold)}
+
+/* ================= HEADER DE SECCIÓN ================= */
+.sec-head{padding-top:52px;text-align:center}
+.sec-head .leaf-mark{margin:0 auto 10px}
+.sec-title{font-family:'Oswald';font-weight:700;text-transform:uppercase;font-size:52px;letter-spacing:.03em}
+.sec-count{font-family:'Oswald';font-weight:600;font-size:26px;color:var(--gold);margin-top:2px}
+
+/* ================= PRODUCTOS FLOR ================= */
+.flowers{margin-left:320px;margin-right:70px;margin-top:30px;display:flex;flex-direction:column;gap:24px}
+.prod{display:grid;grid-template-columns:250px 1fr;align-items:center;gap:22px;
+  background:var(--card);border:1px solid var(--card-line);border-radius:28px;padding:22px 30px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 12px 30px rgba(0,0,0,.4)}
+.prod-photo{width:250px;height:250px;display:flex;align-items:center;justify-content:center}
+.prod-photo img{max-width:100%;max-height:100%;filter:drop-shadow(0 14px 22px rgba(0,0,0,.55))}
+.prod-info{display:flex;flex-direction:column;gap:14px}
+.prod-name{font-family:'Oswald';font-weight:700;text-transform:uppercase;font-size:30px;letter-spacing:.02em;line-height:1}
+.badge{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+  font-family:'Oswald';font-weight:600;font-size:15px;letter-spacing:.12em;text-transform:uppercase;
+  padding:6px 14px;border-radius:999px;border:1px solid currentColor}
+.badge::before{content:"";width:9px;height:9px;border-radius:50%;background:currentColor}
+.b-indica{color:#8b7ff0}.b-sativa{color:#e6a13c}.b-hibrida{color:#54c98a}
+.chips{display:flex;flex-wrap:wrap;gap:12px}
+.chip{display:flex;align-items:baseline;gap:8px;background:rgba(0,0,0,.35);
+  border:1px solid rgba(231,181,60,.25);border-radius:14px;padding:10px 16px}
+.chip .q{font-family:'Oswald';font-weight:600;font-size:20px;color:var(--ink-dim)}
+.chip .p{font-family:'Oswald';font-weight:700;font-size:23px;color:var(--gold-hi)}
+
+/* pie de marca */
+.brandfoot{position:absolute;bottom:34px;left:0;right:0;text-align:center;
+  font-family:'Oswald';font-weight:600;letter-spacing:.34em;font-size:16px;color:rgba(231,181,60,.55)}

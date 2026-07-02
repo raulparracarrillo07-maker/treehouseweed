@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es" class="tema-verde">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<!-- defs de gradientes e iconos reutilizables -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="goldgrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F8DE8A"/>
+      <stop offset=".5" stop-color="#E7B53C"/>
+      <stop offset="1" stop-color="#B8862A"/>
+    </linearGradient>
+  </defs>
+  <symbol id="leaf" viewBox="0 0 24 24"><path fill="url(#goldgrad)" d="M12 2c.3 2 .7 3.9 1.9 5.6-.9-.4-1.8-.9-2.6-1.6.6 2 1.5 3.9 3.2 5.3-1.1-.2-2.2-.6-3.2-1.2 1 1.9 2.4 3.6 4.4 4.6-1.3.1-2.6-.1-3.8-.6 1.3 1.7 3.1 2.9 5.3 3.4-2 .5-4.1.4-6-.3.2 1 .6 2 1.2 2.8h-4c.6-.8 1-1.8 1.2-2.8-1.9.7-4 .8-6 .3 2.2-.5 4-1.7 5.3-3.4-1.2.5-2.5.7-3.8.6 2-1 3.4-2.7 4.4-4.6-1 .6-2.1 1-3.2 1.2 1.7-1.4 2.6-3.3 3.2-5.3-.8.7-1.7 1.2-2.6 1.6C11.3 5.9 11.7 4 12 2z"/></symbol>
+  <symbol id="ic-flores" viewBox="0 0 24 24"><path class="fillw" d="M12 2c.3 2 .7 3.9 1.9 5.6-.9-.4-1.8-.9-2.6-1.6.6 2 1.5 3.9 3.2 5.3-1.1-.2-2.2-.6-3.2-1.2 1 1.9 2.4 3.6 4.4 4.6-1.3.1-2.6-.1-3.8-.6 1.3 1.7 3.1 2.9 5.3 3.4-2 .5-4.1.4-6-.3.2 1 .6 2 1.2 2.8h-4c.6-.8 1-1.8 1.2-2.8-1.9.7-4 .8-6 .3 2.2-.5 4-1.7 5.3-3.4-1.2.5-2.5.7-3.8.6 2-1 3.4-2.7 4.4-4.6-1 .6-2.1 1-3.2 1.2 1.7-1.4 2.6-3.3 3.2-5.3-.8.7-1.7 1.2-2.6 1.6C11.3 5.9 11.7 4 12 2z"/></symbol>
+  <symbol id="ic-prerolls" viewBox="0 0 24 24"><g transform="rotate(-20 12 12)"><rect x="2.5" y="10.4" width="15.5" height="3.4" rx="1.7"/><line x1="6" y1="10.4" x2="6" y2="13.8"/><circle class="fillw" cx="19.7" cy="12.1" r="1.5"/></g></symbol>
+  <symbol id="ic-vapes" viewBox="0 0 24 24"><rect x="9" y="3.5" width="6" height="17" rx="3"/><rect x="10.4" y="1.6" width="3.2" height="2.8" rx="1"/><line x1="9" y1="9" x2="15" y2="9"/></symbol>
+  <symbol id="ic-edibles" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><line x1="4" y1="9.3" x2="20" y2="9.3"/><line x1="4" y1="14.6" x2="20" y2="14.6"/><line x1="9.3" y1="4" x2="9.3" y2="20"/><line x1="14.6" y1="4" x2="14.6" y2="20"/></symbol>
+  <symbol id="ic-extractos" viewBox="0 0 24 24"><path d="M12 3c3.4 4.2 6 7.2 6 10.4A6 6 0 0 1 6 13.4C6 10.2 8.6 7.2 12 3z"/></symbol>
+  <symbol id="ic-smoke" viewBox="0 0 24 24"><path d="M3 11.5h9.5a4.5 4.5 0 0 1 4.5 4.5v.4a4.5 4.5 0 0 1-4.5 4.5H10"/><path d="M3 11.5V8"/><circle class="fillw" cx="4.6" cy="12.6" r="1.5"/></symbol>
+</svg>
+
+<!-- ================= PORTADA ================= -->
+<section class="page cover">
+  <div class="wm"></div>
+  <div class="content" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;width:100%">
+    <div class="topmark"><svg class="leaf-mark" viewBox="0 0 24 24"><use href="#leaf"/></svg></div>
+    <img class="cover-logo" src="../assets/img/logo/treehouseweed-logo-transparente.png" alt="TreeHouseWeed">
+    <div class="eyebrow">CATÁLOGO 2027</div>
+    <div class="sub" style="margin-top:26px">Premium Quality · 100% de dispensario</div>
+    <div class="chevrons">
+      <svg viewBox="0 0 52 26"><path d="M4 4l22 18L48 4"/></svg>
+      <svg viewBox="0 0 52 26"><path d="M4 4l22 18L48 4"/></svg>
+      <svg viewBox="0 0 52 26"><path d="M4 4l22 18L48 4"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MEDICINAL 1/2 ================= -->
+<section class="page">
+  <div class="wm"></div>
+  <div class="content">
+    <!-- rail -->
+    <nav class="rail">
+      <div class="rail-item on"><div class="rail-ic"><svg viewBox="0 0 24 24"><use href="#ic-flores"/></svg></div><span>FLORES</span></div>
+      <div class="rail-item"><div class="rail-ic"><svg viewBox="0 0 24 24"><use href="#ic-prerolls"/></svg></div><span>PRE-ROLLS</span></div>
+      <div class="rail-item"><div class="rail-ic"><svg viewBox="0 0 24 24"><use href="#ic-vapes"/></svg></div><span>VAPES</span></div>
+      <div class="rail-item"><div class="rail-ic"><svg viewBox="0 0 24 24"><use href="#ic-edibles"/></svg></div><span>EDIBLES</span></div>
+      <div class="rail-item"><div class="rail-ic"><svg viewBox="0 0 24 24"><use href="#ic-extractos"/></svg></div><span>EXTRACTOS</span></div>
+      <div class="rail-item"><div class="rail-ic"><svg viewBox="0 0 24 24"><use href="#ic-smoke"/></svg></div><span>SMOKE SHOP</span></div>
+    </nav>
+
+    <div class="sec-head">
+      <svg class="leaf-mark" viewBox="0 0 24 24"><use href="#leaf"/></svg>
+      <div class="sec-title gold-text">MEDICINAL</div>
+      <div class="sec-count">1 / 2</div>
+    </div>
+
+    <div class="flowers">
+      <article class="prod">
+        <div class="prod-photo"><img src="../assets/img/productos/flo-newmoney.png" alt="New Money 3"></div>
+        <div class="prod-info">
+          <div class="prod-name">New Money 3</div>
+          <span class="badge b-indica">Indica</span>
+          <div class="chips">
+            <div class="chip"><span class="q">3 g</span><span class="p">$500</span></div>
+            <div class="chip"><span class="q">7 g</span><span class="p">$1,100</span></div>
+            <div class="chip"><span class="q">½ oz</span><span class="p">$2,000</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="prod">
+        <div class="prod-photo"><img src="../assets/img/productos/flo-cheddar.png" alt="Cheddar OG"></div>
+        <div class="prod-info">
+          <div class="prod-name">Cheddar OG</div>
+          <span class="badge b-indica">Indica</span>
+          <div class="chips">
+            <div class="chip"><span class="q">3 g</span><span class="p">$500</span></div>
+            <div class="chip"><span class="q">7 g</span><span class="p">$1,100</span></div>
+            <div class="chip"><span class="q">½ oz</span><span class="p">$2,000</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="prod">
+        <div class="prod-photo"><img src="../assets/img/productos/flo-banana.png" alt="Banana Candy"></div>
+        <div class="prod-info">
+          <div class="prod-name">Banana Candy</div>
+          <span class="badge b-sativa">Sativa</span>
+          <div class="chips">
+            <div class="chip"><span class="q">3 g</span><span class="p">$500</span></div>
+            <div class="chip"><span class="q">7 g</span><span class="p">$1,100</span></div>
+            <div class="chip"><span class="q">½ oz</span><span class="p">$2,000</span></div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="brandfoot">TREEHOUSEWEED</div>
+  </div>
+</section>
+
+</body>
+</html>

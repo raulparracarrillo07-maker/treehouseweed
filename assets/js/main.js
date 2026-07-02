@@ -1,12 +1,12 @@
-import { montarPuertaEdad } from "./age-gate.js?v=33";
-import { montarIntro } from "./intro.js?v=33";
-import { montarHumo } from "./humo.js?v=33";
-import { montarMonito } from "./monito.js?v=33";
-import { iniciarSmooth, revelar } from "./anim.js?v=33";
-import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=33";
-import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=33";
-import { renderCarrito } from "./ui-cart.js?v=33";
-import { construirMensaje } from "./whatsapp.js?v=33";
+import { montarPuertaEdad } from "./age-gate.js?v=34";
+import { montarIntro } from "./intro.js?v=34";
+import { montarHumo } from "./humo.js?v=34";
+import { montarMonito } from "./monito.js?v=34";
+import { iniciarSmooth, revelar } from "./anim.js?v=34";
+import { renderCasa, renderCuarto, renderDestacados, renderInfo } from "./ui-store.js?v=34";
+import { carritoVacio, agregar, cambiarCantidad } from "./cart.js?v=34";
+import { renderCarrito } from "./ui-cart.js?v=34";
+import { construirMensaje } from "./whatsapp.js?v=34";
 
 let catalogo, config, carrito = carritoVacio();
 let monito;
@@ -187,12 +187,14 @@ function abrirInfo(cuartoId) {
   app.appendChild(volver);
 }
 
-// Bloqueo del scroll táctil en la tienda final (iOS ignora overflow:hidden).
+// Bloqueo del scroll táctil (iOS ignora overflow:hidden).
 document.addEventListener("touchmove", (e) => {
   const b = document.body.classList;
-  if (b.contains("interior-visible") && !b.contains("en-seccion") && !b.contains("modal-abierto")) {
-    e.preventDefault();
-  }
+  if (b.contains("modal-abierto")) return;
+  // Tienda final (imagen con paneles): fija, sin scroll.
+  if (b.contains("interior-visible") && !b.contains("en-seccion")) { e.preventDefault(); return; }
+  // Dentro de una sección: solo se permite el scroll DENTRO del recuadro de la vitrina.
+  if (b.contains("en-seccion") && !e.target.closest(".vitrina-scroll")) { e.preventDefault(); }
 }, { passive: false });
 
 init();
